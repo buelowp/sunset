@@ -5,13 +5,15 @@
 <h2>Usage</h2>
 SunPosition as a class is mostly simple. It expects a bunch of data for the calculations, and will return the number of minutes past midnight of the current day of when the sun will rise and set. You do this the following way.
 
+One note is that this class uses a lot of memory. I haven't tried on an Uno or similar, but it probably won't fit. My suggestion is to use it on a Mega or Teensy to avoid space issues with memory.
+
 ```C++
 SunPosition sun(latitude, longitude, timezone offset);
 ```
 <ul>
-<li>This can be used with a changing location, so it's possible to change the lattitude and longitude prior to each calculation as well. My usage is all stationary, so I can see the location up front and not worry about it.
-<li>By default, SunPosition works normal time, not DST. If you need DST enabled, then you set it. The call is below.
-<li>latitude and longitude are in degrees and fractions of a degree, not degrees, minutes, and seconds. This is an important distinction, but one that GPS gives you for free.
+<li>My usage is all stationary, so I can set the location up front and not worry about it. There is a setLocation call that takes the same arguments which can be called prior to each get operation.
+<li>By default, SunPosition works without a DST factor applied. If you need DST enabled, then you set it. The setting persists until you turn it off specifically.
+<li>latitude and longitude are in degrees and fractions of a degree, not degrees, minutes, and seconds. This is an important distinction, but one that GPS gives you for free. The values are double, and offset is a signed integer.
 <li>offset is the TimeZone offset from UTC either positive or negative. If you're in NYC, then your offset would be -5. If you're in Munich, it would be 1.
 </ul>
 ```C++
