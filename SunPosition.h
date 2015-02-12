@@ -35,14 +35,16 @@ public:
   ~SunPosition();
 
   void setPosition(double, double, int);
-  bool isSunset(time_t);
-  bool isSunrise(time_t);
+  bool isSunset(double);
+  bool isSunrise(double);
   void setTZOffset(int);
-  void setCurrentDate(int, int, int);
+  double setCurrentDate(int, int, int);
+  void enableDST();
+  void disableDST();
   double calcSunriseUTC();
   double calcSunsetUTC();
-  void todaySunsetString(char*, char**, int);
-  void todaySunriseString(char*, char**, int);
+  double calcSunrise();
+  double calcSunset();
 
 private:
   double degToRad(double);
@@ -67,6 +69,7 @@ private:
   double longitude;
   double julianDate;
   int tzOffset;
+  int isDST;
 };
 
 #endif

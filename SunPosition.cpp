@@ -23,6 +23,7 @@
     All thanks for the original work go to Mike who made it pretty easy.
 */
 
+#include <stdio.h>
 #include "SunPosition.h"
 
 SunPosition::SunPosition()
@@ -222,7 +223,32 @@ double SunPosition::calcSunriseUTC()
   timeDiff = 4 * delta;
   timeUTC = 720 + timeDiff - eqTime; // in minutes
 
-  return timeUTC * 60;
+  return timeUTC;
+}
+
+double SunPosition::calcSunrise()
+{
+  double t = calcTimeJulianCent(julianDate);
+  // *** First pass to approximate sunrise
+  double  eqTime = calcEquationOfTime(t);
+  double  solarDec = calcSunDeclination(t);
+  double  hourAngle = calcHourAngleSunrise(latitude, solarDec);
+  double  delta = longitude - radToDeg(hourAngle);
+  double  timeDiff = 4 * delta;	// in minutes of time
+  double  timeUTC = 720 + timeDiff - eqTime;	// in minutes
+  double  newt = calcTimeJulianCent(calcJDFromJulianCent(t) + timeUTC/1440.0);
+
+  eqTime = calcEquationOfTime(newt);
+  solarDec = calcSunDeclination(newt);
+
+  hourAngle = calcHourAngleSunrise(latitude, solarDec);
+  delta = longitude - radToDeg(hourAngle);
+  timeDiff = 4 * delta;
+  timeUTC = 720 + timeDiff - eqTime; // in minutes
+
+  double localTime = timeUTC + (60 * tzOffset) -  (isDST * 60);
+
+  return localTime;	// return time in minutes from midnight
 }
 
 double SunPosition::calcSunsetUTC()
@@ -245,37 +271,66 @@ double SunPosition::calcSunsetUTC()
   timeDiff = 4 * delta;
   timeUTC = 720 + timeDiff - eqTime; // in minutes
 
-  return timeUTC * 60;	// return time in seconds which can work with time_t
+  return timeUTC;	// return time in minutes from midnight
 }
 
-void SunPosition::setCurrentDate(int y, int m, int d)
+double SunPosition::calcSunset()
 {
-  julianDate = calcJD(y, m, d);
+  double t = calcTimeJulianCent(julianDate);
+  // *** First pass to approximate sunset
+  double  eqTime = calcEquationOfTime(t);
+  double  solarDec = calcSunDeclination(t);
+  double  hourAngle = calcHourAngleSunset(latitude, solarDec);
+  double  delta = longitude - radToDeg(hourAngle);
+  double  timeDiff = 4 * delta;	// in minutes of time
+  double  timeUTC = 720 + timeDiff - eqTime;	// in minutes
+  double  newt = calcTimeJulianCent(calcJDFromJulianCent(t) + timeUTC/1440.0);
+
+  eqTime = calcEquationOfTime(newt);
+  solarDec = calcSunDeclination(newt);
+
+  hourAngle = calcHourAngleSunset(latitude, solarDec);
+  delta = longitude - radToDeg(hourAngle);
+  timeDiff = 4 * delta;
+  timeUTC = 720 + timeDiff - eqTime; // in minutes
+  double localTime = timeUTC + (60 * tzOffset) - (isDST * 60);
+
+  return localTime;	// return time in minutes from midnight
 }
 
-bool SunPosition::isSunset(time_t timeNow)
+double SunPosition::setCurrentDate(int y, int m, int d)
 {
-  if ((time_t)calcSunsetUTC() <= timeNow)
-    return true;
-
-  return false;
+	julianDate = calcJD(y, m, d);
+	return julianDate;
 }
 
-void SunPosition::todaySunsetString(char *fmt, char **rval, int size)
+bool SunPosition::isSunset(double m)
 {
+	if (calcSunset() <= m)
+		return true;
 
-	strftime(rval,size,fmt,localtime(&seconds));
+	return false;
 }
 
-void SunPosition::todaySunriseString(char *fmt, char **rval, int size)
+bool SunPosition::isSunrise(double m)
 {
+	if (calcSunrise() <= m)
+		return true;
 
+	return false;
 }
 
-bool SunPosition::isSunrise(time_t timeNow)
+void SunPosition::setTZOffset(int tz)
 {
-  if ((time_t)calcSunriseUTC() <= timeNow)
-    return true;
+	tzOffset = tz;
+}
 
-  return false;
+void SunPosition::enableDST()
+{
+	isDST = 1;
+}
+
+void SunPosition::disableDST()
+{
+	isDST = 0;
 }
