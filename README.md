@@ -4,7 +4,7 @@
 <h2>License</h2>
 This is governed by the MIT license. Use it as you want, make changes as you want.
 
-<h2>Usage</h2>
+<h2>Details</h2>
 To use SunPosition, you need to a few bits of local information.
 <ol>
 <li>Accurate time. If you’re running this with something that can get GPS time or use NTP, then results will always be very accurate. If you do not have a good clock source, then the results are going to be very accurate relative to your not so accurate clock. For the Photon, I use SparkTime and an NTP source. With my Teensy, I connect up a GPS source and read the time from that.</li>
@@ -17,7 +17,7 @@ To use SunPosition, you need to a few bits of local information.
 
 SunPosition is a C++ class, and no C implementation is provided.
 
-<h2>Details</h2>
+<h2>Example</h2>
 This is relative to an Arduino type environment. Create a global object, and initialize it and use it in loop().
 
 <pre>
