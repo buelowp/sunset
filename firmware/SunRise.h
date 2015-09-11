@@ -28,15 +28,13 @@ SOFTWARE.
 #include <math.h>
 #include <time.h>
 
-class SunPosition {
+class SunRise {
 public:
-  SunPosition();
-  SunPosition(double, double, int);
-  ~SunPosition();
+  SunRise();
+  SunRise(double, double, int);
+  ~SunRise();
 
   void setPosition(double, double, int);
-  bool isSunset(double);
-  bool isSunrise(double);
   void setTZOffset(int);
   double setCurrentDate(int, int, int);
   double calcSunriseUTC();
@@ -67,7 +65,6 @@ private:
   double longitude;
   double julianDate;
   int tzOffset;
-  int isDST;
 };
 
 #endif
