@@ -17,7 +17,7 @@ To use SunPosition, you need to a few bits of local information.
 
 SunPosition is a C++ class, and no C implementation is provided.
 
-<h2>Usage</h2>
+<h2>Details</h2>
 This is relative to an Arduino type environment. Create a global object, and initialize it and use it in loop().
 
 <pre>
