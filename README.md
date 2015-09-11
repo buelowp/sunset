@@ -1,48 +1,59 @@
-<h1>SunPosition</h1>
-<h2>Uses GPS source (or alternate time source from a local RTC) to figure out sunrise and sunset times</h2>
-<p>This is a modification of the sunrise.c posted by Mike Chirico back in 2004. See the link below to find it. I needed a mechanism to figure out when the sun would rise and set, but I was doing this with an Arduino and Teensy, which didn't have RTC capability, nor the standard time functions that Linux gives you. So, I found this, and glued a GPS receiver into my system. Now I can simply seed the class and ask for the local minutes past midnight when the sun will rise and set. I'm posting it here in case someone might find use in it.
+<h1>Calculate Sunrise and Sunset based on time and latitude and longitude</h1>
+<p>This is a modification of the sunrise.c posted by Mike Chirico back in 2004. See the link below to find it. I needed an algorithm that could tell me when it was dark out for all intents and purposes. I found Mike’s code, and modified it a bit to be a library that can be used again and again.
+
+<h2>License</h2>
+This is governed by the MIT license. Use it as you want, make changes as you want.
 
 <h2>Usage</h2>
-SunPosition as a class is mostly simple. It expects a bunch of data for the calculations, and will return the number of minutes past midnight of the current day of when the sun will rise and set. You do this the following way.
+To use SunPosition, you need to a few bits of local information.
+<ol>
+<li>Accurate time. If you’re running this with something that can get GPS time or use NTP, then results will always be very accurate. If you do not have a good clock source, then the results are going to be very accurate relative to your not so accurate clock. For the Photon, I use SparkTime and an NTP source. With my Teensy, I connect up a GPS source and read the time from that.</li>
+<li>You need an accurate position, both latitude and longitude, so the library can figure out where you are. The library will only take longitude as a positive value, as it doesn’t matter. Putting in a negative value because the US is -80 something, means you will get odd results.</li>
+<li>Prior to calculating sunrise or sunset, you must update the current date for the library, including DST if applicable. The library doesn’t track the date, so calling it every day without changing the date means you will always get the calculation for the last accurate date you gave it.</li>
+<li>The library always calculates for UTC, but does apply a timezone offset. You can calculate both the offset and UTC with related function calls if you would like.</li>
+<li>The library returns a double that indicates how many seconds past midnight relative to the set date that sunrise or sunset will happen. If the sun will rise at 6am local to the set location and date, then you will get a return value of 360.0. Decimal points indicate fractions of a minute. It’s up to you to figure out how to use the data.</li>
+</ol>
 
-One note is that this class uses a lot of memory. I haven't tried on an Uno or similar, but it probably won't fit. My suggestion is to use it on a Mega or Teensy to avoid space issues with memory.
+SunPosition is a C++ class, and no C implementation is provided.
 
-```C++
-SunPosition sun(latitude, longitude, timezone offset);
-```
-<ul>
-<li>My usage is all stationary, so I can set the location up front and not worry about it. There is a setLocation call that takes the same arguments which can be called prior to each get operation.
-<li>By default, SunPosition works without a DST factor applied. If you need DST enabled, then you set it. The setting persists until you turn it off specifically.
-<li>latitude and longitude are in degrees and fractions of a degree, not degrees, minutes, and seconds. This is an important distinction, but one that GPS gives you for free. The values are double, and offset is a signed integer.
-<li>offset is the TimeZone offset from UTC either positive or negative. If you're in NYC, then your offset would be -5. If you're in Munich, it would be 1.
-</ul>
-```C++
-sun.setCurrentDate(year, month, date);
-```
-<ul>
-<li>The values for year, month, and date are integer 1 based values. Don't zero base the month, or assume from 1900 such as the unix localtime() call does. If you want February 2nd, 2015, then the values for this call are 2015, 2, 2.
-</li>
-</ul>
-```C++
-sun.enabledDST();
-sun.disableDST();
-```
-<ul>
-<li>GPS doesn't give us a lot of heads up about DST values. And generally, we don't know because the systems this runs on generally do not have knowledge of DST values. You will have to set it yourself prior to asking for sunrise time.
-</li>
-</ul>
-```C++
-double sunrise = sun.calcSunrise();
-double sunset = sun.calcSunset();
-```
-<ul>
-<li>This returns the number of minutes past midnight for the specific event in your local timezone set above. Up to you how to use it. If you have access to time_t, then you can convert this to seconds past midnight by multiplying by 60.
-<li>Call calcSunsetUTC() or calcSunriseUTC() for the UTC values
-</ul>
+<h2>Usage</h2>
+This is relative to an Arduino type environment. Create a global object, and initialize it and use it in loop().
 
-I'll document more in the WiKi when I find the time. this is a good first start though.
+<pre>
+#include “SunPosition.h”
+#define TIMEZONE	-5
+#define LATITUDE	40.0000
+#define LONGITUDE	89.0000
+
+SunPosition sun;
+
+void setup()
+{
+	// Set your clock here to get accurate time and date
+	sun.setPosition(LATITUDE, LONGITUDE, TIMEZONE);
+}
+
+void loop()
+{
+	int dstupdate = calculateDST();	// A pseudo function to calculate the current timezone and any DST offset that might apply.
+
+	sun.setCurrentDate(year(), month(), day());
+	sun.setTZOffset(dstupdate);
+	double sunrise = sun.calcSunrise();
+	double sunset = sun.calcSunset();
+	double sunriseUTC = sun.calcSunriseUTC();
+	double sunsetUTC = sun.calcSunriseUTC();
+}
+</pre>
+
+<h2>Notes</h2>
+<ul>
+<li>This is a general purpose calculator, so you could calculate when Sunrise was on the day Shakespeare died. Hence some of the design decisions</li>
+<li>Again, don’t use negative values for longitude, it doesn’t matter</li>
+<li>Date values are absolute, are not zero based, and should not be abbreviated (e.g. don’t use 15 for 2015 or 0 for January)</li>
+<li>This library may run well enough on a 16KHz Arduino, but it’s fairly math intensive and uses quite a bit of memory, so it won’t run fast. It works very well on the ARM M core chips like the Teensy and Photon though.</li>
+<li>For time, I like the SparkTime for Photon which does a good job of keeping accurate time. GPS also works, but you will need to implement a way to calculate if your are DST or not. Other platforms will need to implement a good solution for keeping an accurate date.
+<li>I can be used as a general purpose library on any Linux machine as well. You just need to compile it into your RPI or Beagle project.</li>
 
 You can find the original at http://souptonuts.sourceforge.net/code/sunrise.c.html
 
-This updates it to be a C++ class for easier use by Arduino, Teensy, and other
-embedded projects.

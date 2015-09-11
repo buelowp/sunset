@@ -23,7 +23,6 @@
     All thanks for the original work go to Mike who made it pretty easy.
 */
 
-#include <stdio.h>
 #include "SunPosition.h"
 
 SunPosition::SunPosition()
@@ -45,6 +44,13 @@ SunPosition::SunPosition(double lat, double lon, int tz)
 SunPosition::~SunPosition()
 {
 
+}
+
+void SunPosition::setPosition(double lat, double lon, int tz)
+{
+    latitude = lat;
+    longitude = lon;
+    tzOffset = tz;
 }
 
 double SunPosition::degToRad(double angleDeg)
@@ -334,3 +340,4 @@ void SunPosition::disableDST()
 {
 	isDST = 0;
 }
+
