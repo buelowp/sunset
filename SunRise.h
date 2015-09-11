@@ -1,27 +1,27 @@
 /*
-    This file is part of SunPosition
+The MIT License (MIT)
 
-    SunPosition is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+Copyright (c) 2015 Peter Buelow (goballstate at gmail)
 
-    SunPosition is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-    You should have received a copy of the GNU General Public License
-    along with SunPosition.  If not, see <http://www.gnu.org/licenses/>.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-    This implementation is taken and modified from Mike Chirico at
-    http://souptonuts.sourceforge.net/code/sunrise.c.html
-
-    Modifications done have been in the spirit of the GPL, and
-    any copying or reuse of this header and class are subject to
-    the GPL v2 or any later GPL at the users discretion.
-    All thanks for the original work go to Mike who made it pretty easy.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
+
 #ifndef __SUNPOSITION_H__
 #define __SUNPOSITION_H__
 
@@ -39,8 +39,6 @@ public:
   bool isSunrise(double);
   void setTZOffset(int);
   double setCurrentDate(int, int, int);
-  void enableDST();
-  void disableDST();
   double calcSunriseUTC();
   double calcSunsetUTC();
   double calcSunrise();

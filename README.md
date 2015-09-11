@@ -21,16 +21,17 @@ SunPosition is a C++ class, and no C implementation is provided.
 This is relative to an Arduino type environment. Create a global object, and initialize it and use it in loop().
 
 <pre>
-#include “SunPosition.h”
+#include “SunRise.h”
 #define TIMEZONE	-5
 #define LATITUDE	40.0000
 #define LONGITUDE	89.0000
 
-SunPosition sun;
+SunRise sun;
 
 void setup()
 {
 	// Set your clock here to get accurate time and date
+	// Next, tell SunRise where we are
 	sun.setPosition(LATITUDE, LONGITUDE, TIMEZONE);
 }
 
