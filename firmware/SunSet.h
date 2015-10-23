@@ -28,11 +28,11 @@ SOFTWARE.
 #include <math.h>
 #include <time.h>
 
-class SunRise {
+class SunSet {
 public:
-  SunRise();
-  SunRise(double, double, int);
-  ~SunRise();
+  SunSet();
+  SunSet(double, double, int);
+  ~SunSet();
 
   void setPosition(double, double, int);
   void setTZOffset(int);

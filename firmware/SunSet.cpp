@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "SunRise.h"
+#include "SunSet.h"
 
-SunRise::SunRise()
+SunSet::SunSet()
 {
   latitude = 0.0;
   longitude = 0.0;
@@ -32,7 +32,7 @@ SunRise::SunRise()
   tzOffset = 0;
 }
 
-SunRise::SunRise(double lat, double lon, int tz)
+SunSet::SunSet(double lat, double lon, int tz)
 {
   latitude = lat;
   longitude = lon;
@@ -40,29 +40,29 @@ SunRise::SunRise(double lat, double lon, int tz)
   tzOffset = tz;
 }
 
-SunRise::~SunRise()
+SunSet::~SunSet()
 {
 
 }
 
-void SunRise::setPosition(double lat, double lon, int tz)
+void SunSet::setPosition(double lat, double lon, int tz)
 {
     latitude = lat;
     longitude = lon;
     tzOffset = tz;
 }
 
-double SunRise::degToRad(double angleDeg)
+double SunSet::degToRad(double angleDeg)
 {
   return (M_PI * angleDeg / 180.0);
 }
 
-double SunRise::radToDeg(double angleRad)
+double SunSet::radToDeg(double angleRad)
 {
   return (180.0 * angleRad / M_PI);
 }
 
-double SunRise::calcMeanObliquityOfEcliptic(double t)
+double SunSet::calcMeanObliquityOfEcliptic(double t)
 {
   double seconds = 21.448 - t*(46.8150 + t*(0.00059 - t*(0.001813)));
   double e0 = 23.0 + (26.0 + (seconds/60.0))/60.0;
@@ -70,7 +70,7 @@ double SunRise::calcMeanObliquityOfEcliptic(double t)
   return e0;              // in degrees
 }
 
-double SunRise::calcGeomMeanLongSun(double t)
+double SunSet::calcGeomMeanLongSun(double t)
 {
   double L = 280.46646 + t * (36000.76983 + 0.0003032 * t);
 
@@ -85,7 +85,7 @@ double SunRise::calcGeomMeanLongSun(double t)
   return L;              // in degrees
 }
 
-double SunRise::calcObliquityCorrection(double t)
+double SunSet::calcObliquityCorrection(double t)
 {
   double e0 = calcMeanObliquityOfEcliptic(t);
   double omega = 125.04 - 1934.136 * t;
@@ -94,19 +94,19 @@ double SunRise::calcObliquityCorrection(double t)
   return e;               // in degrees
 }
 
-double SunRise::calcEccentricityEarthOrbit(double t)
+double SunSet::calcEccentricityEarthOrbit(double t)
 {
   double e = 0.016708634 - t * (0.000042037 + 0.0000001267 * t);
   return e;               // unitless
 }
 
-double SunRise::calcGeomMeanAnomalySun(double t)
+double SunSet::calcGeomMeanAnomalySun(double t)
 {
   double M = 357.52911 + t * (35999.05029 - 0.0001537 * t);
   return M;               // in degrees
 }
 
-double SunRise::calcEquationOfTime(double t)
+double SunSet::calcEquationOfTime(double t)
 {
   double epsilon = calcObliquityCorrection(t);
   double l0 = calcGeomMeanLongSun(t);
@@ -125,13 +125,13 @@ double SunRise::calcEquationOfTime(double t)
   return radToDeg(Etime)*4.0;	// in minutes of time
 }
 
-double SunRise::calcTimeJulianCent(double jd)
+double SunSet::calcTimeJulianCent(double jd)
 {
   double T = ( jd - 2451545.0)/36525.0;
   return T;
 }
 
-double SunRise::calcSunTrueLong(double t)
+double SunSet::calcSunTrueLong(double t)
 {
   double l0 = calcGeomMeanLongSun(t);
   double c = calcSunEqOfCenter(t);
@@ -140,7 +140,7 @@ double SunRise::calcSunTrueLong(double t)
   return O;               // in degrees
 }
 
-double SunRise::calcSunApparentLong(double t)
+double SunSet::calcSunApparentLong(double t)
 {
   double o = calcSunTrueLong(t);
 
@@ -149,7 +149,7 @@ double SunRise::calcSunApparentLong(double t)
   return lambda;          // in degrees
 }
 
-double SunRise::calcSunDeclination(double t)
+double SunSet::calcSunDeclination(double t)
 {
   double e = calcObliquityCorrection(t);
   double lambda = calcSunApparentLong(t);
@@ -159,7 +159,7 @@ double SunRise::calcSunDeclination(double t)
   return theta;           // in degrees
 }
 
-double SunRise::calcHourAngleSunrise(double lat, double solarDec)
+double SunSet::calcHourAngleSunrise(double lat, double solarDec)
 {
   double latRad = degToRad(lat);
   double sdRad  = degToRad(solarDec);
@@ -168,7 +168,7 @@ double SunRise::calcHourAngleSunrise(double lat, double solarDec)
   return HA;              // in radians
 }
 
-double SunRise::calcHourAngleSunset(double lat, double solarDec)
+double SunSet::calcHourAngleSunset(double lat, double solarDec)
 {
   double latRad = degToRad(lat);
   double sdRad  = degToRad(solarDec);
@@ -177,7 +177,7 @@ double SunRise::calcHourAngleSunset(double lat, double solarDec)
   return -HA;              // in radians
 }
 
-double SunRise::calcJD(int y, int m, int d)
+double SunSet::calcJD(int y, int m, int d)
 {
   if (m <= 2) {
     y -= 1;
@@ -190,13 +190,13 @@ double SunRise::calcJD(int y, int m, int d)
   return JD;
 }
 
-double SunRise::calcJDFromJulianCent(double t)
+double SunSet::calcJDFromJulianCent(double t)
 {
   double JD = t * 36525.0 + 2451545.0;
   return JD;
 }
 
-double SunRise::calcSunEqOfCenter(double t)
+double SunSet::calcSunEqOfCenter(double t)
 {
   double m = calcGeomMeanAnomalySun(t);
   double mrad = degToRad(m);
@@ -208,7 +208,7 @@ double SunRise::calcSunEqOfCenter(double t)
   return C;		// in degrees
 }
 
-double SunRise::calcSunriseUTC()
+double SunSet::calcSunriseUTC()
 {
   double t = calcTimeJulianCent(julianDate);
   // *** First pass to approximate sunrise
@@ -231,7 +231,7 @@ double SunRise::calcSunriseUTC()
   return timeUTC;
 }
 
-double SunRise::calcSunrise()
+double SunSet::calcSunrise()
 {
   double t = calcTimeJulianCent(julianDate);
   // *** First pass to approximate sunrise
@@ -256,7 +256,7 @@ double SunRise::calcSunrise()
   return localTime;	// return time in minutes from midnight
 }
 
-double SunRise::calcSunsetUTC()
+double SunSet::calcSunsetUTC()
 {
   double t = calcTimeJulianCent(julianDate);
   // *** First pass to approximate sunset
@@ -279,7 +279,7 @@ double SunRise::calcSunsetUTC()
   return timeUTC;	// return time in minutes from midnight
 }
 
-double SunRise::calcSunset()
+double SunSet::calcSunset()
 {
   double t = calcTimeJulianCent(julianDate);
   // *** First pass to approximate sunset
@@ -303,13 +303,13 @@ double SunRise::calcSunset()
   return localTime;	// return time in minutes from midnight
 }
 
-double SunRise::setCurrentDate(int y, int m, int d)
+double SunSet::setCurrentDate(int y, int m, int d)
 {
 	julianDate = calcJD(y, m, d);
 	return julianDate;
 }
 
-void SunRise::setTZOffset(int tz)
+void SunSet::setTZOffset(int tz)
 {
 	tzOffset = tz;
 }

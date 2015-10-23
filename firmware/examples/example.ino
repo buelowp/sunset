@@ -1,5 +1,5 @@
 #include "SparkTime/SparkTime.h"
-#include "SunRise/SunRise.h"
+#include "SunSet/SunSet.h"
 
 /* I'm in the midwest, so this is what I use for my home */
 #define LATITUDE        41.12345
@@ -7,7 +7,7 @@
 #define CST_OFFSET      -6
 #define DST_OFFSET      -5
 
-SunPosition sun;
+SunSet sun;
 UDP UDPClient;
 SparkTime rtc;
 
