@@ -317,7 +317,7 @@ void SunSet::setTZOffset(int tz)
 	tzOffset = tz;
 }
 
-double SunSet::moonPhase()
+int SunSet::moonPhase()
 {
 	double n = floor(12.37 * (m_year - 1900 + ((1.0 * m_month - 0.5) / 12.0)));
 	double rad = 3.14159265 / 180.0;
@@ -329,8 +329,8 @@ double SunSet::moonPhase()
 	double xtra = 0.75933 + 1.53058868 * n + ((1.178e-4) - (1.55e-7) * t) * tsq;
 	xtra += (0.1734 - 3.93e-4 * t) * sin(rad * as) - 0.4068 * sin(rad * am);
 	double i = (xtra > 0.0 ? floor(xtra) : ceil(xtra - 1.0));
-	double jd = (2415020 + 28 * n) + i;
-	return ((julianDate - jd) + 30) % 30;
+	int jd = (2415020 + 28 * n) + i;
+	return (((int)julianDate - jd) + 30) % 30;
 }
 
 
