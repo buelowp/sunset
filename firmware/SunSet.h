@@ -41,6 +41,7 @@ public:
   double calcSunsetUTC();
   double calcSunrise();
   double calcSunset();
+  double moonPhase();
 
 private:
   double degToRad(double);
@@ -64,6 +65,9 @@ private:
   double latitude;
   double longitude;
   double julianDate;
+  int m_year;
+  int m_month;
+  int m_day;
   int tzOffset;
 };
 
