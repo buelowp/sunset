@@ -2,6 +2,6 @@
   "name": "SunSet",
   "author": "Peter Buelow (goballstate@gmail.com)",
   "license": "MIT",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Provides accurate Sunrise and Sunset calculations based on location and date"
 }

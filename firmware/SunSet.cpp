@@ -317,20 +317,11 @@ void SunSet::setTZOffset(int tz)
 	tzOffset = tz;
 }
 
-int SunSet::moonPhase()
+int SunSet::moonPhase(int fromepoch)
 {
-	double n = floor(12.37 * (m_year - 1900 + ((1.0 * m_month - 0.5) / 12.0)));
-	double rad = 3.14159265 / 180.0;
-	double t = n / 1236.85;
-	double tsq = t * t;
-
-	double as = 359.2242 + 29.105356 * n;
-	double am = 306.0253 + 385.816918 * n + 0.010730 * tsq;
-	double xtra = 0.75933 + 1.53058868 * n + ((1.178e-4) - (1.55e-7) * t) * tsq;
-	xtra += (0.1734 - 3.93e-4 * t) * sin(rad * as) - 0.4068 * sin(rad * am);
-	double i = (xtra > 0.0 ? floor(xtra) : ceil(xtra - 1.0));
-	int jd = (2415020 + 28 * n) + i;
-	return (((int)julianDate - jd) + 30) % 30;
+    int moon = (fromepoch - 74100) % 2551443;
+    int phase = floor(moon / (24 * 3600)) + 1;
+    return phase;
 }
 
 
