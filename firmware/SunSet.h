@@ -41,7 +41,7 @@ public:
   double calcSunsetUTC();
   double calcSunrise();
   double calcSunset();
-  int moonPhase();
+  int moonPhase(int);
 
 private:
   double degToRad(double);
