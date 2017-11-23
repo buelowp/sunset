@@ -317,6 +317,18 @@ void SunSet::setTZOffset(int tz)
 	tzOffset = tz;
 }
 
+int SunSet::moonPhase()
+{
+	double intpart;
+
+	double jd = calcJD(m_year, m_month, m_day);
+	double dsn = jd - 2451549.5;
+	double nm = dsn / 29.53;
+	double fp = modf(nm, &intpart);
+	double dic = intpart * 29.53;
+	return dic;
+}
+
 int SunSet::moonPhase(int fromepoch)
 {
     int moon = (fromepoch - 74100) % 2551443;
