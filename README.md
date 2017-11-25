@@ -66,5 +66,7 @@ void loop()
 <li>I can be used as a general purpose library on any Linux machine as well. You just need to compile it into your RPI or Beagle project.</li>
 </ul>
 
-You can find the original at http://souptonuts.sourceforge.net/code/sunrise.c.html
+<h2>Links</h2>
+You can find the original math in c code at http://souptonuts.sourceforge.net/code/sunrise.c.html
+I got the moon work from Ben Daglish at http://www.ben-daglish.net/moon.shtml
 
