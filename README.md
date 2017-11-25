@@ -31,6 +31,7 @@ it to return 30 anyway).
 This is relative to an Arduino type environment. Create a global object, and initialize it and use it in loop().
 
 <pre>
+#include <ctime>
 #include “SunRise.h”
 #define TIMEZONE	-5
 #define LATITUDE	40.0000
