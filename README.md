@@ -15,6 +15,9 @@ To use SunPosition, you need to a few bits of local information.
 <li>The library returns a double that indicates how many seconds past midnight relative to the set date that sunrise or sunset will happen. If the sun will rise at 6am local to the set location and date, then you will get a return value of 360.0. Decimal points indicate fractions of a minute. It’s up to you to figure out how to use the data.</li>
 </ol>
 
+The example provides the how to below, it's pretty simple. Every time you need the calculation call for it. I wouldn't suggest caching the value unless 
+you can handle changes in date so the calculation is correct relative to a date you need.
+
 SunPosition is a C++ class, and no C implementation is provided.
 
 <h2>Moon Phases</h2>
@@ -61,6 +64,7 @@ void loop()
 <li>This library may run well enough on a 16KHz Arduino, but it’s fairly math intensive and uses quite a bit of memory, so it won’t run fast. It works very well on the ARM M core chips like the Teensy and Photon though.</li>
 <li>For time, I like the SparkTime for Photon which does a good job of keeping accurate time. GPS also works, but you will need to implement a way to calculate if your are DST or not. Other platforms will need to implement a good solution for keeping an accurate date.
 <li>I can be used as a general purpose library on any Linux machine as well. You just need to compile it into your RPI or Beagle project.</li>
+</ul>
 
 You can find the original at http://souptonuts.sourceforge.net/code/sunrise.c.html
 
