@@ -17,7 +17,14 @@ To use SunPosition, you need to a few bits of local information.
 
 SunPosition is a C++ class, and no C implementation is provided.
 
-<h2>Example</h2>
+<h2>Moon Phases</h2>
+This library also allows you to calculate the moon phase for the current day to an integer value. This means it's not perfectly accurate, but it's pretty close.
+To use it, you call moonPhase() with an integer value that is the number of seconds from the January 1, 1970 epoch. It will do some simple math and return
+an integer value that represents the current phase of the moon, from 0 to 29. In this case, 0 is new, and 29 is new, 15 is full. The code handles times that may
+cause the calculation to return 30 to avoid some limits confustion (there aren't 30 days in the lunar cycle, but it's close enough that some time values will cause
+it to return 30 anyway).
+
+<h2>Examples</h2>
 This is relative to an Arduino type environment. Create a global object, and initialize it and use it in loop().
 
 <pre>
@@ -33,18 +40,16 @@ void setup()
 	// Set your clock here to get accurate time and date
 	// Next, tell SunRise where we are
 	sun.setPosition(LATITUDE, LONGITUDE, TIMEZONE);
+	sun.setCurrentDate(year(), month(), day());
 }
 
 void loop()
 {
-	int dstupdate = calculateDST();	// A pseudo function to calculate the current timezone and any DST offset that might apply.
-
-	sun.setCurrentDate(year(), month(), day());
-	sun.setTZOffset(dstupdate);
 	double sunrise = sun.calcSunrise();
 	double sunset = sun.calcSunset();
 	double sunriseUTC = sun.calcSunriseUTC();
 	double sunsetUTC = sun.calcSunriseUTC();
+	int moonphase = sun.moonPhase(std::time(nullptr));
 }
 </pre>
 

@@ -1,11 +1,11 @@
 cmake_minimum_required (VERSION 3.0.0)
-project (SUNSET)
+project (sunset)
 
 set (CMAKE_CXX_STANDARD 11)
-set (SOURCES firmware/SunSet.cpp)
-set (HEADERS firmware/SunSet.h)
+set (SOURCES src/SunSet.cpp)
+set (HEADERS src/SunSet.h)
 
-add_library (sunset SHARED ${SOURCES})
+add_library (${PROJECT_NAME} SHARED ${SOURCES})
 
-install (TARGETS sunset DESTINATION lib)
+install (TARGETS ${PROJECT_NAME} DESTINATION lib)
 install (FILES ${HEADERS} DESTINATION include)
