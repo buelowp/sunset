@@ -32,7 +32,7 @@ This is relative to an Arduino type environment. Create a global object, and ini
 
 <pre>
 #include &ltctime&gt
-#include “SunRise.h”
+#include &ltSunSet.h&gt
 #define TIMEZONE	-5
 #define LATITUDE	40.0000
 #define LONGITUDE	89.0000
