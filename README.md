@@ -69,6 +69,7 @@ void loop()
 <li>This library may run well enough on a 16KHz Arduino, but it’s fairly math intensive and uses quite a bit of memory, so it won’t run fast. It works very well on the ARM M core chips like the Teensy and Photon though.</li>
 <li>For time, I like the SparkTime for Photon which does a good job of keeping accurate time. GPS also works, but you will need to implement a way to calculate if your are DST or not. Other platforms will need to implement a good solution for keeping an accurate date.
 <li>It can be used as a general purpose library on any Linux machine as well. You just need to compile it into your RPI or Beagle project using cmake 3.5 or later.</li>
+<li>UTC is not the UTC sunrise time, it is the time in Greenwhich when the sun would rise at your location. It's werid, but allows for some flexibility when doing calcualations depending on how you keep track of time in your system.</li>
 </ul>
 
 <h2>Links</h2>
