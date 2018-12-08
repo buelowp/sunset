@@ -65,11 +65,10 @@ void loop()
 <h2>Notes</h2>
 <ul>
 <li>This is a general purpose calculator, so you could calculate when Sunrise was on the day Shakespeare died. Hence some of the design decisions</li>
-<li>Again, don’t use negative values for longitude, it doesn’t matter</li>
 <li>Date values are absolute, are not zero based, and should not be abbreviated (e.g. don’t use 15 for 2015 or 0 for January)</li>
 <li>This library may run well enough on a 16KHz Arduino, but it’s fairly math intensive and uses quite a bit of memory, so it won’t run fast. It works very well on the ARM M core chips like the Teensy and Photon though.</li>
 <li>For time, I like the SparkTime for Photon which does a good job of keeping accurate time. GPS also works, but you will need to implement a way to calculate if your are DST or not. Other platforms will need to implement a good solution for keeping an accurate date.
-<li>I can be used as a general purpose library on any Linux machine as well. You just need to compile it into your RPI or Beagle project.</li>
+<li>It can be used as a general purpose library on any Linux machine as well. You just need to compile it into your RPI or Beagle project using cmake 3.5 or later.</li>
 </ul>
 
 <h2>Links</h2>
