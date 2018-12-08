@@ -8,7 +8,7 @@ This is governed by the MIT license. Use it as you want, make changes as you wan
 To use SunPosition, you need to a few bits of local information.
 <ol>
 <li>Accurate time. If you’re running this with something that can get GPS time or use NTP, then results will always be very accurate. If you do not have a good clock source, then the results are going to be very accurate relative to your not so accurate clock. For the Photon, I use SparkTime and an NTP source. With my Teensy, I connect up a GPS source and read the time from that.</li>
-<li>You need an accurate position, both latitude and longitude, so the library can figure out where you are. The library will only take longitude as a positive value, as it doesn’t matter. Putting in a negative value because the US is -80 something, means you will get odd results.</li>
+<li>You need an accurate position, both latitude and longitude, so the library can figure out where you are.</li>
 <li>Prior to calculating sunrise or sunset, you must update the current date for the library, including DST if applicable. The library doesn’t track the date, so calling it every day without changing the date means you will always get the calculation for the last accurate date you gave it.</li>
 <li>If you do not set the date, it defaults to midnight, January 1st of year 0</li>
 <li>The library always calculates for UTC, but does apply a timezone offset. You can calculate both the offset and UTC with related function calls if you would like.</li>
@@ -19,6 +19,11 @@ The example provides the how to below, it's pretty simple. Every time you need t
 you can handle changes in date so the calculation is correct relative to a date you need.
 
 SunPosition is a C++ class, and no C implementation is provided.
+
+<h2>Releases</h2>
+<ul>
+<li>1.0.7: Allowes for use of positive or negative longitude values. Thank you to https://github.com/nliviu</li>
+</ul>
 
 <h2>Moon Phases</h2>
 This library also allows you to calculate the moon phase for the current day to an integer value. This means it's not perfectly accurate, but it's pretty close.
