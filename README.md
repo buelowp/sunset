@@ -2,7 +2,7 @@
 <p>This is a modification of the sunrise.c posted by Mike Chirico back in 2004. See the link below to find it. I needed an algorithm that could tell me when it was dark out for all intents and purposes. I found Mike’s code, and modified it a bit to be a library that can be used again and again.
 
 <h2>License</h2>
-This is governed by the MIT license. Use it as you want, make changes as you want.
+This is governed by the GPL2 license. See the License terms in the LICENSE file. Use it as you want, make changes as you want, but please contribute back in accordance with the GPL.
 
 <h2>Details</h2>
 To use SunPosition, you need to a few bits of local information.
