@@ -57,7 +57,7 @@ void loop()
 	double sunrise = sun.calcSunrise();
 	double sunset = sun.calcSunset();
 	double sunriseUTC = sun.calcSunriseUTC();
-	double sunsetUTC = sun.calcSunriseUTC();
+	double sunsetUTC = sun.calcSunsetUTC();
 	int moonphase = sun.moonPhase(std::time(nullptr));
 }
 </pre>
