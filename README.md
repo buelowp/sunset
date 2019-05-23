@@ -17,6 +17,12 @@ make DESTDIR=<some path> install
 
 Note that by default, the installer will attempt to install to /usr/local/include and /usr/local/lib or the equivalent for Windows.
 
+## Supported targets
+
+This should work on any platform that supports C++ 14 and later. However, it is exceptionally math intensive, and as such, will be very slow on 8 bit microcontrollers.
+
+I have created a released library for the Particle build system, which you can find if you search for the sunset library. It is also buildable as a Linux C++ library. Porting to other build systems is possible, but outside of my willingness to support.
+
 ## Details
 To use SunPosition, you need to a few bits of local information.
 1. Accurate time. If you’re running this with something that can get GPS time or use NTP, then results will always be very accurate. If you do not have a good clock source, then the results are going to be very accurate relative to your not so accurate clock. For best results, make sure your clock is accurate to within a second if possible.
