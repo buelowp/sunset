@@ -1,5 +1,5 @@
 cmake_policy (SET CMP0054 NEW)
-cmake_minimum_required (VERSION 3.6.0)
+cmake_minimum_required (VERSION 3.0.0)
 project (sunset)
 
 set (CMAKE_CXX_STANDARD 14)
