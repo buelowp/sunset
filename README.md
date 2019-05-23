@@ -59,22 +59,22 @@ SunSet sun;
 
 void setup()
 {
-	// Set your clock here to get accurate time and date
-	// Next, tell SunRise where we are
-	sun.setPosition(LATITUDE, LONGITUDE, TIMEZONE);
+    // Set your clock here to get accurate time and date
+    // Next, tell SunRise where we are
+    sun.setPosition(LATITUDE, LONGITUDE, TIMEZONE);
 }
 
 void loop()
 {
     // You should always set the date to be accurate
-	sun.setCurrentDate(year(), month(), day());
-	// If you have daylight savings time, make sure you set the timezone appropriately as well
-	sun.setTZOffset(TIMEZONE);
-	double sunrise = sun.calcSunrise();
-	double sunset = sun.calcSunset();
-	double sunriseUTC = sun.calcSunriseUTC();
-	double sunsetUTC = sun.calcSunsetUTC();
-	int moonphase = sun.moonPhase(std::time(nullptr));
+    sun.setCurrentDate(year(), month(), day());
+    // If you have daylight savings time, make sure you set the timezone appropriately as well
+    sun.setTZOffset(TIMEZONE);
+    double sunrise = sun.calcSunrise();
+    double sunset = sun.calcSunset();
+    double sunriseUTC = sun.calcSunriseUTC();
+    double sunsetUTC = sun.calcSunsetUTC();
+    int moonphase = sun.moonPhase(std::time(nullptr));
 }
 ```
 
@@ -101,9 +101,9 @@ void main(int argc, char *argv)
     m_sun.setPosition(lat, lon, tad->tm_gmtoff / ONE_HOUR);
     m_sun.setCurrentDate(tad->tm_year + 1900, tad->tm_mon + 1, tad->tm_mday);
     double sunrise = sun.calcSunrise();
-	double sunset = sun.calcSunset();
-	double sunriseUTC = sun.calcSunriseUTC();
-	double sunsetUTC = sun.calcSunsetUTC();
+    double sunset = sun.calcSunset();
+    double sunriseUTC = sun.calcSunriseUTC();
+    double sunsetUTC = sun.calcSunsetUTC();
     int moonphase = sun.moonPhase(rightnow);
 }
 
