@@ -29,6 +29,7 @@
 #include <math.h>
 #include <time.h>
 
+
 class SunSet {
 public:
   SunSet();
@@ -44,15 +45,13 @@ public:
   double calcSunset();
   int moonPhase(int);
   int moonPhase();
-  double moonRiseUTC(int fromepoch);
-  double moonRise(int fromepoch);
-  double moonSetUTC(int fromepoch);
-  double moonSet(int fromepoch);
+  double moonRiseUTC(int);
+  double moonRise(int);
+  double moonSetUTC(int);
+  double moonSet(int);
 
 private:
-  double degToRad(double);
-  double radToDeg(double);
-  double calcMeanObliquityOfEcliptic(double);
+    double calcMeanObliquityOfEcliptic(double);
   double calcGeomMeanLongSun(double);
   double calcObliquityCorrection(double);
   double calcEccentricityEarthOrbit(double);
@@ -68,6 +67,14 @@ private:
   double calcJD(int,int,int);
   double calcJDFromJulianCent(double);
   double calcSunEqOfCenter(double);
+  //Utilities
+  double hourToDeg(double);
+  double degToHour(double);
+  double degToRad(double);
+  double radToDeg(double);
+  double adjustDeg(double);
+  double adjustHour(double);
+  double adjustRad(double);
 
   double latitude;
   double longitude;
@@ -76,6 +83,8 @@ private:
   int m_month;
   int m_day;
   int tzOffset;
-};
 
+};
+enum SUN_EVENT{SUNRISE, SUNSET};
+enum MOON_EVENT{NEW,LEFT_CRESCENT,HALF,FULL,RIGHT_CRESCENT};
 #endif

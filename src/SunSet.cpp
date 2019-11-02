@@ -61,6 +61,33 @@ double SunSet::radToDeg(double angleRad)
 {
   return (180.0 * angleRad / M_PI);
 }
+double SunSet::hourToDeg(double hour)
+{
+  return hour*15;
+  }
+double SunSet::degToHour(double angle)
+{
+  return angle / 15.0;
+  }
+
+double SunSet::adjustDeg(double L){
+while ( L >= 360) {
+  L -= 360.0;
+}
+
+while (L <  0) {
+  L += 360.0;
+}
+return L;
+}
+
+double SunSet::adjustRad(double L){
+	return degToRad(adjustDeg(radToDeg(L)));
+}
+
+double SunSet::adjustHour(double L){
+	return degToHour(adjust(hourToDeg(L)));
+}
 
 
 double SunSet::calcMeanObliquityOfEcliptic(double t)
@@ -75,15 +102,9 @@ double SunSet::calcGeomMeanLongSun(double t)
 {
   double L = 280.46646 + t * (36000.76983 + 0.0003032 * t);
 
-  while ((int) L > 360) {
-    L -= 360.0;
-  }
 
-  while (L <  0) {
-    L += 360.0;
-  }
 
-  return L;              // in degrees
+  return adjustDeg(L);              // in degrees
 }
 
 double SunSet::calcObliquityCorrection(double t)
@@ -92,7 +113,7 @@ double SunSet::calcObliquityCorrection(double t)
   double omega = 125.04 - 1934.136 * t;
   double e = e0 + 0.00256 * cos(degToRad(omega));
 
-  return e;               // in degrees
+  return adjustDeg(e);               // in degrees
 }
 
 double SunSet::calcEccentricityEarthOrbit(double t)
@@ -104,7 +125,7 @@ double SunSet::calcEccentricityEarthOrbit(double t)
 double SunSet::calcGeomMeanAnomalySun(double t)
 {
   double M = 357.52911 + t * (35999.05029 - 0.0001537 * t);
-  return M;               // in degrees
+  return adjustDeg(M);               // in degrees
 }
 
 double SunSet::calcEquationOfTime(double t)
@@ -138,7 +159,7 @@ double SunSet::calcSunTrueLong(double t)
   double c = calcSunEqOfCenter(t);
 
   double O = l0 + c;
-  return O;               // in degrees
+  return adjustDeg(O);               // in degrees
 }
 
 double SunSet::calcSunApparentLong(double t)
@@ -147,7 +168,7 @@ double SunSet::calcSunApparentLong(double t)
 
   double  omega = 125.04 - 1934.136 * t;
   double  lambda = o - 0.00569 - 0.00478 * sin(degToRad(omega));
-  return lambda;          // in degrees
+  return adjustDeg(lambda);          // in degrees
 }
 
 double SunSet::calcSunDeclination(double t)
@@ -157,7 +178,7 @@ double SunSet::calcSunDeclination(double t)
 
   double sint = sin(degToRad(e)) * sin(degToRad(lambda));
   double theta = radToDeg(asin(sint));
-  return theta;           // in degrees
+  return adjustDeg(theta);           // in degrees
 }
 
 double SunSet::calcHourAngleSunrise(double lat, double solarDec)
@@ -166,13 +187,13 @@ double SunSet::calcHourAngleSunrise(double lat, double solarDec)
   double sdRad  = degToRad(solarDec);
   double HA = (acos(cos(degToRad(90.833))/(cos(latRad)*cos(sdRad))-tan(latRad) * tan(sdRad)));
 
-  return HA;              // in radians
+  return adjustRad(HA);              // in radians
 }
 
 double SunSet::calcHourAngleSunset(double lat, double solarDec)
 {
 
-  return -calcHourAngleSunrise();           // in radians
+  return adjustRad(-calcHourAngleSunrise());           // in radians
 }
 
 double SunSet::calcJD(int y, int m, int d)
@@ -190,7 +211,7 @@ double SunSet::calcJD(int y, int m, int d)
 
 double SunSet::calcJDFromJulianCent(double t)
 {
-  double JD = t * 36525.0 + 2451545.0;
+  double JD = t * 36525.0 + JD_EPOCH2000;
   return JD;
 }
 
@@ -203,7 +224,7 @@ double SunSet::calcSunEqOfCenter(double t)
   double sin3m = sin(mrad+mrad+mrad);
   double C = sinm * (1.914602 - t * (0.004817 + 0.000014 * t)) + sin2m * (0.019993 - 0.000101 * t) + sin3m * 0.000289;
 
-  return C;		// in degrees
+  return adjustDeg(C);		// in degrees
 }
 double SunSet::calcSunrise_setUTC(int event)
 {
@@ -229,7 +250,7 @@ double SunSet::calcSunrise_setUTC(int event)
 }
 double SunSet::calcSunriseUTC()
 {
-    return calcSunrise_setUTC(0);
+    return calcSunrise_setUTC(SUN_EVENT.SUNRISE);
 }
 
 double SunSet::calcSunrise()
@@ -243,7 +264,7 @@ double timeUTC = calculateSunriseUTC();
 
 double SunSet::calcSunsetUTC()
 {
-	return calcSunrise_setUTC(1);  // return time in minutes from midnight
+	return calcSunrise_setUTC(SUN_EVENT.SUNSET);  // return time in minutes from midnight
 }
 
 double SunSet::calcSunset()
@@ -280,33 +301,34 @@ int SunSet::moonPhase(int fromepoch)
         return res;
 }
 
-int SunSet::moonRiseTime(int fromepoch)
+int SunSet::moonRiseTime()
 {
-        return 1;
+	//To do
+        return moonRiseUTC(julianDate);
 }
-int SunSet::moonSetTime(int fromepoch)
+int SunSet::moonSetTime()
 {
-
-        return res;
+	//To do
+        return moonSetUTC(julianDate);
 
 double SunSet::moonRiseUTC(int fromepoch)
 {
 	//To do
-	  return 6.0;
+	  return moonRise(fromepoch) -(60 * tzOffset);
 }
 double SunSet::moonSetUTC(int fromepoch)
 {
 	//To do
-	  return 6.0;
+	  return moonSet(fromepoch) -(60 * tzOffset);
 }
 double SunSet::moonRise(int fromepoch)
 {
 	//To do
-	  return 6.0;
+	return 6 + moonPhase(fromepoch)*(24/30);
 }
 double SunSet::moonSet(int fromepoch)
 {
 	//To do
-	  return 6.0;
+	  return 18 + moonPhase(fromepoch)*(24/30));
 
 }
