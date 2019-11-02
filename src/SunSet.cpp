@@ -279,4 +279,23 @@ int SunSet::moonPhase(int fromepoch)
 
         return res;
 }
-
+double SunSet::moonRiseUTC(int fromepoch)
+{
+	//To do
+	  return 6.0;
+}
+double SunSet::moonSetUTC(int fromepoch)
+{
+	//To do
+	  return 6.0;
+}
+double SunSet::moonRise(int fromepoch)
+{
+	//To do
+	  return 6.0;
+}
+double SunSet::moonSet(int fromepoch)
+{
+	//To do
+	  return 6.0;
+}
