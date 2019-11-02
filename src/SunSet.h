@@ -58,6 +58,7 @@ private:
   double calcSunTrueLong(double);
   double calcSunApparentLong(double);
   double calcSunDeclination(double);
+  double calcSunrise_setUTC(int);
   double calcHourAngleSunrise(double, double);
   double calcHourAngleSunset(double, double);
   double calcJD(int,int,int);
