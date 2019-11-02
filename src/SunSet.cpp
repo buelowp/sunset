@@ -279,7 +279,7 @@ int SunSet::moonPhase(int fromepoch)
 
         return res;
 }
-<<<<<<< HEAD
+
 int SunSet::moonRiseTime(int fromepoch)
 {
         return 1;
@@ -288,7 +288,7 @@ int SunSet::moonSetTime(int fromepoch)
 {
 
         return res;
-=======
+
 double SunSet::moonRiseUTC(int fromepoch)
 {
 	//To do
@@ -308,5 +308,5 @@ double SunSet::moonSet(int fromepoch)
 {
 	//To do
 	  return 6.0;
->>>>>>> refs/heads/moonrise
+
 }
