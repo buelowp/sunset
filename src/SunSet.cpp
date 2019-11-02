@@ -1,6 +1,6 @@
 /*
  * Provides the ability to calculate the local time for sunrise,
- * sunwet, and moonrise at any point in time at any location in the world
+ * sunset, and moonrise at any point in time at any location in the world
  *
  * Original work used with permission maintaining license
  * Copyright (GPL) 2004 Mike Chirico mchirico@comcast.net
@@ -20,7 +20,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with source code and documentation.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "SunSet.h"
 
@@ -62,9 +62,10 @@ double SunSet::radToDeg(double angleRad)
   return (180.0 * angleRad / M_PI);
 }
 
+
 double SunSet::calcMeanObliquityOfEcliptic(double t)
 {
-  double seconds = 21.448 - t*(46.8150 + t*(0.00059 - t*(0.001813)));
+  double seconds = 21.448- t*(46.8150 + t*(0.00059 - t*(0.001813)));
   double e0 = 23.0 + (26.0 + (seconds/60.0))/60.0;
 
   return e0;              // in degrees
@@ -170,11 +171,8 @@ double SunSet::calcHourAngleSunrise(double lat, double solarDec)
 
 double SunSet::calcHourAngleSunset(double lat, double solarDec)
 {
-  double latRad = degToRad(lat);
-  double sdRad  = degToRad(solarDec);
-  double HA = (acos(cos(degToRad(90.833))/(cos(latRad)*cos(sdRad))-tan(latRad) * tan(sdRad)));
 
-  return -HA;              // in radians
+  return -calcHourAngleSunrise();           // in radians
 }
 
 double SunSet::calcJD(int y, int m, int d)
@@ -207,8 +205,7 @@ double SunSet::calcSunEqOfCenter(double t)
 
   return C;		// in degrees
 }
-
-double SunSet::calcSunriseUTC()
+double SunSet::calcSunrise_setUTC(int event)
 {
   double t = calcTimeJulianCent(julianDate);
   // *** First pass to approximate sunrise
@@ -223,12 +220,16 @@ double SunSet::calcSunriseUTC()
   eqTime = calcEquationOfTime(newt);
   solarDec = calcSunDeclination(newt);
 
-  hourAngle = calcHourAngleSunrise(latitude, solarDec);
+  hourAngle = (event==0)? calcHourAngleSunrise(latitude, solarDec):calcHourAngleSunset(latitude, solarDec);
   delta = longitude + radToDeg(hourAngle);
   timeDiff = 4 * delta;
   timeUTC = 720 - timeDiff - eqTime; // in minutes
 
   return timeUTC;
+}
+double SunSet::calcSunriseUTC()
+{
+    return calcSunrise_setUTC(0);
 }
 
 double SunSet::calcSunrise()
@@ -242,25 +243,7 @@ double timeUTC = calculateSunriseUTC();
 
 double SunSet::calcSunsetUTC()
 {
-  double t = calcTimeJulianCent(julianDate);
-  // *** First pass to approximate sunset
-  double  eqTime = calcEquationOfTime(t);
-  double  solarDec = calcSunDeclination(t);
-  double  hourAngle = calcHourAngleSunset(latitude, solarDec);
-  double  delta = longitude + radToDeg(hourAngle);
-  double  timeDiff = 4 * delta;	// in minutes of time
-  double  timeUTC = 720 - timeDiff - eqTime;	// in minutes
-  double  newt = calcTimeJulianCent(calcJDFromJulianCent(t) + timeUTC/1440.0);
-
-  eqTime = calcEquationOfTime(newt);
-  solarDec = calcSunDeclination(newt);
-
-  hourAngle = calcHourAngleSunset(latitude, solarDec);
-  delta = longitude + radToDeg(hourAngle);
-  timeDiff = 4 * delta;
-  timeUTC = 720 - timeDiff - eqTime; // in minutes
-
-  return timeUTC;	// return time in minutes from midnight
+	return calcSunrise_setUTC(1);  // return time in minutes from midnight
 }
 
 double SunSet::calcSunset()
@@ -287,7 +270,7 @@ void SunSet::setTZOffset(int tz)
 
 int SunSet::moonPhase(int fromepoch)
 {
-	int moonepoch = 614100;
+	const int moonepoch = 614100;
 
         int phase = (fromepoch - moonepoch) % 2551443;
         int res = floor(phase / (24 * 3600)) + 1;
@@ -296,4 +279,12 @@ int SunSet::moonPhase(int fromepoch)
 
         return res;
 }
+int SunSet::moonRiseTime(int fromepoch)
+{
+        return 1;
+}
+int SunSet::moonSetTime(int fromepoch)
+{
 
+        return res;
+}

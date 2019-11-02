@@ -1,6 +1,6 @@
 /*
  * Provides the ability to calculate the local time for sunrise,
- * sunwet, and moonrise at any point in time at any location in the world
+ * sunset, and moonrise at any point in time at any location in the world
  *
  * Original work used with permission maintaining license
  * Copyright (GPL) 2004 Mike Chirico mchirico@comcast.net
@@ -20,7 +20,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with source code and documentation.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef __SUNPOSITION_H__
@@ -58,6 +58,7 @@ private:
   double calcSunTrueLong(double);
   double calcSunApparentLong(double);
   double calcSunDeclination(double);
+  double calcSunrise_setUTC(int);
   double calcHourAngleSunrise(double, double);
   double calcHourAngleSunset(double, double);
   double calcJD(int,int,int);
