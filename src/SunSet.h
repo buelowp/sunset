@@ -44,6 +44,10 @@ public:
   double calcSunset();
   int moonPhase(int);
   int moonPhase();
+  double moonRiseUTC(int fromepoch);
+  double moonRise(int fromepoch);
+  double moonSetUTC(int fromepoch);
+  double moonSet(int fromepoch);
 
 private:
   double degToRad(double);
