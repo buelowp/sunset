@@ -65,7 +65,7 @@ double SunSet::hourToDeg(double hour)
 {
   return hour*15;
   }
-double SunSet::degToHour(double angle)
+double SunSet::degToTime(double angle)
 {
   return angle / 15.0;
   }
@@ -85,8 +85,8 @@ double SunSet::adjustRad(double L){
 	return degToRad(adjustDeg(radToDeg(L)));
 }
 
-double SunSet::adjustHour(double L){
-	return degToHour(adjust(hourToDeg(L)));
+double SunSet::adjustTime(double L){
+	return degToTime(adjustDeg(hourToDeg(L)));
 }
 
 
@@ -193,7 +193,7 @@ double SunSet::calcHourAngleSunrise(double lat, double solarDec)
 double SunSet::calcHourAngleSunset(double lat, double solarDec)
 {
 
-  return adjustRad(-calcHourAngleSunrise());           // in radians
+  return adjustRad(-calcHourAngleSunrise(lat,solarDec));           // in radians
 }
 
 double SunSet::calcJD(int y, int m, int d)
@@ -241,7 +241,7 @@ double SunSet::calcSunrise_setUTC(int event)
   eqTime = calcEquationOfTime(newt);
   solarDec = calcSunDeclination(newt);
 
-  hourAngle = (event==0)? calcHourAngleSunrise(latitude, solarDec):calcHourAngleSunset(latitude, solarDec);
+  hourAngle = (event==RISE)? calcHourAngleSunrise(latitude, solarDec):calcHourAngleSunset(latitude, solarDec);
   delta = longitude + radToDeg(hourAngle);
   timeDiff = 4 * delta;
   timeUTC = 720 - timeDiff - eqTime; // in minutes
@@ -250,12 +250,12 @@ double SunSet::calcSunrise_setUTC(int event)
 }
 double SunSet::calcSunriseUTC()
 {
-    return calcSunrise_setUTC(SUN_EVENT.SUNRISE);
+    return calcSunrise_setUTC(RISE);
 }
 
 double SunSet::calcSunrise()
 {
-double timeUTC = calculateSunriseUTC();
+double timeUTC = calcSunriseUTC();
 
   double localTime = timeUTC + (60 * tzOffset);
 
@@ -264,12 +264,12 @@ double timeUTC = calculateSunriseUTC();
 
 double SunSet::calcSunsetUTC()
 {
-	return calcSunrise_setUTC(SUN_EVENT.SUNSET);  // return time in minutes from midnight
+	return calcSunrise_setUTC(SET);  // return time in minutes from midnight
 }
 
 double SunSet::calcSunset()
 {
-double timeUTC=calculateSunsetUTC();
+double timeUTC=calcSunsetUTC();
   double localTime = timeUTC + (60 * tzOffset);
 
   return localTime;	// return time in minutes from midnight
@@ -293,24 +293,24 @@ int SunSet::moonPhase(int fromepoch)
 {
 	const int moonepoch = 614100;
 
-        int phase = (fromepoch - moonepoch) % 2551443;
-        int res = floor(phase / (24 * 3600)) + 1;
+        int phase = (fromepoch - moonepoch) % MOON_MONTH_SECONDS;
+        int res = floor(phase / SECONDS_PER_DAY) + 1;
 	if (res == 30)
 		res = 0;
 
         return res;
 }
 
-int SunSet::moonRiseTime()
+double SunSet::moonRiseTime()
 {
 	//To do
-        return moonRiseUTC(julianDate);
+        return moonRise((julianDate-JD_EPOCH2000)*SECONDS_PER_DAY);
 }
-int SunSet::moonSetTime()
+double SunSet::moonSetTime()
 {
 	//To do
-        return moonSetUTC(julianDate);
-
+        return moonSet((julianDate-JD_EPOCH2000)*SECONDS_PER_DAY);
+}
 double SunSet::moonRiseUTC(int fromepoch)
 {
 	//To do
@@ -323,12 +323,22 @@ double SunSet::moonSetUTC(int fromepoch)
 }
 double SunSet::moonRise(int fromepoch)
 {
-	//To do
-	return 6 + moonPhase(fromepoch)*(24/30);
+	//To do 1st approximation
+	return 6 + moonShift(fromepoch,RISE);
 }
 double SunSet::moonSet(int fromepoch)
 {
-	//To do
-	  return 18 + moonPhase(fromepoch)*(24/30));
+	//To do 1st approximation
+	  return 18 + moonShift(fromepoch,SET);
+
+}
+double SunSet::moonShift(int fromepoch, EVENT e)
+{
+	//To do 1st approximation - from wikipedia - orbit circular?
+	  return  moonPhase(fromepoch)*(24/MOON_MONTH_DAYS);
+
+}
+
+int main(){
 
 }

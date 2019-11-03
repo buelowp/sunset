@@ -28,6 +28,14 @@
 
 #include <math.h>
 #include <time.h>
+#define JD_EPOCH2000 2451545.0
+#define SECONDS_PER_DAY 60.0*60.0*24.0
+#define MOON_MONTH_SECONDS 2551443
+#define MOON_MONTH_DAYS MOON_MONTH_SECONDS/SECONDS_PER_DAY
+
+enum EVENT{RISE, SET};
+
+enum MOON_EVENT{NEW,LEFT_CRESCENT,HALF,FULL,RIGHT_CRESCENT};
 
 
 class SunSet {
@@ -45,13 +53,15 @@ public:
   double calcSunset();
   int moonPhase(int);
   int moonPhase();
+  double moonRiseTime();
+  double moonSetTime();
   double moonRiseUTC(int);
   double moonRise(int);
   double moonSetUTC(int);
   double moonSet(int);
 
 private:
-    double calcMeanObliquityOfEcliptic(double);
+  double calcMeanObliquityOfEcliptic(double);
   double calcGeomMeanLongSun(double);
   double calcObliquityCorrection(double);
   double calcEccentricityEarthOrbit(double);
@@ -67,13 +77,14 @@ private:
   double calcJD(int,int,int);
   double calcJDFromJulianCent(double);
   double calcSunEqOfCenter(double);
+  double moonShift(int fromepoch, EVENT e);
   //Utilities
   double hourToDeg(double);
-  double degToHour(double);
+  double degToTime(double);
   double degToRad(double);
   double radToDeg(double);
   double adjustDeg(double);
-  double adjustHour(double);
+  double adjustTime(double);
   double adjustRad(double);
 
   double latitude;
@@ -85,6 +96,4 @@ private:
   int tzOffset;
 
 };
-enum SUN_EVENT{SUNRISE, SUNSET};
-enum MOON_EVENT{NEW,LEFT_CRESCENT,HALF,FULL,RIGHT_CRESCENT};
 #endif
