@@ -30,6 +30,9 @@ SunSet::SunSet()
   longitude = 0.0;
   julianDate = 0.0;
   tzOffset = 0;
+  m_day =1;
+  m_month = 1;
+  m_year = 1;
 }
 
 SunSet::SunSet(double lat, double lon, int tz)
@@ -38,6 +41,9 @@ SunSet::SunSet(double lat, double lon, int tz)
   longitude = lon;
   julianDate = 0.0;
   tzOffset = tz;
+  m_day =1;
+  m_month = 1;
+  m_year = 1;
 }
 
 SunSet::~SunSet()
