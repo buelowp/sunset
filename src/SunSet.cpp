@@ -345,6 +345,4 @@ double SunSet::moonShift(int fromepoch, EVENT e)
 
 }
 
-int main(){
 
-}
