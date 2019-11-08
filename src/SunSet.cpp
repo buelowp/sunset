@@ -23,6 +23,10 @@
  * along with source code and documentation.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "SunSet.h"
+#include <time.h>
+#include <stdio.h>
+#include <sys/timeb.h>
+#include <math.h>
 
 SunSet::SunSet()
 {
@@ -67,7 +71,7 @@ double SunSet::radToDeg(double angleRad)
 {
   return (180.0 * angleRad / M_PI);
 }
-double SunSet::hourToDeg(double hour)
+double SunSet::timeToDeg(double hour)
 {
   return hour*15;
   }
@@ -92,7 +96,7 @@ double SunSet::adjustRad(double L){
 }
 
 double SunSet::adjustTime(double L){
-	return degToTime(adjustDeg(hourToDeg(L)));
+	return degToTime(adjustDeg(timeToDeg(L)));
 }
 
 
@@ -107,8 +111,6 @@ double SunSet::calcMeanObliquityOfEcliptic(double t)
 double SunSet::calcGeomMeanLongSun(double t)
 {
   double L = 280.46646 + t * (36000.76983 + 0.0003032 * t);
-
-
 
   return adjustDeg(L);              // in degrees
 }
@@ -345,4 +347,56 @@ double SunSet::moonShift(int fromepoch, EVENT e)
 
 }
 
+double SunSet::udaysFromSid(double jd_fromEpoch, double sidTime, double longitude){
+double midDay= adjustRad(SID_CONST + longitude+SID_COEF*jd_fromEpoch);
+ return ((sidTime - midDay)/M_PI)*(180/15)/24;
+}
+double SunSet::localSidTime(double days, double longitude){
+return SID_CONST + SID_COEF*days + longitude;
+}
+double SunSet::starRiseTimeSidereal(double ra, double decl, double lat){
+return ra - acos(-tan(decl)*tan(lat));
+}
+double SunSet::starSetTimeSidereal(double ra, double decl, double lat){
+return ra + acos(-tan(decl)*tan(lat));
+}
+int SunSet::starRise_SetTime(double jd, double ra_deg, double decl_deg,double lat_deg, double longitude_deg)
+{
+//double
+	printf("\n jd %f",jd);
+	ra_deg=(1+33/60.0 + 50.91/(60*60))*15;
+//double
+decl_deg=(30+39/60+35.8/(60+60));
+//double
+lat_deg = (8.9);
+//double
+longitude_deg = 38;
+double ra = degToRad(ra_deg);
+double decl=degToRad(decl_deg);
+double lat=degToRad(lat_deg);
+double longitude = degToRad(longitude_deg);
+double set=adjustRad(starSetTimeSidereal(ra,decl,lat));
+double rise=adjustRad(starRiseTimeSidereal(ra,decl,lat));
+double daysFromJ2000 = jd-JD_EPOCH2000;
+printf("\n daysFromJ2000 %f",daysFromJ2000);
+printf("\n rise udays %f",adjustTime(12+3+ 24*udaysFromSid(daysFromJ2000,rise,longitude)));
+printf("\t set udays %f ",adjustTime(12+3+24* udaysFromSid(daysFromJ2000,set,longitude)));
+if(fabs(decl-lat) > M_PI/2) printf("\n Below Horizon");
+if(fabs(decl+lat) > M_PI/2) printf("\n Above  Horizon");
+return adjustTime(12+3+24* udaysFromSid(daysFromJ2000,set,longitude));
+}
 
+
+int main()
+{
+//time_t * tv = (time_t*) malloc(sizeof(time_t));
+ //time( tv);
+struct timeb *tp = ( timeb*) malloc(sizeof(timeb));
+ftime(tp);
+printf("time %ld",tp->time);
+SunSet *s = new SunSet();//(SunSet*) malloc(sizeof( SunSet));
+//printf("time %ld",s->calcJD(1970,1,1));
+s->starRise_SetTime(JD_UNIX+(tp->time/SECONDS_PER_DAY),1,1,1,1);
+free(tp);
+
+}

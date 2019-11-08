@@ -26,16 +26,20 @@
 #ifndef __SUNPOSITION_H__
 #define __SUNPOSITION_H__
 
-#include <math.h>
-#include <time.h>
 #define JD_EPOCH2000 2451545.0
 #define SECONDS_PER_DAY 60.0*60.0*24.0
 #define MOON_MONTH_SECONDS 2551443
 #define MOON_MONTH_DAYS MOON_MONTH_SECONDS/SECONDS_PER_DAY
 
+#define SID_CONST 4.894961212735792
+#define SID_COEF 6.300388098984389
+#define JD_EPOCH_2000 2451544 //2440587.5
+#define JD_UNIX 2440587
+
+
 enum EVENT{RISE, SET};
 
-enum MOON_EVENT{NEW,LEFT_CRESCENT,HALF,FULL,RIGHT_CRESCENT};
+enum MOON_EVENT{NEW,WAXING_CRESCENT,FIRST_QUARTER,WAXING_GIBBOUS,FULL,WANING_GIBBOUS,LAST_QUARTER, WANING_CRESCENT};
 
 
 class SunSet {
@@ -59,6 +63,13 @@ public:
   double moonRise(int);
   double moonSetUTC(int);
   double moonSet(int);
+  //
+  double local_sidereal(int ,int ,int ,int ,int );
+  double udaysFromSid(double , double , double );
+  double localSidTime(double , double );
+  double starRiseTimeSidereal(double, double, double );
+  double starSetTimeSidereal(double , double , double );
+  int starRise_SetTime(double , double , double , double, double);
 
 private:
   double calcMeanObliquityOfEcliptic(double);
@@ -79,14 +90,13 @@ private:
   double calcSunEqOfCenter(double);
   double moonShift(int fromepoch, EVENT e);
   //Utilities
-  double hourToDeg(double);
+  double timeToDeg(double);
   double degToTime(double);
   double degToRad(double);
   double radToDeg(double);
   double adjustDeg(double);
   double adjustTime(double);
   double adjustRad(double);
-
   double latitude;
   double longitude;
   double julianDate;
