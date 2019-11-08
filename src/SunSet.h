@@ -31,10 +31,7 @@
 #define MOON_MONTH_SECONDS 2551443
 #define MOON_MONTH_DAYS MOON_MONTH_SECONDS/SECONDS_PER_DAY
 
-#define SID_CONST 4.894961212735792
-#define SID_COEF 6.300388098984389
-#define JD_EPOCH_2000 2451544 //2440587.5
-#define JD_UNIX 2440587
+
 
 
 enum EVENT{RISE, SET};
@@ -64,12 +61,7 @@ public:
   double moonSetUTC(int);
   double moonSet(int);
   //
-  double local_sidereal(int ,int ,int ,int ,int );
-  double udaysFromSid(double , double , double );
-  double localSidTime(double , double );
-  double starRiseTimeSidereal(double, double, double );
-  double starSetTimeSidereal(double , double , double );
-  int starRise_SetTime(double , double , double , double, double);
+
 
 private:
   double calcMeanObliquityOfEcliptic(double);
