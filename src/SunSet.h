@@ -30,6 +30,8 @@
 #define SECONDS_PER_DAY 60.0*60.0*24.0
 #define MOON_MONTH_SECONDS 2551443
 #define MOON_MONTH_DAYS MOON_MONTH_SECONDS/SECONDS_PER_DAY
+#define SID_CONST 4.894961212735792
+#define SID_COEF 6.300388098984389
 
 
 
@@ -81,6 +83,10 @@ private:
   double calcJDFromJulianCent(double);
   double calcSunEqOfCenter(double);
   double moonShift(int fromepoch, EVENT e);
+  int starRise_SetTime(double, double, double , double, double , int );
+  double starRiseSetTimeSidereal(double , double , double ,int );
+  double localSidTime(double , double );
+  double SunSet::udaysFromSid(double , double,double );
   //Utilities
   double timeToDeg(double);
   double degToTime(double);
