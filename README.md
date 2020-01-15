@@ -1,11 +1,12 @@
 # Calculate Sunrise and Sunset based on time and latitude and longitude</h1>
 This is a modification of the sunrise.c posted by Mike Chirico back in 2004. See the link below to find it. I needed an algorithm that could tell me when it was dark out for all intents and purposes. I found Mike’s code, and modified it a bit to be a library that can be used again and again.
 
-## License
+# License
 This is governed by the GPL2 license. See the License terms in the LICENSE file. Use it as you want, make changes as you want, but please contribute back in accordance with the GPL.
 
 # Building
 
+## Building for any cmake target
 The builder requires CMake 3.0.0 or newer, which should be available in most Linux distributions.
 
 ```
@@ -18,7 +19,7 @@ make DESTDIR=<some path> install
 
 Note that by default, the installer will attempt to install to /usr/local/include and /usr/local/lib or the equivalent for Windows.
 
-## Building with Google Test as a targets
+## Building with Google Test for library verification
 
 You can use google test by doing the following
 
@@ -30,13 +31,13 @@ make
 ./sunset-test
 ```
 
-## Supported targets
+# Supported targets
 
 This should work on any platform that supports C++ 14 and later. However, it is exceptionally math intensive, and as such, will be very slow on 8 bit microcontrollers.
 
 I have created a released library for the Particle build system, which you can find if you search for the sunset library. It is also buildable as a Linux C++ library. Porting to other build systems is possible, but outside of my willingness to support.
 
-## Details
+# Details
 To use SunPosition, you need to a few bits of local information.
 1. Accurate time. If you’re running this with something that can get GPS time or use NTP, then results will always be very accurate. If you do not have a good clock source, then the results are going to be very accurate relative to your not so accurate clock. For best results, make sure your clock is accurate to within a second if possible.
 1. You need an accurate position, both latitude and longitude, which the library needs to provide accurate timing.
@@ -49,15 +50,15 @@ The example provides the how to below, it's pretty simple. Every time you need t
 
 SunPosition is C++, no C implementation is provided.
 
-## Releases
+# Releases
 * 1.0.9: Revert some imported changes which broke the system
 * 1.0.8: Fix installation path issue and update README to include installation instructions
 * 1.0.7: Allowes for use of positive or negative longitude values. Thank you to https://github.com/nliviu
 
-## Moon Phases
+# Moon Phases
 This library also allows you to calculate the moon phase for the current day to an integer value. This means it's not perfectly accurate, but it's pretty close. To use it, you call moonPhase() with an integer value that is the number of seconds from the January 1, 1970 epoch. It will do some simple math and return an integer value that represents the current phase of the moon, from 0 to 29. In this case, 0 is new, and 29 is new, 15 is full. The code handles times that may cause the calculation to return 30 to avoid some limits confustion (there aren't 30 days in the lunar cycle, but it's close enough that some time values will cause it to return 30 anyway).
 
-## Examples
+# Examples
 This example is relative to an .ino file. Create a global object, and initialize it and use it in loop().
 
 ```
@@ -123,7 +124,7 @@ void main(int argc, char *argv)
 
 ```
 
-## Notes
+# Notes
 
 * This is a general purpose calculator, so you could calculate when Sunrise was on the day Shakespeare died. Hence some of the design decisions
 * Date values are absolute, are not zero based, and should not be abbreviated (e.g. don’t use 15 for 2015 or 0 for January)
@@ -132,7 +133,7 @@ void main(int argc, char *argv)
 * It can be used as a general purpose library on any Linux machine as well. You just need to compile it into your RPI or Beagle project using cmake 3.0 or later.
 * UTC is not the UTC sunrise time, it is the time in Greenwhich when the sun would rise at your location. It's werid, but allows for some flexibility when doing calcualations depending on how you keep track of time in your system.
 
-## Links
+# Links
 You can find the original math in c code at http://souptonuts.sourceforge.net/code/sunrise.c.html
 
 I got the moon work from Ben Daglish at http://www.ben-daglish.net/moon.shtml
