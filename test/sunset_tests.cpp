@@ -74,9 +74,24 @@ namespace
         
         sun.setPosition(LATITUDE, LONGITUDE, DST_OFFSET);
         sun.setCurrentDate(2020, 1, 15);
-       ss << std::setprecision(8) << sun.calcSunsetUTC();
+        ss << std::setprecision(8) << sun.calcSunsetUTC();
         
         EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
+    }
+    
+    TEST(SunsetTesting, MoonPhaseToday)
+    {
+        SunSet sun;
+        time_t t = time(0);
+        int DST_OFFSET = -6;
+        double LATITUDE = 42.058102;
+        double LONGITUDE = -87.984189;
+        struct tm * now = localtime(&t);
+        
+        sun.setPosition(LATITUDE, LONGITUDE, DST_OFFSET);
+        sun.setCurrentDate(2020, 1, 15);
+        
+        EXPECT_EQ(sun.moonPhase(1579097467), 20) << "Returned: " << sun.moonPhase() << ", epoch is " << 1579097467;
     }
 
 }

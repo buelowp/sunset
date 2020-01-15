@@ -320,12 +320,17 @@ void SunSet::setTZOffset(int tz)
 int SunSet::moonPhase(int fromepoch)
 {
 	int moonepoch = 614100;
+    int phase = (fromepoch - moonepoch) % 2551443;
+    int res = floor(phase / (24 * 3600)) + 1;
+	
+    if (res == 30)
+        res = 0;
 
-        int phase = (fromepoch - moonepoch) % 2551443;
-        int res = floor(phase / (24 * 3600)) + 1;
-	if (res == 30)
-		res = 0;
-
-        return res;
+    return res;
 }
 
+int SunSet::moonPhase()
+{
+    time_t t = std::time(0);
+    return moonPhase(static_cast<int>(t));
+}
