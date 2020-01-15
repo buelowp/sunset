@@ -37,6 +37,7 @@ The example provides the how to below, it's pretty simple. Every time you need t
 SunPosition is C++, no C implementation is provided.
 
 ## Releases
+* 1.0.9: Revert some imported changes which broke the system
 * 1.0.8: Fix installation path issue and update README to include installation instructions
 * 1.0.7: Allowes for use of positive or negative longitude values. Thank you to https://github.com/nliviu
 
