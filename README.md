@@ -39,10 +39,10 @@ I have created a released library for the Particle build system, which you can f
 
 # Details
 To use SunPosition, you need to a few bits of local information.
-1. Accurate time. If you’re running this with something that can get GPS time or use NTP, then results will always be very accurate. If you do not have a good clock source, then the results are going to be very accurate relative to your not so accurate clock. For best results, make sure your clock is accurate to within a second if possible.
+1. Accurate time. If you’re running this with something that can get GPS time or use NTP, then results will always be very accurate. If you do not have a good clock source, then the results are going to be very accurate relative to your not so accurate clock. For best results, make sure your clock is accurate to within a second if possible. Note that you also need an accurate timezone as the calculation is to UTC, and then the timezone is applied before the value is returned. If your results seem off by some set number of hours, a bad or missing timezone is probably why.
 1. You need an accurate position, both latitude and longitude, which the library needs to provide accurate timing.
 1. To get accurate results for your location, you need both the Latitude and Longitude, AND a local timezone. Without the timezone, the calcuations done are relative to UTC which may not be useful. Note that UTC isn't sunrise in Greenwhich, it is the UTC time when sunrises in your location.
-1. Prior to calculating sunrise or sunset, you must update the current date for the library, including DST if applicable. The library doesn’t track the date, so calling it every day without changing the date means you will always get the calculation for the last accurate date you gave it. If you do not set the date, it defaults to midnight, January 1st of year 0
+1. Prior to calculating sunrise or sunset, you must update the current date for the library, including the required timezone. The library doesn’t track the date, so calling it every day without changing the date means you will always get the calculation for the last accurate date you gave it. If you do not set the date, it defaults to midnight, January 1st of year 0
 1. You can calculate for both the local timezone offset and UTC with related function calls if you would like. Local time calculations will return the number of minutes past midnight relative to your provided timezone. The UTC calculation will return the UTC time at your location, not the time in Greenwich.
 1. The library returns a double that indicates how many minutes past midnight relative to the set date that sunrise or sunset will happen. If the sun will rise at 6am local to the set location and date, then you will get a return value of 360.0. Decimal points indicate fractions of a minute.
 
@@ -129,9 +129,9 @@ void main(int argc, char *argv)
 * This is a general purpose calculator, so you could calculate when Sunrise was on the day Shakespeare died. Hence some of the design decisions
 * Date values are absolute, are not zero based, and should not be abbreviated (e.g. don’t use 15 for 2015 or 0 for January)
 * This library may run well enough on a 16KHz Arduino, but it’s fairly math intensive and uses quite a bit of memory, so it won’t run fast. It works very well on the ARM M core chips like the Teensy and Photon though.
-* It is important to remember you MUST have accurate date and time to make this work well. You must use internet time synced enough to avoid more than a few seconds drift, or GPS time. Without that, eventually the reported values from the library won't match up to what your CPU thinks the time is, and your usage will be not accurate.
-* It can be used as a general purpose library on any Linux machine as well. You just need to compile it into your RPI or Beagle project using cmake 3.0 or later.
-* UTC is not the UTC sunrise time, it is the time in Greenwhich when the sun would rise at your location. It's werid, but allows for some flexibility when doing calcualations depending on how you keep track of time in your system.
+* It is important to remember you MUST have accurate date and time. The calculations are time sensitive, and if you aren't accurate the results will be obvious. Note that the library does not use hours, minutes, or seconds, just the date, so syncing time a lot won't help, just making sure it's accurate at midnight so you can set the date before calling the calc functions. Knowing when to update the timzone for savings time if applicaple is also pretty important.
+* It can be used as a general purpose library on any Linux machine as well as on an Arduino or Particle Photon. You just need to compile it into your RPI or Beagle project using cmake 3.0 or later.
+* UTC is not the UTC sunrise time, it is the time in Greenwhich when the sun would rise at the location specified to the library. It's werid, but allows for some flexibility when doing calcualations depending on how you keep track of time in your system.
 
 # Links
 You can find the original math in c code at http://souptonuts.sourceforge.net/code/sunrise.c.html
