@@ -119,7 +119,7 @@ void main(int argc, char *argv)
     double sunset = sun.calcSunset();
     double sunriseUTC = sun.calcSunriseUTC();
     double sunsetUTC = sun.calcSunsetUTC();
-    int moonphase = sun.moonPhase(rightnow);
+    int moonphase = sun.moonPhase(static_cast<int>(rightnow));
 }
 
 ```
