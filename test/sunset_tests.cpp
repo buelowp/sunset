@@ -93,5 +93,40 @@ namespace
         
         EXPECT_EQ(sun.moonPhase(1579097467), 20) << "Returned: " << sun.moonPhase() << ", epoch is " << 1579097467;
     }
+    
+    TEST(SunsetTesting, NegativeLatitudeCapeTown)
+    {
+        SunSet sun;
+        time_t t = time(0);
+        int DST_OFFSET = 2;
+        double LATITUDE = -33.9249;
+        double LONGITUDE = 18.4241;
+        struct tm * now = localtime(&t);
+        std::string expected("350.35");
+        std::stringstream ss(std::stringstream::in | std::stringstream::out);
+        
+        sun.setPosition(LATITUDE, LONGITUDE, DST_OFFSET);
+        sun.setCurrentDate(2020, 1, 15);
+        ss << std::setprecision(6) << sun.calcSunrise();
+        
+        EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
+    }
 
+    TEST(SunsetTesting, PositiveLongitudeMoscow)
+    {
+        SunSet sun;
+        time_t t = time(0);
+        int DST_OFFSET = 3;
+        double LATITUDE = 55.7558;
+        double LONGITUDE = 37.617779;
+        struct tm * now = localtime(&t);
+        std::string expected("530.075");
+        std::stringstream ss(std::stringstream::in | std::stringstream::out);
+        
+        sun.setPosition(LATITUDE, LONGITUDE, DST_OFFSET);
+        sun.setCurrentDate(2020, 1, 15);
+        ss << std::setprecision(6) << sun.calcSunrise();
+        
+        EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
+    }
 }
