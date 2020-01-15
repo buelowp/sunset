@@ -10,12 +10,25 @@ The builder requires CMake 3.0.0 or newer, which should be available in most Lin
 
 ```
 mkdir build
+cd build
 cmake ..
 make
 make DESTDIR=<some path> install
 ```
 
 Note that by default, the installer will attempt to install to /usr/local/include and /usr/local/lib or the equivalent for Windows.
+
+## Building with Google Test as a targets
+
+You can use google test by doing the following
+
+```
+mkdir build
+cd build
+cmake -DPLATFORM_TESTING=ON ..
+make
+./sunset-test
+```
 
 ## Supported targets
 
