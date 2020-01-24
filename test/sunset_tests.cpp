@@ -79,7 +79,7 @@ namespace
         EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
     }
     
-    TEST(SunsetTesting, MoonPhaseToday)
+    TEST(SunsetTesting, MoonPhase)
     {
         SunSet sun;
         time_t t = time(0);
@@ -111,7 +111,7 @@ namespace
         
         EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
     }
-
+    
     TEST(SunsetTesting, PositiveLongitudeMoscow)
     {
         SunSet sun;
@@ -121,6 +121,24 @@ namespace
         double LONGITUDE = 37.617779;
         struct tm * now = localtime(&t);
         std::string expected("530.075");
+        std::stringstream ss(std::stringstream::in | std::stringstream::out);
+        
+        sun.setPosition(LATITUDE, LONGITUDE, DST_OFFSET);
+        sun.setCurrentDate(2020, 1, 15);
+        ss << std::setprecision(6) << sun.calcSunrise();
+        
+        EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
+    }
+    
+    TEST(SunsetTesting, AllNegativeBuenosAires)
+    {
+        SunSet sun;
+        time_t t = time(0);
+        int DST_OFFSET = -3;
+        double LATITUDE = -34.6037;
+        double LONGITUDE = -58.3816;
+        struct tm * now = localtime(&t);
+        std::string expected("356.131");
         std::stringstream ss(std::stringstream::in | std::stringstream::out);
         
         sun.setPosition(LATITUDE, LONGITUDE, DST_OFFSET);
