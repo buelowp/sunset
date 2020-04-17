@@ -67,7 +67,7 @@ This example is relative to an .ino file. Create a global object, and initialize
 #include <SunSet.h>
 #define TIMEZONE	-5
 #define LATITUDE	40.0000
-#define LONGITUDE	89.0000
+#define LONGITUDE	-89.0000
 // Note that LONGITUDE can be positive or negative, but the original code will fail if you use a negative value
 // Using a negative longitude does not impact, as it's the same either way. The code compensates for a negative value
 
