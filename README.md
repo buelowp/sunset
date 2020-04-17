@@ -35,7 +35,23 @@ make
 
 This should work on any platform that supports C++ 14 and later. However, it is exceptionally math intensive, and as such, will be very slow on 8 bit microcontrollers.
 
-I have created a released library for the Particle build system, which you can find if you search for the sunset library. It is also buildable as a Linux C++ library. Porting to other build systems is possible, but outside of my willingness to support.
+I have used this library on the following systems successfully, and test it on a Raspberry PI. It really does require a 32 bit system at a minimum, and due to the math needs, a 32 bit processor that has native floating point support is best. This does mean that the original Arudino is unlikely to be able to handle this and still do other work. It may work, but I would suggest it's not a good idea.
+
+* Particle Photon (just search for sunset, use version 1.0.10
+* Raspberry PI
+* Omega Onion
+* ESP8266
+* ESP32
+* Teensy with GPS
+
+I have used the following build systems with this library as well
+
+* Raspberry PI command line
+* Onion cross compile using docker
+* Arudino IDE
+* VS Code for Particle
+
+I don't use PlatformIO, but am working on an ESP32 project now, so I may update with some findings if I get that working soon.
 
 # Details
 To use SunPosition, you need to a few bits of local information.
