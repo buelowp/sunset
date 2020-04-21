@@ -26,9 +26,8 @@
 #ifndef __SUNPOSITION_H__
 #define __SUNPOSITION_H__
 
-#include <chrono>
-#include <math.h>
-#include <time.h>
+#include <cmath>
+#include <ctime>
 
 class SunSet {
 public:
