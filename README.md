@@ -37,12 +37,13 @@ This should work on any platform that supports C++ 14 and later. However, it is 
 
 I have used this library on the following systems successfully, and test it on a Raspberry PI. It really does require a 32 bit system at a minimum, and due to the math needs, a 32 bit processor that has native floating point support is best. This does mean that the original Arudino is unlikely to be able to handle this and still do other work. It may work, but I would suggest it's not a good idea.
 
-* Particle Photon (just search for sunset, use version 1.0.10
+* Particle Photon (just search for sunset, use version 1.0.11)
 * Raspberry PI
 * Omega Onion
 * ESP8266
 * ESP32
 * Teensy with GPS
+* SAMD targets using PIO/VSCode
 
 I have used the following build systems with this library as well
 
@@ -51,7 +52,7 @@ I have used the following build systems with this library as well
 * Arudino IDE
 * VS Code for Particle
 
-I don't use PlatformIO, but am working on an ESP32 project now, so I may update with some findings if I get that working soon.
+I don't use PlatformIO for much but some compile time testing. I can't help much with that platform.
 
 # Details
 To use SunPosition, you need to a few bits of local information.
@@ -67,6 +68,7 @@ The example provides the how to below, it's pretty simple. Every time you need t
 SunPosition is C++, no C implementation is provided.
 
 # Releases
+* 1.0.11 Fixes related to making SAMD targets compile. SAMD doesn't like std::chrono it seems.
 * 1.0.10 Fixed a bug in a header file, it should build for all platforms now.
 * 1.0.9: Revert some imported changes which broke the system
 * 1.0.8: Fix installation path issue and update README to include installation instructions
