@@ -66,10 +66,10 @@ To use SunSet, you need to a few bits of local information.
 1. Accurate time. If you’re running this with something that can get GPS time or use NTP, then results will always be very accurate. If you do not have a good clock source, then the results are going to be very accurate relative to your not so accurate clock. For best results, make sure your clock is accurate to within a second if possible. Note that you also need an accurate timezone as the calculation is to UTC, and then the timezone is applied before the value is returned. If your results seem off by some set number of hours, a bad or missing timezone is probably why.
 1. You need an accurate position, both latitude and longitude, which the library needs to provide accurate timing. Note that it does rely on positive or negative longitude, so you are at -100 longitude, but put 100 longitude in, you will get invalid results.
 1. To get accurate results for your location, you need both the Latitude and Longitude, AND a local timezone.
- * All math is done without a timezone, (timezone = 0). Therefore, to make sure you get accurate results for your location, you must set a local timezone for the LAT and LON you are using. You can tell if you made a mistake when the result you get is negative for sunrise.
+   * All math is done without a timezone, (timezone = 0). Therefore, to make sure you get accurate results for your location, you must set a local timezone for the LAT and LON you are using. You can tell if you made a mistake when the result you get is negative for sunrise.
 1. Prior to calculating sunrise or sunset, you must update the current date for the library, including the required timezone. The library doesn’t track the date, so calling it every day without changing the date means you will always get the calculation for the last accurate date you gave it. If you do not set the date, it defaults to midnight, January 1st of year 0 in the Gregorian calendar.
 1. Since all calculations are done in UTC, it is possible to know what time sunrise is in your location without a timezone. Call calcSunriseUTC for this detail.
- * This isn't very useful in the long run, so the UTC functions will be deprecated. The new civil, astro, and nautical API's do not include the UTC analog. This is by design.
+   * This isn't very useful in the long run, so the UTC functions will be deprecated. The new civil, astro, and nautical API's do not include the UTC analog. This is by design.
 1. The library returns a double that indicates how many minutes past midnight relative to the set date that sunrise or sunset will happen. If the sun will rise at 6am local to the set location and date, then you will get a return value of 360.0. Decimal points indicate fractions of a minute.
 
 The example provides the how to below, it's pretty simple. Every time you need the calculation call for it. I wouldn't suggest caching the value unless you can handle changes in date so the calculation is correct relative to a date you need.
@@ -78,10 +78,10 @@ SunSet is C++, no C implementation is provided.
 
 # Releases
 * 1.0.12 New capabilities. Added Civil, Nautical, and Astronomical sunrise and sunset
- * New API's for the new calls
- * Fixed the calcSunrise() to be calcSunriseLocal(). The old API remains, but is deprecated. It will not be removed.
- * All public API's for getting sunrise and sunset now end in Local to be more clear about the purpose of the API.
- * Begin to deprecate UTC functions. These will not be removed. Prefer the Local functions.
+  * New API's for the new calls
+  * Fixed the calcSunrise() to be calcSunriseLocal(). The old API remains, but is deprecated. It will not be removed.
+  * All public API's for getting sunrise and sunset now end in Local to be more clear about the purpose of the API.
+  * Begin to deprecate UTC functions. These will not be removed. Prefer the Local functions.
 * 1.0.11 Fixes related to making SAMD targets compile. SAMD doesn't like std::chrono it seems.
 * 1.0.10 Fixed a bug in a header file, it should build for all platforms now.
 * 1.0.9: Revert some imported changes which broke the system.
