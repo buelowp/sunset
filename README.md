@@ -40,9 +40,9 @@ make
 
 # Supported targets
 
-This should work on any platform that supports C++ 14 and later. However, it is exceptionally math intensive, and as such, will be very slow on 8 bit microcontrollers.
+This should work on any platform that supports C++ 14 and later. There is a hard requirement on 32 bit systems at a minimum due to needing full 32 bit integers for some of the work.
 
-I have used this library on the following systems successfully, and test it on a Raspberry PI. It really does require a 32 bit system at a minimum, and due to the math needs, a 32 bit processor that has native floating point support is best. This does mean that the original Arudino is unlikely to be able to handle this and still do other work. It may work, but I would suggest it's not a good idea.
+I have used this library on the following systems successfully, and test it on a Raspberry PI. It really does require a 32 bit system at a minimum, and due to the math needs, a 32 bit processor that has native floating point support is best. This does mean that the original Arudino and other similar 8 bit micros cannot use this library correctly.
 
 * Particle Photon (just search for sunset, use the latest version available)
 * Raspberry PI
@@ -56,7 +56,7 @@ I have used the following build systems with this library as well
 
 * Raspberry PI command line
 * Onion cross compiled using KDevelop and Eclipse
-* Arudino IDE
+* Arudino IDE (must be for 32 bit micros)
 * VS Code for Particle
 
 I don't use PlatformIO for much but some compile time testing. I can't help much with that platform.
