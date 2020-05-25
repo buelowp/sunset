@@ -62,27 +62,30 @@ I have used the following build systems with this library as well
 I don't use PlatformIO for much but some compile time testing. I can't help much with that platform.
 
 # Details
-To use SunPosition, you need to a few bits of local information.
+To use SunSet, you need to a few bits of local information.
 1. Accurate time. If you’re running this with something that can get GPS time or use NTP, then results will always be very accurate. If you do not have a good clock source, then the results are going to be very accurate relative to your not so accurate clock. For best results, make sure your clock is accurate to within a second if possible. Note that you also need an accurate timezone as the calculation is to UTC, and then the timezone is applied before the value is returned. If your results seem off by some set number of hours, a bad or missing timezone is probably why.
 1. You need an accurate position, both latitude and longitude, which the library needs to provide accurate timing. Note that it does rely on positive or negative longitude, so you are at -100 longitude, but put 100 longitude in, you will get invalid results.
-1. To get accurate results for your location, you need both the Latitude and Longitude, AND a local timezone. Without the timezone, the calcuations done are relative to UTC which may not be useful. Note that UTC isn't sunrise in Greenwhich, it is the UTC time when sunrises in your location. This may be negative if you don't set correct details.
-1. Prior to calculating sunrise or sunset, you must update the current date for the library, including the required timezone. The library doesn’t track the date, so calling it every day without changing the date means you will always get the calculation for the last accurate date you gave it. If you do not set the date, it defaults to midnight, January 1st of year 0
-1. You can calculate for both the local timezone offset and UTC with related function calls if you would like. Local time calculations will return the number of minutes past midnight relative to your provided timezone. The UTC calculation will return the UTC time at your location, not the time in Greenwich.
+1. To get accurate results for your location, you need both the Latitude and Longitude, AND a local timezone.
+ * All math is done without a timezone, (timezone = 0). Therefore, to make sure you get accurate results for your location, you must set a local timezone for the LAT and LON you are using. You can tell if you made a mistake when the result you get is negative for sunrise.
+1. Prior to calculating sunrise or sunset, you must update the current date for the library, including the required timezone. The library doesn’t track the date, so calling it every day without changing the date means you will always get the calculation for the last accurate date you gave it. If you do not set the date, it defaults to midnight, January 1st of year 0 in the Gregorian calendar.
+1. Since all calculations are done in UTC, it is possible to know what time sunrise is in your location without a timezone. Call calcSunriseUTC for this detail.
+ * This isn't very useful in the long run, so the UTC functions will be deprecated. The new civil, astro, and nautical API's do not include the UTC analog. This is by design.
 1. The library returns a double that indicates how many minutes past midnight relative to the set date that sunrise or sunset will happen. If the sun will rise at 6am local to the set location and date, then you will get a return value of 360.0. Decimal points indicate fractions of a minute.
 
 The example provides the how to below, it's pretty simple. Every time you need the calculation call for it. I wouldn't suggest caching the value unless you can handle changes in date so the calculation is correct relative to a date you need.
 
-SunPosition is C++, no C implementation is provided.
+SunSet is C++, no C implementation is provided.
 
 # Releases
 * 1.0.12 New capabilities. Added Civil, Nautical, and Astronomical sunrise and sunset
  * New API's for the new calls
  * Fixed the calcSunrise() to be calcSunriseLocal(). The old API remains, but is deprecated. It will not be removed.
- * All public API's for getting sunrise and sunset end in UTC or Local to be more clear about the purpose of the API
+ * All public API's for getting sunrise and sunset now end in Local to be more clear about the purpose of the API.
+ * Begin to deprecate UTC functions. These will not be removed. Prefer the Local functions.
 * 1.0.11 Fixes related to making SAMD targets compile. SAMD doesn't like std::chrono it seems.
 * 1.0.10 Fixed a bug in a header file, it should build for all platforms now.
-* 1.0.9: Revert some imported changes which broke the system
-* 1.0.8: Fix installation path issue and update README to include installation instructions
+* 1.0.9: Revert some imported changes which broke the system.
+* 1.0.8: Fix installation path issue and update README to include installation instructions.
 * 1.0.7: Allowes for use of positive or negative longitude values. Thank you to https://github.com/nliviu
 
 # Moon Phases
@@ -117,8 +120,6 @@ void loop()
     sun.setTZOffset(TIMEZONE);
     double sunrise = sun.calcSunriseLocal();
     double sunset = sun.calcSunsetLocal();
-    double sunriseUTC = sun.calcSunriseUTC();
-    double sunsetUTC = sun.calcSunsetUTC();
     int moonphase = sun.moonPhase(std::time(nullptr));
 }
 ```
@@ -145,8 +146,6 @@ void main(int argc, char *argv)
     m_sun.setCurrentDate(tad->tm_year + 1900, tad->tm_mon + 1, tad->tm_mday);
     double sunrise = sun.calcSunriseLocal();
     double sunset = sun.calcSunsetLocal();
-    double sunriseUTC = sun.calcSunriseUTC();
-    double sunsetUTC = sun.calcSunsetUTC();
     double civialSunrise = sun.calcCivilSunriseLocal();
     double nauticalSunrise = sun.calcNauticalSunriseLocal();
     double astroSunrise = sun.calcAstronomicalSunriseLocal();
@@ -170,3 +169,12 @@ You can find the original math in c code at http://souptonuts.sourceforge.net/co
 
 I got the moon work from Ben Daglish at http://www.ben-daglish.net/moon.shtml
 
+# Thank you to
+
+The following contributors have helped me identify issues and add features. The individuals are in no particular order.
+
+* https://github.com/ASL07
+* https://github.com/ThothK
+* https://github.com/CaspianMaster
+* https://github.com/rhn
+* https://github.com/Glichy

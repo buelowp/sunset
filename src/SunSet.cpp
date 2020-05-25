@@ -289,11 +289,6 @@ double SunSet::calcSunsetUTC()
     return calcAbsSunset(SUNSET_OFFICIAL);
 }
 
-double SunSet::calcAstronomicalSunriseUTC()
-{
-    return calcAbsSunrise(SUNSET_ASTONOMICAL);
-}
-
 double SunSet::calcAstronomicalSunriseLocal()
 {
     return calcAbsSunrise(SUNSET_ASTONOMICAL) + (60 * m_tzOffset);
@@ -304,29 +299,14 @@ double SunSet::calcAstronomicalSunsetLocal()
     return calcAbsSunset(SUNSET_ASTONOMICAL) + (60 * m_tzOffset);
 }
 
-double SunSet::calcAstronomicalSunsetUTC()
-{
-    return calcAbsSunset(SUNSET_ASTONOMICAL);
-}
-
 double SunSet::calcCivilSunriseLocal()
 {
     return calcAbsSunrise(SUNSET_CIVIL) + (60 * m_tzOffset);
 }
 
-double SunSet::calcCivilSunriseUTC()
-{
-    return calcAbsSunrise(SUNSET_CIVIL);
-}
-
 double SunSet::calcCivilSunsetLocal()
 {
     return calcAbsSunset(SUNSET_CIVIL) + (60 * m_tzOffset);
-}
-
-double SunSet::calcCivilSunsetUTC()
-{
-    return calcAbsSunset(SUNSET_CIVIL);
 }
 
 /**
@@ -341,17 +321,6 @@ double SunSet::calcNauticalSunriseLocal()
 }
 
 /**
- * \fn double SunSet::calcNauticalSunriseUTC()
- * \return Returns the Nautical sunrise in fractional minutes past midnight
- * 
- * This function will return the Nautical Sunrise in UTC time for your location
- */
-double SunSet::calcNauticalSunriseUTC()
-{
-    return calcAbsSunrise(SUNSET_NAUTICAL);
-}
-
-/**
  * \fn double SunSet::calcNauticalSunsetLocal()
  * \return Returns the Nautical sunset in fractional minutes past midnight
  * 
@@ -360,17 +329,6 @@ double SunSet::calcNauticalSunriseUTC()
 double SunSet::calcNauticalSunsetLocal()
 {
     return calcAbsSunset(SUNSET_NAUTICAL) + (60 * m_tzOffset);
-}
-
-/**
- * \fn double SunSet::calcNauticalSunsetUTC()
- * \return Returns the Nautical sunset in fractional minutes past midnight
- * 
- * This function will return the Nautical sunset in UTC time for your location
- */
-double SunSet::calcNauticalSunsetUTC()
-{
-    return calcAbsSunset(SUNSET_NAUTICAL);
 }
 
 /**

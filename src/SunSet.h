@@ -47,12 +47,8 @@ public:
     double calcNauticalSunsetUTC();
     double calcNauticalSunriseLocal();
     double calcNauticalSunsetLocal();
-    double calcCivilSunriseUTC();
-    double calcCivilSunsetUTC();
     double calcCivilSunriseLocal();
     double calcCivilSunsetLocal();
-    double calcAstronomicalSunriseUTC();
-    double calcAstronomicalSunsetUTC();
     double calcAstronomicalSunriseLocal();
     double calcAstronomicalSunsetLocal();
     double calcSunriseUTC();
