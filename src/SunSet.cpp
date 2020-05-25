@@ -159,20 +159,20 @@ double SunSet::calcSunDeclination(double t)
   return theta;           // in degrees
 }
 
-double SunSet::calcHourAngleSunrise(double lat, double solarDec)
+double SunSet::calcHourAngleSunrise(double lat, double solarDec, double offset)
 {
   double latRad = degToRad(lat);
   double sdRad  = degToRad(solarDec);
-  double HA = (acos(cos(degToRad(90.833))/(cos(latRad)*cos(sdRad))-tan(latRad) * tan(sdRad)));
+  double HA = (acos(cos(degToRad(offset))/(cos(latRad)*cos(sdRad))-tan(latRad) * tan(sdRad)));
 
   return HA;              // in radians
 }
 
-double SunSet::calcHourAngleSunset(double lat, double solarDec)
+double SunSet::calcHourAngleSunset(double lat, double solarDec, double offset)
 {
   double latRad = degToRad(lat);
   double sdRad  = degToRad(solarDec);
-  double HA = (acos(cos(degToRad(90.833))/(cos(latRad)*cos(sdRad))-tan(latRad) * tan(sdRad)));
+  double HA = (acos(cos(degToRad(offset))/(cos(latRad)*cos(sdRad))-tan(latRad) * tan(sdRad)));
 
   return -HA;              // in radians
 }
@@ -208,99 +208,139 @@ double SunSet::calcSunEqOfCenter(double t)
   return C;		// in degrees
 }
 
-double SunSet::calcSunriseUTC()
+double SunSet::calcAbsSunrise(double offset)
 {
-  double t = calcTimeJulianCent(julianDate);
-  // *** First pass to approximate sunrise
-  double  eqTime = calcEquationOfTime(t);
-  double  solarDec = calcSunDeclination(t);
-  double  hourAngle = calcHourAngleSunrise(latitude, solarDec);
-  double  delta = longitude + radToDeg(hourAngle);
-  double  timeDiff = 4 * delta;	// in minutes of time
-  double  timeUTC = 720 - timeDiff - eqTime;	// in minutes
-  double  newt = calcTimeJulianCent(calcJDFromJulianCent(t) + timeUTC/1440.0);
+    double t = calcTimeJulianCent(julianDate);
+    // *** First pass to approximate sunrise
+    double  eqTime = calcEquationOfTime(t);
+    double  solarDec = calcSunDeclination(t);
+    double  hourAngle = calcHourAngleSunrise(latitude, solarDec, offset);
+    double  delta = longitude + radToDeg(hourAngle);
+    double  timeDiff = 4 * delta;	// in minutes of time
+    double  timeUTC = 720 - timeDiff - eqTime;	// in minutes
+    double  newt = calcTimeJulianCent(calcJDFromJulianCent(t) + timeUTC/1440.0);
 
-  eqTime = calcEquationOfTime(newt);
-  solarDec = calcSunDeclination(newt);
+    eqTime = calcEquationOfTime(newt);
+    solarDec = calcSunDeclination(newt);
 
-  hourAngle = calcHourAngleSunrise(latitude, solarDec);
-  delta = longitude + radToDeg(hourAngle);
-  timeDiff = 4 * delta;
-  timeUTC = 720 - timeDiff - eqTime; // in minutes
-
-  return timeUTC;
+    hourAngle = calcHourAngleSunrise(latitude, solarDec, offset);
+    delta = longitude + radToDeg(hourAngle);
+    timeDiff = 4 * delta;
+    timeUTC = 720 - timeDiff - eqTime; // in minutes
+    return timeUTC;
 }
 
-double SunSet::calcSunrise()
+double SunSet::calcAbsSunset(double offset)
 {
-  double t = calcTimeJulianCent(julianDate);
-  // *** First pass to approximate sunrise
-  double  eqTime = calcEquationOfTime(t);
-  double  solarDec = calcSunDeclination(t);
-  double  hourAngle = calcHourAngleSunrise(latitude, solarDec);
-  double  delta = longitude + radToDeg(hourAngle);
-  double  timeDiff = 4 * delta;	// in minutes of time
-  double  timeUTC = 720 - timeDiff - eqTime;	// in minutes
-  double  newt = calcTimeJulianCent(calcJDFromJulianCent(t) + timeUTC/1440.0);
+    double t = calcTimeJulianCent(julianDate);
+    // *** First pass to approximate sunset
+    double  eqTime = calcEquationOfTime(t);
+    double  solarDec = calcSunDeclination(t);
+    double  hourAngle = calcHourAngleSunset(latitude, solarDec, offset);
+    double  delta = longitude + radToDeg(hourAngle);
+    double  timeDiff = 4 * delta;	// in minutes of time
+    double  timeUTC = 720 - timeDiff - eqTime;	// in minutes
+    double  newt = calcTimeJulianCent(calcJDFromJulianCent(t) + timeUTC/1440.0);
 
-  eqTime = calcEquationOfTime(newt);
-  solarDec = calcSunDeclination(newt);
+    eqTime = calcEquationOfTime(newt);
+    solarDec = calcSunDeclination(newt);
 
-  hourAngle = calcHourAngleSunrise(latitude, solarDec);
-  delta = longitude + radToDeg(hourAngle);
-  timeDiff = 4 * delta;
-  timeUTC = 720 - timeDiff - eqTime; // in minutes
+    hourAngle = calcHourAngleSunset(latitude, solarDec, offset);
+    delta = longitude + radToDeg(hourAngle);
+    timeDiff = 4 * delta;
+    timeUTC = 720 - timeDiff - eqTime; // in minutes
 
-  double localTime = timeUTC + (60 * tzOffset);
+    return timeUTC;	// return time in minutes from midnight
+}
 
-  return localTime;	// return time in minutes from midnight
+double SunSet::calcSunriseUTC()
+{
+    return calcAbsSunrise(SUNSET_OFFICIAL);
 }
 
 double SunSet::calcSunsetUTC()
 {
-  double t = calcTimeJulianCent(julianDate);
-  // *** First pass to approximate sunset
-  double  eqTime = calcEquationOfTime(t);
-  double  solarDec = calcSunDeclination(t);
-  double  hourAngle = calcHourAngleSunset(latitude, solarDec);
-  double  delta = longitude + radToDeg(hourAngle);
-  double  timeDiff = 4 * delta;	// in minutes of time
-  double  timeUTC = 720 - timeDiff - eqTime;	// in minutes
-  double  newt = calcTimeJulianCent(calcJDFromJulianCent(t) + timeUTC/1440.0);
+    return calcAbsSunset(SUNSET_OFFICIAL);
+}
 
-  eqTime = calcEquationOfTime(newt);
-  solarDec = calcSunDeclination(newt);
+double SunSet::calcAstronomicalSunriseUTC()
+{
+    return calcAbsSunrise(SUNSET_ASTONOMICAL);
+}
 
-  hourAngle = calcHourAngleSunset(latitude, solarDec);
-  delta = longitude + radToDeg(hourAngle);
-  timeDiff = 4 * delta;
-  timeUTC = 720 - timeDiff - eqTime; // in minutes
+double SunSet::calcAstronomicalSunriseLocal()
+{
+    return calcAbsSunrise(SUNSET_ASTONOMICAL) + (60 * tzOffset);
+}
 
-  return timeUTC;	// return time in minutes from midnight
+double SunSet::calcAstronomicalSunsetLocal()
+{
+    return calcAbsSunset(SUNSET_ASTONOMICAL) + (60 * tzOffset);
+}
+
+double SunSet::calcAstronomicalSunsetUTC()
+{
+    return calcAbsSunset(SUNSET_ASTONOMICAL);
+}
+
+double SunSet::calcCivilSunriseLocal()
+{
+    return calcAbsSunrise(SUNSET_CIVIL) + (60 * tzOffset);
+}
+
+double SunSet::calcCivilSunriseUTC()
+{
+    return calcAbsSunrise(SUNSET_CIVIL);
+}
+
+double SunSet::calcCivilSunsetLocal()
+{
+    return calcAbsSunset(SUNSET_CIVIL) + (60 * tzOffset);
+}
+
+double SunSet::calcCivilSunsetUTC()
+{
+    return calcAbsSunset(SUNSET_CIVIL);
+}
+
+double SunSet::calcNauticalSunriseLocal()
+{
+    return calcAbsSunrise(SUNSET_NAUTICAL) + (60 * tzOffset);
+}
+
+double SunSet::calcNauticalSunriseUTC()
+{
+    return calcAbsSunrise(SUNSET_NAUTICAL);
+}
+
+double SunSet::calcNauticalSunsetLocal()
+{
+    return calcAbsSunset(SUNSET_NAUTICAL) + (60 * tzOffset);
+}
+
+double SunSet::calcNauticalSunsetUTC()
+{
+    return calcAbsSunset(SUNSET_NAUTICAL);
+}
+
+double SunSet::calcSunriseLocal()
+{
+    return calcAbsSunrise(SUNSET_OFFICIAL) + (60 * tzOffset);
+}
+
+double SunSet::calcSunsetLocal()
+{
+    return calcAbsSunset(SUNSET_OFFICIAL) + (60 * tzOffset);
+}
+
+double SunSet::calcSunrise()
+{
+    return calcAbsSunrise(SUNSET_OFFICIAL) + (60 * tzOffset);
 }
 
 double SunSet::calcSunset()
 {
-  double t = calcTimeJulianCent(julianDate);
-  // *** First pass to approximate sunset
-  double  eqTime = calcEquationOfTime(t);
-  double  solarDec = calcSunDeclination(t);
-  double  hourAngle = calcHourAngleSunset(latitude, solarDec);
-  double  delta = longitude + radToDeg(hourAngle);
-  double  timeDiff = 4 * delta;	// in minutes of time
-  double  timeUTC = 720 - timeDiff - eqTime;	// in minutes
-  double  newt = calcTimeJulianCent(calcJDFromJulianCent(t) + timeUTC/1440.0);
-
-  eqTime = calcEquationOfTime(newt);
-  solarDec = calcSunDeclination(newt);
-
-  hourAngle = calcHourAngleSunset(latitude, solarDec);
-  delta = longitude + radToDeg(hourAngle);
-  timeDiff = 4 * delta;
-  timeUTC = 720 - timeDiff - eqTime; // in minutes
-  double localTime = timeUTC + (60 * tzOffset);
-
-  return localTime;	// return time in minutes from midnight
+    return calcAbsSunset(SUNSET_OFFICIAL) + (60 * tzOffset);
 }
 
 double SunSet::setCurrentDate(int y, int m, int d)

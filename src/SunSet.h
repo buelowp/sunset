@@ -29,6 +29,11 @@
 #include <cmath>
 #include <ctime>
 
+#define SUNSET_OFFICIAL     90.833
+#define SUNSET_NAUTICAL     102
+#define SUNSET_CIVIL        96
+#define SUNSET_ASTONOMICAL  108
+
 class SunSet {
 public:
     SunSet();
@@ -38,8 +43,22 @@ public:
     void setPosition(double, double, int);
     void setTZOffset(int);
     double setCurrentDate(int, int, int);
+    double calcNauticalSunriseUTC();
+    double calcNauticalSunsetUTC();
+    double calcNauticalSunriseLocal();
+    double calcNauticalSunsetLocal();
+    double calcCivilSunriseUTC();
+    double calcCivilSunsetUTC();
+    double calcCivilSunriseLocal();
+    double calcCivilSunsetLocal();
+    double calcAstronomicalSunriseUTC();
+    double calcAstronomicalSunsetUTC();
+    double calcAstronomicalSunriseLocal();
+    double calcAstronomicalSunsetLocal();
     double calcSunriseUTC();
     double calcSunsetUTC();
+    double calcSunriseLocal();
+    double calcSunsetLocal();
     double calcSunrise();
     double calcSunset();
     int moonPhase(int);
@@ -58,11 +77,13 @@ private:
     double calcSunTrueLong(double);
     double calcSunApparentLong(double);
     double calcSunDeclination(double);
-    double calcHourAngleSunrise(double, double);
-    double calcHourAngleSunset(double, double);
+    double calcHourAngleSunrise(double, double, double);
+    double calcHourAngleSunset(double, double, double);
     double calcJD(int,int,int);
     double calcJDFromJulianCent(double);
     double calcSunEqOfCenter(double);
+    double calcAbsSunrise(double);
+    double calcAbsSunset(double);
 
     double latitude;
     double longitude;
