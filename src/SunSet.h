@@ -85,13 +85,13 @@ private:
     double calcAbsSunrise(double);
     double calcAbsSunset(double);
 
-    double latitude;
-    double longitude;
-    double julianDate;
+    double m_latitude;
+    double m_longitude;
+    double m_julianDate;
     int m_year;
     int m_month;
     int m_day;
-    int tzOffset;
+    int m_tzOffset;
 };
 
 #endif

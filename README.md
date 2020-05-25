@@ -1,6 +1,13 @@
 # Calculate Sunrise and Sunset based on time and latitude and longitude</h1>
 This is a modification of the sunrise.c posted by Mike Chirico back in 2004. See the link below to find it. I needed an algorithm that could tell me when it was dark out for all intents and purposes. I found Mike’s code, and modified it a bit to be a library that can be used again and again.
 
+Since then, I have updated it a bit to do some more work. It will calculate the Moon position generically. It also with version 1.0.12 calculate other sunrise/sunset times depending on your needs
+
+* Can accurately calculate Standard Sunrise and Sunset
+* Can accurately calculate Nautical Sunrise and Sunset
+* Can accurately calculate Civil Sunrise and Sunset
+* Can accurately calculate Astronomical Sunrise and Sunset
+
 # License
 This is governed by the GPL2 license. See the License terms in the LICENSE file. Use it as you want, make changes as you want, but please contribute back in accordance with the GPL.
 
@@ -37,7 +44,7 @@ This should work on any platform that supports C++ 14 and later. However, it is 
 
 I have used this library on the following systems successfully, and test it on a Raspberry PI. It really does require a 32 bit system at a minimum, and due to the math needs, a 32 bit processor that has native floating point support is best. This does mean that the original Arudino is unlikely to be able to handle this and still do other work. It may work, but I would suggest it's not a good idea.
 
-* Particle Photon (just search for sunset, use version 1.0.11)
+* Particle Photon (just search for sunset, use the latest version available)
 * Raspberry PI
 * Omega Onion
 * ESP8266
@@ -48,7 +55,7 @@ I have used this library on the following systems successfully, and test it on a
 I have used the following build systems with this library as well
 
 * Raspberry PI command line
-* Onion cross compile using docker
+* Onion cross compiled using KDevelop and Eclipse
 * Arudino IDE
 * VS Code for Particle
 
@@ -68,6 +75,10 @@ The example provides the how to below, it's pretty simple. Every time you need t
 SunPosition is C++, no C implementation is provided.
 
 # Releases
+* 1.0.12 New capabilities. Added Civil, Nautical, and Astronomical sunrise and sunset
+ * New API's for the new calls
+ * Fixed the calcSunrise() to be calcSunriseLocal(). The old API remains, but is deprecated. It will not be removed.
+ * All public API's for getting sunrise and sunset end in UTC or Local to be more clear about the purpose of the API
 * 1.0.11 Fixes related to making SAMD targets compile. SAMD doesn't like std::chrono it seems.
 * 1.0.10 Fixed a bug in a header file, it should build for all platforms now.
 * 1.0.9: Revert some imported changes which broke the system
@@ -104,8 +115,8 @@ void loop()
     sun.setCurrentDate(year(), month(), day());
     // If you have daylight savings time, make sure you set the timezone appropriately as well
     sun.setTZOffset(TIMEZONE);
-    double sunrise = sun.calcSunrise();
-    double sunset = sun.calcSunset();
+    double sunrise = sun.calcSunriseLocal();
+    double sunset = sun.calcSunsetLocal();
     double sunriseUTC = sun.calcSunriseUTC();
     double sunsetUTC = sun.calcSunsetUTC();
     int moonphase = sun.moonPhase(std::time(nullptr));
@@ -121,10 +132,8 @@ This example is for the Raspberry Pi using C++
 #define ONE_HOUR	(60 * 60)
 #define TIMEZONE	-5
 #define LATITUDE	40.0000
-#define LONGITUDE	89.0000
-// Note that LONGITUDE can be positive or negative, but the original code will fail if you use a negative value
-// Using a negative longitude does not impact, as it's the same either way. The code compensates for a negative value
-
+#define LONGITUDE	-89.0000
+// This location is near Chicago, Illinois USA
 void main(int argc, char *argv)
 {
     SunSet sun;
@@ -134,10 +143,13 @@ void main(int argc, char *argv)
     
     m_sun.setPosition(lat, lon, tad->tm_gmtoff / ONE_HOUR);
     m_sun.setCurrentDate(tad->tm_year + 1900, tad->tm_mon + 1, tad->tm_mday);
-    double sunrise = sun.calcSunrise();
-    double sunset = sun.calcSunset();
+    double sunrise = sun.calcSunriseLocal();
+    double sunset = sun.calcSunsetLocal();
     double sunriseUTC = sun.calcSunriseUTC();
     double sunsetUTC = sun.calcSunsetUTC();
+    double civialSunrise = sun.calcCivilSunriseLocal();
+    double nauticalSunrise = sun.calcNauticalSunriseLocal();
+    double astroSunrise = sun.calcAstronomicalSunriseLocal();
     int moonphase = sun.moonPhase(static_cast<int>(rightnow));
 }
 
@@ -151,6 +163,7 @@ void main(int argc, char *argv)
 * It is important to remember you MUST have accurate date and time. The calculations are time sensitive, and if you aren't accurate the results will be obvious. Note that the library does not use hours, minutes, or seconds, just the date, so syncing time a lot won't help, just making sure it's accurate at midnight so you can set the date before calling the calc functions. Knowing when to update the timzone for savings time if applicaple is also pretty important.
 * It can be used as a general purpose library on any Linux machine as well as on an Arduino or Particle Photon. You just need to compile it into your RPI or Beagle project using cmake 3.0 or later.
 * UTC is not the UTC sunrise time, it is the time in Greenwhich when the sun would rise at the location specified to the library. It's werid, but allows for some flexibility when doing calcualations depending on how you keep track of time in your system.
+* Use of Civil, Nautical, and Astronomical values are interesting for lots of new uses of the library. They are added as a convience, but hopefully will prove useful.
 
 # Links
 You can find the original math in c code at http://souptonuts.sourceforge.net/code/sunrise.c.html

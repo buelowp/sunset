@@ -231,4 +231,17 @@ namespace
         EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
     }
 
+    TEST(SunsetTesting, ValidJulianDate)
+    {
+        SunSet sun;
+        std::string expected("2458994.5");
+        std::stringstream ss(std::stringstream::in | std::stringstream::out);
+        
+        sun.setPosition(LATITUDE_AH, LONGITUDE_AH, TIMEZONE_AH);
+        double jd = sun.setCurrentDate(2020, 5, 25);
+        ss << std::setprecision(8) << jd;
+        
+        EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
+    }
+        
 }
