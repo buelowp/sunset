@@ -163,8 +163,8 @@ void main(int argc, char *argv)
 * This library has a hard requirement on a 32 bit micro with native hard float. Soft float micros *do* work, but may have issues. The math is pretty intensive.
 * It is important to remember you MUST have accurate date and time. The calculations are time sensitive, and if you aren't accurate the results will be obvious. Note that the library does not use hours, minutes, or seconds, just the date, so syncing time a lot won't help, just making sure it's accurate at midnight so you can set the date before calling the calc functions. Knowing when to update the timzone for savings time if applicaple is also pretty important.
 * It can be used as a general purpose library on any Linux machine as well as on an Arduino or Particle Photon. You just need to compile it into your RPI or Beagle project using cmake 3.0 or later.
-* UTC is not the UTC sunrise time, it is the time in Greenwhich when the sun would rise at the location specified to the library. It's werid, but allows for some flexibility when doing calcualations depending on how you keep track of time in your system.
-* Use of Civil, Nautical, and Astronomical values are interesting for lots of new uses of the library. They are added as a convience, but hopefully will prove useful.
+* UTC is not the UTC sunrise time, it is the time in Greenwhich when the sun would rise at the location specified to the library. It's werid, but allows for some flexibility when doing calcualations depending on how you keep track of time in your system. The UTC specific calls are being deprecated starting with 1.1.0.
+* Use of Civil, Nautical, and Astronomical values are interesting for lots of new uses of the library. They are added as a convience, but hopefully will prove useful. These functions do not have equal UTC functions.
 * I do not build or test on a Windows target. I don't have a Windows machine to do so. I do test this on a Mac, but only lightly and not every release right now.
 
 ## ESP Devices
