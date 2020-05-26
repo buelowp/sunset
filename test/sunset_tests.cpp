@@ -63,59 +63,6 @@ namespace
         EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
     }
 
-    TEST(SunsetTesting, ValidReturnValueSunriseLocal)
-    {
-        SunSet sun;
-        std::string expected("437.817");
-        std::stringstream ss(std::stringstream::in | std::stringstream::out);
-        
-        sun.setPosition(LATITUDE_AH, LONGITUDE_AH, TIMEZONE_AH);
-        sun.setCurrentDate(2020, 1, 15);
-        ss << std::setprecision(6) << sun.calcSunrise();
-        
-        EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
-    }
-    
-    TEST(SunsetTesting, ValidReturnValueSunsetLocal)
-    {
-        SunSet sun;
-
-        std::string expected("1005.0013");
-        std::stringstream ss(std::stringstream::in | std::stringstream::out);
-        
-        sun.setPosition(LATITUDE_AH, LONGITUDE_AH, TIMEZONE_AH);
-        sun.setCurrentDate(2020, 1, 15);
-        ss << std::setprecision(8) << sun.calcSunset();
-        
-        EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
-    }
-
-    TEST(SunsetTesting, ValidReturnValueSunriseUTC)
-    {
-        SunSet sun;
-        std::string expected("797.817");
-        std::stringstream ss(std::stringstream::in | std::stringstream::out);
-        
-        sun.setPosition(LATITUDE_AH, LONGITUDE_AH, TIMEZONE_AH);
-        sun.setCurrentDate(2020, 1, 15);
-        ss << std::setprecision(6) << sun.calcSunriseUTC();
-        
-        EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
-    }
-    
-    TEST(SunsetTesting, ValidReturnValueSunsetUTC)
-    {
-        SunSet sun;
-        std::string expected("1365.0013");
-        std::stringstream ss(std::stringstream::in | std::stringstream::out);
-        
-        sun.setPosition(LATITUDE_AH, LONGITUDE_AH, TIMEZONE_AH);
-        sun.setCurrentDate(2020, 1, 15);
-        ss << std::setprecision(8) << sun.calcSunsetUTC();
-        
-        EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
-    }
-    
     TEST(SunsetTesting, MoonPhase)
     {
         SunSet sun;
@@ -293,7 +240,7 @@ namespace
         EXPECT_EQ(isnan(rval), true) << "Returned: " << rval;
     }
 
-    TEST(SunsetTesting, SouthernMostPointWinter)
+    TEST(SunsetTesting, SouthernMostPointMay)
     {
         SunSet sun;
         std::string expected("576.8452");
@@ -306,7 +253,7 @@ namespace
         EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
     }
 
-    TEST(SunsetTesting, SouthernMostPointSummer)
+    TEST(SunsetTesting, SouthernMostPointWinter)
     {
         SunSet sun;
         std::string expected("294.96866");

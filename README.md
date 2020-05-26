@@ -44,7 +44,11 @@ This should work on any platform that supports C++ 14 and later. There is a hard
 
 I have used this library on the following systems successfully, and test it on a Raspberry PI. It really does require a 32 bit system at a minimum, and due to the math needs, a 32 bit processor that has native floating point support is best. This does mean that the original Arudino and other similar 8 bit micros cannot use this library correctly.
 
-* Particle Photon (just search for sunset, use the latest version available)
+## Tested against directly
+* Ubuntu 20.04 g++
+* Particle Photon (latest ParticleOS release 1.5.2 works with Sunset 1.1.0)
+
+## Used with historically
 * Raspberry PI
 * Omega Onion
 * ESP8266 and ESP32 (see below for notes about the ESP chips)
@@ -59,6 +63,10 @@ I have used the following build systems with this library as well
 * VS Code for Particle
 
 I don't use PlatformIO for much but some compile time testing. I can't help much with that platform.
+
+# Testing
+
+I primarily use google test to validate the code running under Linux. This is done with the cmake config test above. I also run a small ino on a Particle Photon to prove that it works against a micro as well. Test results can be found for the latest release on the release page.
 
 # Details
 To use SunSet, you need to a few bits of local information.
