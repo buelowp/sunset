@@ -70,7 +70,7 @@ void SunSet::setPosition(double lat, double lon, int tz)
 {
     m_latitude = lat;
     m_longitude = lon;
-    if (tz > -12 && tz < 15)
+    if (tz >= -12 && tz <= 14)
         m_tzOffset = tz;
     else
         m_tzOffset = 0;
@@ -80,7 +80,7 @@ void SunSet::setPosition(double lat, double lon, double tz)
 {
     m_latitude = lat;
     m_longitude = lon;
-    if (tz > -12 && tz < 15)
+    if (tz >= -12 && tz <= 14)
         m_tzOffset = tz;
     else
         m_tzOffset = 0.0;

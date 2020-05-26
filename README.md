@@ -1,7 +1,7 @@
 # Calculate Sunrise and Sunset based on time and latitude and longitude</h1>
 This is a modification of the sunrise.c posted by Mike Chirico back in 2004. See the link below to find it. I needed an algorithm that could tell me when it was dark out for all intents and purposes. I found Mike’s code, and modified it a bit to be a library that can be used again and again.
 
-Since then, I have updated it a bit to do some more work. It will calculate the Moon position generically. It also with version 1.0.12 calculate other sunrise/sunset times depending on your needs
+Since then, I have updated it a bit to do some more work. It will calculate the Moon position generically. It also with version 1.1.0 calculate other sunrise/sunset times depending on your needs
 
 * Can accurately calculate Standard Sunrise and Sunset
 * Can accurately calculate Nautical Sunrise and Sunset
@@ -120,8 +120,8 @@ void loop()
     sun.setCurrentDate(year(), month(), day());
     // If you have daylight savings time, make sure you set the timezone appropriately as well
     sun.setTZOffset(TIMEZONE);
-    double sunrise = sun.calcSunriseLocal();
-    double sunset = sun.calcSunsetLocal();
+    double sunrise = sun.calcSunrise();
+    double sunset = sun.calcSunset();
     int moonphase = sun.moonPhase(std::time(nullptr));
 }
 ```
@@ -146,11 +146,11 @@ void main(int argc, char *argv)
     
     m_sun.setPosition(lat, lon, tad->tm_gmtoff / ONE_HOUR);
     m_sun.setCurrentDate(tad->tm_year + 1900, tad->tm_mon + 1, tad->tm_mday);
-    double sunrise = sun.calcSunriseLocal();
+    double sunrise = sun.calcSunrise();
     double sunset = sun.calcSunsetLocal();
-    double civialSunrise = sun.calcCivilSunriseLocal();
-    double nauticalSunrise = sun.calcNauticalSunriseLocal();
-    double astroSunrise = sun.calcAstronomicalSunriseLocal();
+    double civilSunrise = sun.calcCivilSunrise();
+    double nauticalSunrise = sun.calcNauticalSunrise();
+    double astroSunrise = sun.calcAstronomicalSunrise();
     int moonphase = sun.moonPhase(static_cast<int>(rightnow));
 }
 
@@ -163,8 +163,8 @@ void main(int argc, char *argv)
 * This library has a hard requirement on a 32 bit micro with native hard float. Soft float micros *do* work, but may have issues. The math is pretty intensive.
 * It is important to remember you MUST have accurate date and time. The calculations are time sensitive, and if you aren't accurate the results will be obvious. Note that the library does not use hours, minutes, or seconds, just the date, so syncing time a lot won't help, just making sure it's accurate at midnight so you can set the date before calling the calc functions. Knowing when to update the timzone for savings time if applicaple is also pretty important.
 * It can be used as a general purpose library on any Linux machine as well as on an Arduino or Particle Photon. You just need to compile it into your RPI or Beagle project using cmake 3.0 or later.
-* UTC is not the UTC sunrise time, it is the time in Greenwhich when the sun would rise at the location specified to the library. It's werid, but allows for some flexibility when doing calcualations depending on how you keep track of time in your system.
-* Use of Civil, Nautical, and Astronomical values are interesting for lots of new uses of the library. They are added as a convience, but hopefully will prove useful.
+* UTC is not the UTC sunrise time, it is the time in Greenwhich when the sun would rise at the location specified to the library. It's werid, but allows for some flexibility when doing calcualations depending on how you keep track of time in your system. The UTC specific calls are being deprecated starting with 1.1.0.
+* Use of Civil, Nautical, and Astronomical values are interesting for lots of new uses of the library. They are added as a convience, but hopefully will prove useful. These functions do not have equal UTC functions.
 * I do not build or test on a Windows target. I don't have a Windows machine to do so. I do test this on a Mac, but only lightly and not every release right now.
 
 ## ESP Devices
