@@ -24,11 +24,41 @@
  */
 #include "SunSet.h"
 
-SunSet::SunSet() : m_latitude(0.0), m_longitude(0.0), m_julianDate(0.0), m_tzOffset(0)
+/**
+ * \fn SunSet::SunSet()
+ * 
+ * Default constructor taking no arguments. It will default all values
+ * to zero, except the timezones. Note that because I have to return some
+ * value when called, this will result in the double timezone being active
+ * but it will return a value that is WAY off.
+ */
+SunSet::SunSet() : m_latitude(0.0), m_longitude(0.0), m_julianDate(0.0), m_tzOffset(0.0)
 {
 }
 
+/**
+ * \fn SunSet::SunSet(double lat, double lon, int tz)
+ * \param lat Latitude for this object
+ * \param lon Longitude for this object
+ * \param tz Integer based timezone for this object
+ * 
+ * This will create an object for a location with an integer based
+ * timezone value.
+ */
 SunSet::SunSet(double lat, double lon, int tz) : m_latitude(lat), m_longitude(lon), m_julianDate(0.0), m_tzOffset(tz)
+{
+}
+
+/**
+ * \fn SunSet::SunSet(double lat, double lon, double tz)
+ * \param lat Latitude for this object
+ * \param lon Longitude for this object
+ * \param tz Double based timezone for this object
+ * 
+ * This will create an object for a location with an integer based
+ * timezone value.
+ */
+SunSet::SunSet(double lat, double lon, double tz) : m_latitude(lat), m_longitude(lon), m_julianDate(0.0), m_tzOffset(tz)
 {
 }
 
@@ -40,7 +70,20 @@ void SunSet::setPosition(double lat, double lon, int tz)
 {
     m_latitude = lat;
     m_longitude = lon;
-    m_tzOffset = tz;
+    if (tz > -12 && tz < 15)
+        m_tzOffset = tz;
+    else
+        m_tzOffset = 0;
+}
+
+void SunSet::setPosition(double lat, double lon, double tz)
+{
+    m_latitude = lat;
+    m_longitude = lon;
+    if (tz > -12 && tz < 15)
+        m_tzOffset = tz;
+    else
+        m_tzOffset = 0.0;
 }
 
 double SunSet::degToRad(double angleDeg)
@@ -279,86 +322,79 @@ double SunSet::calcAbsSunset(double offset)
     return timeUTC;	// return time in minutes from midnight
 }
 
+/**
+ * \fn double SunSet::calcSunriseUTC()
+ * \return Returns the UTC time when sunrise occurs in the location provided
+ * 
+ * This is a holdover from the original implementation and to me doesn't
+ * seem to be very useful, it's just confusing. This function is deprecated
+ * but won't be removed unless that becomes necessary.
+ */
 double SunSet::calcSunriseUTC()
 {
     return calcAbsSunrise(SUNSET_OFFICIAL);
 }
 
+/**
+ * \fn double SunSet::calcSunriseUTC()
+ * \return Returns the UTC time when sunset occurs in the location provided
+ * 
+ * This is a holdover from the original implementation and to me doesn't
+ * seem to be very useful, it's just confusing. This function is deprecated
+ * but won't be removed unless that becomes necessary.
+ */
 double SunSet::calcSunsetUTC()
 {
     return calcAbsSunset(SUNSET_OFFICIAL);
 }
 
-double SunSet::calcAstronomicalSunriseLocal()
+double SunSet::calcAstronomicalSunrise()
 {
     return calcAbsSunrise(SUNSET_ASTONOMICAL) + (60 * m_tzOffset);
 }
 
-double SunSet::calcAstronomicalSunsetLocal()
+double SunSet::calcAstronomicalSunset()
 {
     return calcAbsSunset(SUNSET_ASTONOMICAL) + (60 * m_tzOffset);
 }
 
-double SunSet::calcCivilSunriseLocal()
+double SunSet::calcCivilSunrise()
 {
     return calcAbsSunrise(SUNSET_CIVIL) + (60 * m_tzOffset);
 }
 
-double SunSet::calcCivilSunsetLocal()
+double SunSet::calcCivilSunset()
 {
     return calcAbsSunset(SUNSET_CIVIL) + (60 * m_tzOffset);
 }
 
 /**
- * \fn double SunSet::calcNauticalSunsetLocal()
+ * \fn double SunSet::calcNauticalSunset()
  * \return Returns the Nautical sunset in fractional minutes past midnight
  * 
  * This function will return the Nautical sunset in local time for your location
  */
-double SunSet::calcNauticalSunriseLocal()
+double SunSet::calcNauticalSunrise()
 {
     return calcAbsSunrise(SUNSET_NAUTICAL) + (60 * m_tzOffset);
 }
 
 /**
- * \fn double SunSet::calcNauticalSunsetLocal()
+ * \fn double SunSet::calcNauticalSunset()
  * \return Returns the Nautical sunset in fractional minutes past midnight
  * 
  * This function will return the Nautical sunset in local time for your location
  */
-double SunSet::calcNauticalSunsetLocal()
+double SunSet::calcNauticalSunset()
 {
     return calcAbsSunset(SUNSET_NAUTICAL) + (60 * m_tzOffset);
-}
-
-/**
- * \fn double SunSet::calcSunriseLocal()
- * \return Returns local sunrise in minutes past midnight.
- * 
- * This function supersedes calcSunrise()
- */
-double SunSet::calcSunriseLocal()
-{
-    return calcAbsSunrise(SUNSET_OFFICIAL) + (60 * m_tzOffset);
-}
-
-/**
- * \fn double SunSet::calcSunsetLocal()
- * \return Returns local sunrise in minutes past midnight.
- * 
- * This function supersedes calcSunset()
- */
-double SunSet::calcSunsetLocal()
-{
-    return calcAbsSunset(SUNSET_OFFICIAL) + (60 * m_tzOffset);
 }
 
 /**
  * \fn double SunSet::calcSunrise()
  * \return Returns local sunrise in minutes past midnight.
  * 
- * This function is deprecated, but will not be removed.
- * Use calcSunriseLocal() instead.
+ * This function supersedes calcSunrise()
  */
 double SunSet::calcSunrise()
 {
@@ -367,11 +403,10 @@ double SunSet::calcSunrise()
 
 /**
  * \fn double SunSet::calcSunset()
- * \return Returns local sunset in minutes past midnight.
+ * \return Returns local sunrise in minutes past midnight.
  * 
- * This function is deprecated, but will not be removed.
- * Use calcSunriseLocal() instead. 
-*/
+ * This function supersedes calcSunset()
+ */
 double SunSet::calcSunset()
 {
     return calcAbsSunset(SUNSET_OFFICIAL) + (60 * m_tzOffset);
@@ -404,6 +439,17 @@ double SunSet::setCurrentDate(int y, int m, int d)
  * Critical to set your timezone so results are accurate for your time and date
  */
 void SunSet::setTZOffset(int tz)
+{
+	m_tzOffset = tz;
+}
+
+/**
+ * \fn void SunSet::setTZOffset(double tz)
+ * \param tz Double timezone, may be positive or negative
+ * 
+ * Critical to set your timezone so results are accurate for your time and date
+ */
+void SunSet::setTZOffset(double tz)
 {
 	m_tzOffset = tz;
 }

@@ -29,32 +29,41 @@
 #include <cmath>
 #include <ctime>
 
-#define SUNSET_OFFICIAL     90.833
-#define SUNSET_NAUTICAL     102
-#define SUNSET_CIVIL        96
-#define SUNSET_ASTONOMICAL  108
+#define SUNSET_OFFICIAL         90.833
+#define SUNSET_NAUTICAL         102
+#define SUNSET_CIVIL            96
+#define SUNSET_ASTONOMICAL      108
 
+#define SUNSET_INVALID_TZ_D     99.9
+#define SUNSET_INVALID_TZ_I     99
+
+/**
+ * \class SunSet
+ * 
+ * This class controls all aspects of the operations. The math is done in private
+ * functions, and the public API's allow for returning a sunrise/sunset value for the
+ * given coordinates and timezone.
+ */
 class SunSet {
 public:
     SunSet();
     SunSet(double, double, int);
+    SunSet(double, double, double);
     ~SunSet();
 
     void setPosition(double, double, int);
+    void setPosition(double, double, double);
     void setTZOffset(int);
+    void setTZOffset(double);
     double setCurrentDate(int, int, int);
-    double calcNauticalSunriseUTC();
-    double calcNauticalSunsetUTC();
-    double calcNauticalSunriseLocal();
-    double calcNauticalSunsetLocal();
-    double calcCivilSunriseLocal();
-    double calcCivilSunsetLocal();
-    double calcAstronomicalSunriseLocal();
-    double calcAstronomicalSunsetLocal();
-    double calcSunriseUTC();
-    double calcSunsetUTC();
-    double calcSunriseLocal();
-    double calcSunsetLocal();
+    double calcNauticalSunrise();
+    double calcNauticalSunset();
+    double calcCivilSunrise();
+    double calcCivilSunset();
+    double calcAstronomicalSunrise();
+    double calcAstronomicalSunset();
+    [[deprecated("UTC specific calls may not be supported in the future")]] double calcSunriseUTC();
+    [[deprecated("UTC specific calls may not be supported in the future")]] double calcSunsetUTC();
     double calcSunrise();
     double calcSunset();
     int moonPhase(int);
@@ -84,10 +93,10 @@ private:
     double m_latitude;
     double m_longitude;
     double m_julianDate;
+    double m_tzOffset;
     int m_year;
     int m_month;
     int m_day;
-    int m_tzOffset;
 };
 
 #endif

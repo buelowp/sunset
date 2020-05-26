@@ -47,8 +47,7 @@ I have used this library on the following systems successfully, and test it on a
 * Particle Photon (just search for sunset, use the latest version available)
 * Raspberry PI
 * Omega Onion
-* ESP8266
-* ESP32
+* ESP8266 and ESP32 (see below for notes about the ESP chips)
 * Teensy with GPS
 * SAMD targets using PIO/VSCode
 
@@ -71,17 +70,18 @@ To use SunSet, you need to a few bits of local information.
 1. Since all calculations are done in UTC, it is possible to know what time sunrise is in your location without a timezone. Call calcSunriseUTC for this detail.
    * This isn't very useful in the long run, so the UTC functions will be deprecated. The new civil, astro, and nautical API's do not include the UTC analog. This is by design.
 1. The library returns a double that indicates how many minutes past midnight relative to the set date that sunrise or sunset will happen. If the sun will rise at 6am local to the set location and date, then you will get a return value of 360.0. Decimal points indicate fractions of a minute.
+1. The library returns NaN for instances where there is no real sunrise or sunset value. You MUST check for this as a valid return as there isn't another way to handle the value. I choose not to return 0 in this case as 0 would be a valid sunrise/sunset potentially, and it would be confusing for cases where there isn't a valid value.
+   * It has been brough to my attention that for latitudes above 67, the 8266 and possibly other micros may have issues doing the math, though why I do not know. I can't get the library to crash in the same way under Linux, and don't have debug capabilities for similar micros right now. I will investigate why it might crash for that scenario in the future, but for now, be aware that calculations above 67 latitude might cause issues on some devices. https://github.com/buelowp/sunset/issues/16
 
-The example provides the how to below, it's pretty simple. Every time you need the calculation call for it. I wouldn't suggest caching the value unless you can handle changes in date so the calculation is correct relative to a date you need.
+The example below gives some hints for using the library, it's pretty simple. Every time you need the calculation call for it. I wouldn't suggest caching the value unless you can handle changes in date so the calculation is correct relative to a date you need.
 
-SunSet is C++, no C implementation is provided.
+SunSet is C++, no C implementation is provided. It is compiled using C++14, and any code using it should use C++14 as well as there is a dependency on C++14 at a minimum. Newer C++ versions work as well.
 
 # Releases
 * 1.0.12 New capabilities. Added Civil, Nautical, and Astronomical sunrise and sunset
-  * New API's for the new calls
-  * Fixed the calcSunrise() to be calcSunriseLocal(). The old API remains, but is deprecated. It will not be removed.
-  * All public API's for getting sunrise and sunset now end in Local to be more clear about the purpose of the API.
-  * Begin to deprecate UTC functions. These will not be removed. Prefer the Local functions.
+  * New API's for the new functionality. See the code for details.
+  * Begin to deprecate UTC functions. These will not be removed until later if ever. They are not tested as well.
+  * Migrate timzone to be a double for fractional timezones. IST for example works correctly now.
 * 1.0.11 Fixes related to making SAMD targets compile. SAMD doesn't like std::chrono it seems.
 * 1.0.10 Fixed a bug in a header file, it should build for all platforms now.
 * 1.0.9: Revert some imported changes which broke the system.
@@ -158,16 +158,25 @@ void main(int argc, char *argv)
 
 * This is a general purpose calculator, so you could calculate when Sunrise was on the day Shakespeare died. Hence some of the design decisions
 * Date values are absolute, are not zero based, and should not be abbreviated (e.g. don’t use 15 for 2015 or 0 for January)
-* This library may run well enough on a 16KHz Arduino, but it’s fairly math intensive and uses quite a bit of memory, so it won’t run fast. It works very well on the ARM M core chips like the Teensy and Photon though.
+* This library has a hard requirement on a 32 bit micro with native hard float. Soft float micros *do* work, but may have issues. The math is pretty intensive.
 * It is important to remember you MUST have accurate date and time. The calculations are time sensitive, and if you aren't accurate the results will be obvious. Note that the library does not use hours, minutes, or seconds, just the date, so syncing time a lot won't help, just making sure it's accurate at midnight so you can set the date before calling the calc functions. Knowing when to update the timzone for savings time if applicaple is also pretty important.
 * It can be used as a general purpose library on any Linux machine as well as on an Arduino or Particle Photon. You just need to compile it into your RPI or Beagle project using cmake 3.0 or later.
 * UTC is not the UTC sunrise time, it is the time in Greenwhich when the sun would rise at the location specified to the library. It's werid, but allows for some flexibility when doing calcualations depending on how you keep track of time in your system.
 * Use of Civil, Nautical, and Astronomical values are interesting for lots of new uses of the library. They are added as a convience, but hopefully will prove useful.
+* I do not build or test on a Windows target. I don't have a Windows machine to do so. I do test this on a Mac, but only lightly and not every release right now.
+
+ESP devices have a HW floating point capability, but I've been doing some research due to a reported bug. Seems on the ESP devices, the FP performance may be terrible. 
+
+* https://www.esp32.com/viewtopic.php?f=14&t=800
+* https://blog.classycode.com/esp32-floating-point-performance-6e9f6f567a69
+
+The conclusions in the links seem to indicate that a lot of the math used by this library is VERY slow on the ESP processors. The bug report was about watchdog resets, which may be due to how long it took to do the calculations. I can't say for sure, I haven't had a chance to check this out myself for lack of any ESP devices at this time. However, if you plan to use this library with an ESP, please note that your results and timing may be impacted, possibly significantly.
 
 # Links
 You can find the original math in c code at http://souptonuts.sourceforge.net/code/sunrise.c.html
 
 I got the moon work from Ben Daglish at http://www.ben-daglish.net/moon.shtml
+
 
 # Thank you to
 

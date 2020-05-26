@@ -2,6 +2,7 @@
 #include <ctime>
 #include <string>
 #include <sstream>
+#include <math.h>
 
 #include "SunSet.h"
 
@@ -21,6 +22,17 @@
 #define LONGITUDE_BA    -58.3816
 #define TIMEZONE_BA     -3
 
+#define LATITUDE_PB     71.3875
+#define LONGITUDE_PB    -156.4811
+#define TIMEZONE_PB     -8
+
+#define LATITUDE_US     -54.8019
+#define LONGITUDE_US    -68.3030
+#define TIMEZONE_US     -3
+
+#define LATITUDE_ND     28.6139
+#define LONGITUDE_ND    77.2090
+#define TIMEZONE_ND     5.5
 
 namespace
 {
@@ -59,7 +71,7 @@ namespace
         
         sun.setPosition(LATITUDE_AH, LONGITUDE_AH, TIMEZONE_AH);
         sun.setCurrentDate(2020, 1, 15);
-        ss << std::setprecision(6) << sun.calcSunriseLocal();
+        ss << std::setprecision(6) << sun.calcSunrise();
         
         EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
     }
@@ -73,7 +85,7 @@ namespace
         
         sun.setPosition(LATITUDE_AH, LONGITUDE_AH, TIMEZONE_AH);
         sun.setCurrentDate(2020, 1, 15);
-        ss << std::setprecision(8) << sun.calcSunsetLocal();
+        ss << std::setprecision(8) << sun.calcSunset();
         
         EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
     }
@@ -161,7 +173,7 @@ namespace
         
         sun.setPosition(LATITUDE_AH, LONGITUDE_AH, TIMEZONE_AH);
         sun.setCurrentDate(2020, 5, 25);
-        ss << std::setprecision(6) << sun.calcAstronomicalSunriseLocal();
+        ss << std::setprecision(6) << sun.calcAstronomicalSunrise();
         
         EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
     }
@@ -174,7 +186,7 @@ namespace
         
         sun.setPosition(LATITUDE_AH, LONGITUDE_AH, TIMEZONE_AH);
         sun.setCurrentDate(2020, 5, 25);
-        ss << std::setprecision(6) << sun.calcAstronomicalSunsetLocal();
+        ss << std::setprecision(6) << sun.calcAstronomicalSunset();
         
         EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
     }
@@ -187,7 +199,7 @@ namespace
         
         sun.setPosition(LATITUDE_AH, LONGITUDE_AH, TIMEZONE_AH);
         sun.setCurrentDate(2020, 5, 25);
-        ss << std::setprecision(6) << sun.calcNauticalSunriseLocal();
+        ss << std::setprecision(6) << sun.calcNauticalSunrise();
         
         EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
     }
@@ -200,7 +212,7 @@ namespace
         
          sun.setPosition(LATITUDE_AH, LONGITUDE_AH, TIMEZONE_AH);
         sun.setCurrentDate(2020, 5, 25);
-        ss << std::setprecision(6) << sun.calcNauticalSunsetLocal();
+        ss << std::setprecision(6) << sun.calcNauticalSunset();
         
         EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
     }
@@ -213,7 +225,7 @@ namespace
         
         sun.setPosition(LATITUDE_AH, LONGITUDE_AH, TIMEZONE_AH);
         sun.setCurrentDate(2020, 5, 25);
-        ss << std::setprecision(6) << sun.calcCivilSunriseLocal();
+        ss << std::setprecision(6) << sun.calcCivilSunrise();
         
         EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
     }
@@ -226,7 +238,7 @@ namespace
         
         sun.setPosition(LATITUDE_AH, LONGITUDE_AH, TIMEZONE_AH);
         sun.setCurrentDate(2020, 5, 25);
-        ss << std::setprecision(6) << sun.calcCivilSunsetLocal();
+        ss << std::setprecision(6) << sun.calcCivilSunset();
         
         EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
     }
@@ -244,4 +256,93 @@ namespace
         EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
     }
         
+    TEST(SunsetTesting, HighLatitudeTestSummer)
+    {
+        SunSet sun;
+        
+        sun.setPosition(LATITUDE_PB, LONGITUDE_PB, TIMEZONE_PB);
+        sun.setCurrentDate(2020, 6, 21);
+        double rval = sun.calcSunrise();
+        
+        EXPECT_EQ(isnan(rval), true) << "Returned: " << rval;
+    }
+
+    TEST(SunsetTesting, HighLatitudeTestSpring)
+    {
+        SunSet sun;
+        
+        std::string expected("495.2976");
+        std::stringstream ss(std::stringstream::in | std::stringstream::out);
+        sun.setPosition(LATITUDE_PB, LONGITUDE_PB, TIMEZONE_PB);
+        sun.setCurrentDate(2020, 3, 21);
+        double rval = sun.calcSunrise();
+        ss << std::setprecision(8) << rval;
+        
+        EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
+    }
+
+    TEST(SunsetTesting, HighLatitudeTestWinter)
+    {
+        SunSet sun;
+        
+        sun.setPosition(LATITUDE_PB, LONGITUDE_PB, TIMEZONE_PB);
+        sun.setCurrentDate(2020, 12, 21);
+        double rval = sun.calcSunrise();
+        
+        EXPECT_EQ(isnan(rval), true) << "Returned: " << rval;
+    }
+
+    TEST(SunsetTesting, SouthernMostPointWinter)
+    {
+        SunSet sun;
+        std::string expected("576.8452");
+        std::stringstream ss(std::stringstream::in | std::stringstream::out);
+        
+        sun.setPosition(LATITUDE_US, LONGITUDE_US, TIMEZONE_US);
+        sun.setCurrentDate(2020, 5, 26);
+        ss << std::setprecision(8) << sun.calcSunrise();
+        
+        EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
+    }
+
+    TEST(SunsetTesting, SouthernMostPointSummer)
+    {
+        SunSet sun;
+        std::string expected("294.96866");
+        std::stringstream ss(std::stringstream::in | std::stringstream::out);
+        
+        sun.setPosition(LATITUDE_US, LONGITUDE_US, TIMEZONE_US);
+        sun.setCurrentDate(2020, 12, 26);
+        ss << std::setprecision(8) << sun.calcSunrise();
+        
+        EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
+    }
+
+    TEST(SunsetTesting, ValidReturnFractionalTimezoneSunrise)
+    {
+        SunSet sun;
+        std::string expected("325.266");
+        std::stringstream ss(std::stringstream::in | std::stringstream::out);
+        
+        sun.setPosition(LATITUDE_ND, LONGITUDE_ND, TIMEZONE_ND);
+        sun.setCurrentDate(2020, 5, 26);
+        ss << std::setprecision(6) << sun.calcSunrise();
+        
+        EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
+    }
+    
+    TEST(SunsetTesting, ValidReturnFractionalTimezoneSunset)
+    {
+        SunSet sun;
+
+        std::string expected("1151.4867");
+        std::stringstream ss(std::stringstream::in | std::stringstream::out);
+        
+        sun.setPosition(LATITUDE_ND, LONGITUDE_ND, TIMEZONE_ND);
+        sun.setCurrentDate(2020, 5, 26);
+        ss << std::setprecision(8) << sun.calcSunset();
+        
+        EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
+    }
+
 }

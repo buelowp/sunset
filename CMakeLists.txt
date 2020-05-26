@@ -8,6 +8,7 @@ set (CMAKE_CXX_STANDARD 14)
 set (SOURCES src/SunSet.cpp)
 set (HEADERS src/SunSet.h)
 set (CMAKE_CXX_FLAGS -pthread)
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-long-long -pedantic")
 
 FILE (GLOB TESTS "${CMAKE_CURRENT_SOURCE_DIR}/test/*.cpp")
 
