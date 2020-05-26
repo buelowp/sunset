@@ -71,6 +71,8 @@ To use SunSet, you need to a few bits of local information.
 1. Since all calculations are done in UTC, it is possible to know what time sunrise is in your location without a timezone. Call calcSunriseUTC for this detail.
    * This isn't very useful in the long run, so the UTC functions will be deprecated. The new civil, astro, and nautical API's do not include the UTC analog. This is by design.
 1. The library returns a double that indicates how many minutes past midnight relative to the set date that sunrise or sunset will happen. If the sun will rise at 6am local to the set location and date, then you will get a return value of 360.0. Decimal points indicate fractions of a minute.
+1. The library returns NaN for instances where there is no real sunrise or sunset value. You MUST check for this as a valid return as there isn't another way to handle the value. I choose not to return 0 in this case as 0 would be a valid sunrise/sunset potentially, and it would be confusing for cases where there isn't a valid value.
+   * It has been brough to my attention that for latitudes above 67, the 8266 and possibly other micros may have issues doing the math, though why I do not know. I can't get the library to crash in the same way under Linux, and don't have debug capabilities for similar micros right now. I will investigate why it might crash for that scenario in the future, but for now, be aware that calculations above 67 latitude might cause issues.
 
 The example provides the how to below, it's pretty simple. Every time you need the calculation call for it. I wouldn't suggest caching the value unless you can handle changes in date so the calculation is correct relative to a date you need.
 
@@ -82,6 +84,7 @@ SunSet is C++, no C implementation is provided.
   * Fixed the calcSunrise() to be calcSunriseLocal(). The old API remains, but is deprecated. It will not be removed.
   * All public API's for getting sunrise and sunset now end in Local to be more clear about the purpose of the API.
   * Begin to deprecate UTC functions. These will not be removed. Prefer the Local functions.
+  * Migrate timzone to be a double for fractional timezones. IST for example works correctly now.
 * 1.0.11 Fixes related to making SAMD targets compile. SAMD doesn't like std::chrono it seems.
 * 1.0.10 Fixed a bug in a header file, it should build for all platforms now.
 * 1.0.9: Revert some imported changes which broke the system.

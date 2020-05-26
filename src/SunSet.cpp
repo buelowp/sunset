@@ -24,11 +24,41 @@
  */
 #include "SunSet.h"
 
-SunSet::SunSet() : m_latitude(0.0), m_longitude(0.0), m_julianDate(0.0), m_tzOffset(0)
+/**
+ * \fn SunSet::SunSet()
+ * 
+ * Default constructor taking no arguments. It will default all values
+ * to zero, except the timezones. Note that because I have to return some
+ * value when called, this will result in the double timezone being active
+ * but it will return a value that is WAY off.
+ */
+SunSet::SunSet() : m_latitude(0.0), m_longitude(0.0), m_julianDate(0.0), m_tzOffset(0.0)
 {
 }
 
+/**
+ * \fn SunSet::SunSet(double lat, double lon, int tz)
+ * \param lat Latitude for this object
+ * \param lon Longitude for this object
+ * \param tz Integer based timezone for this object
+ * 
+ * This will create an object for a location with an integer based
+ * timezone value.
+ */
 SunSet::SunSet(double lat, double lon, int tz) : m_latitude(lat), m_longitude(lon), m_julianDate(0.0), m_tzOffset(tz)
+{
+}
+
+/**
+ * \fn SunSet::SunSet(double lat, double lon, double tz)
+ * \param lat Latitude for this object
+ * \param lon Longitude for this object
+ * \param tz Double based timezone for this object
+ * 
+ * This will create an object for a location with an integer based
+ * timezone value.
+ */
+SunSet::SunSet(double lat, double lon, double tz) : m_latitude(lat), m_longitude(lon), m_julianDate(0.0), m_tzOffset(tz)
 {
 }
 
@@ -40,7 +70,20 @@ void SunSet::setPosition(double lat, double lon, int tz)
 {
     m_latitude = lat;
     m_longitude = lon;
-    m_tzOffset = tz;
+    if (tz > -12 && tz < 15)
+        m_tzOffset = tz;
+    else
+        m_tzOffset = 0;
+}
+
+void SunSet::setPosition(double lat, double lon, double tz)
+{
+    m_latitude = lat;
+    m_longitude = lon;
+    if (tz > -12 && tz < 15)
+        m_tzOffset = tz;
+    else
+        m_tzOffset = 0.0;
 }
 
 double SunSet::degToRad(double angleDeg)
@@ -404,6 +447,17 @@ double SunSet::setCurrentDate(int y, int m, int d)
  * Critical to set your timezone so results are accurate for your time and date
  */
 void SunSet::setTZOffset(int tz)
+{
+	m_tzOffset = tz;
+}
+
+/**
+ * \fn void SunSet::setTZOffset(double tz)
+ * \param tz Double timezone, may be positive or negative
+ * 
+ * Critical to set your timezone so results are accurate for your time and date
+ */
+void SunSet::setTZOffset(double tz)
 {
 	m_tzOffset = tz;
 }

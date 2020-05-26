@@ -29,19 +29,25 @@
 #include <cmath>
 #include <ctime>
 
-#define SUNSET_OFFICIAL     90.833
-#define SUNSET_NAUTICAL     102
-#define SUNSET_CIVIL        96
-#define SUNSET_ASTONOMICAL  108
+#define SUNSET_OFFICIAL         90.833
+#define SUNSET_NAUTICAL         102
+#define SUNSET_CIVIL            96
+#define SUNSET_ASTONOMICAL      108
+
+#define SUNSET_INVALID_TZ_D     99.9
+#define SUNSET_INVALID_TZ_I     99
 
 class SunSet {
 public:
     SunSet();
     SunSet(double, double, int);
+    SunSet(double, double, double);
     ~SunSet();
 
     void setPosition(double, double, int);
+    void setPosition(double, double, double);
     void setTZOffset(int);
+    void setTZOffset(double);
     double setCurrentDate(int, int, int);
     double calcNauticalSunriseUTC();
     double calcNauticalSunsetUTC();
@@ -87,7 +93,7 @@ private:
     int m_year;
     int m_month;
     int m_day;
-    int m_tzOffset;
+    double m_tzOffset;
 };
 
 #endif
