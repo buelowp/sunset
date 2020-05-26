@@ -167,6 +167,7 @@ void main(int argc, char *argv)
 * Use of Civil, Nautical, and Astronomical values are interesting for lots of new uses of the library. They are added as a convience, but hopefully will prove useful.
 * I do not build or test on a Windows target. I don't have a Windows machine to do so. I do test this on a Mac, but only lightly and not every release right now.
 
+## ESP Devices
 ESP devices have a HW floating point capability, but I've been doing some research due to a reported bug. Seems on the ESP devices, the FP performance may be terrible. 
 
 * https://www.esp32.com/viewtopic.php?f=14&t=800
