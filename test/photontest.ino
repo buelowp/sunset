@@ -53,6 +53,7 @@ String Tests[] = {
     "Usharia Argentina Winter",                     // 17
     "Fractional Sunrise IST",                       // 18
     "Fractional Sunset IST",                        // 19
+    "Check above 67",                               // 20
 };
 
 String Results[] = {
@@ -75,7 +76,8 @@ String Results[] = {
     "576.845",                                      // 16
     "294.969",                                      // 17
     "325.266",                                      // 18
-    "1151.487"                                      // 19
+    "1151.487",                                      // 19
+    "251",                                           // 20
 };
 
 void setup() 
@@ -88,6 +90,7 @@ void setup()
 void loop() 
 {
     String result;
+    int count = 0;
 
     switch (g_testRun) {
         case 0:
@@ -187,6 +190,15 @@ void loop()
             sun.setCurrentDate(2020, 5, 26);
             result = String(sun.calcSunset(), 3);
             break;
+        case 20:
+            sun.setCurrentDate(2020, 5, 26);
+            for (double i = 65.0; i < 90; i += .1) {
+                sun.setPosition(i, LONGITUDE_AH, TIMEZONE_AH);
+                sun.calcSunrise();
+                count++;
+            }
+            result = String(count);
+            break;
         default:
             return;
     }
@@ -207,4 +219,3 @@ void loop()
     }
     g_testRun++;
 }
-
