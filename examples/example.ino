@@ -25,6 +25,12 @@ void loop()
 {
 	double sunrise;
 	double sunset;
+    double civilsunrise;
+    double civilsunset;
+    double astrosunrise;
+    double astrosunset;
+    double nauticalsunrise;
+    double nauticalsunset;
 
 	/* Check to see if we have a valid time sync yet, if not, just wait a bit and loop */
 	if (!rtc.hasSynced()) {
@@ -43,8 +49,14 @@ void loop()
 			sun.setTZOffset(CST_OFFSET);
 	}
 
-	sunrise = sun.calcSunrise();
-	sunset = sun.calcSunset();
+	sunrise = sun.calcSunriseLocal();
+	sunset = sun.calcSunsetLocal();
+	civilsunrise = sun.calcCivlSunriseLocal();
+	civilsunset = sun.calcCivilSunsetLocal();
+	nauticalsunrise = sun.calcNauticalSunriseLocal();
+	nauticalsunset = sun.calcNauticalSunsetLocal();
+	astrosunrise = sun.calcAstronomicalSunriseLocal();
+	astrosunset = sun.calcAstronomicalSunsetLocal();
 
 	Serial.print("Sunrise is ");
 	Serial.print(sunrise);

@@ -24,32 +24,66 @@
  */
 #include "SunSet.h"
 
-SunSet::SunSet()
+/**
+ * \fn SunSet::SunSet()
+ * 
+ * Default constructor taking no arguments. It will default all values
+ * to zero, except the timezones. Note that because I have to return some
+ * value when called, this will result in the double timezone being active
+ * but it will return a value that is WAY off.
+ */
+SunSet::SunSet() : m_latitude(0.0), m_longitude(0.0), m_julianDate(0.0), m_tzOffset(0.0)
 {
-  latitude = 0.0;
-  longitude = 0.0;
-  julianDate = 0.0;
-  tzOffset = 0;
 }
 
-SunSet::SunSet(double lat, double lon, int tz)
+/**
+ * \fn SunSet::SunSet(double lat, double lon, int tz)
+ * \param lat Latitude for this object
+ * \param lon Longitude for this object
+ * \param tz Integer based timezone for this object
+ * 
+ * This will create an object for a location with an integer based
+ * timezone value.
+ */
+SunSet::SunSet(double lat, double lon, int tz) : m_latitude(lat), m_longitude(lon), m_julianDate(0.0), m_tzOffset(tz)
 {
-  latitude = lat;
-  longitude = lon;
-  julianDate = 0.0;
-  tzOffset = tz;
+}
+
+/**
+ * \fn SunSet::SunSet(double lat, double lon, double tz)
+ * \param lat Latitude for this object
+ * \param lon Longitude for this object
+ * \param tz Double based timezone for this object
+ * 
+ * This will create an object for a location with an integer based
+ * timezone value.
+ */
+SunSet::SunSet(double lat, double lon, double tz) : m_latitude(lat), m_longitude(lon), m_julianDate(0.0), m_tzOffset(tz)
+{
 }
 
 SunSet::~SunSet()
 {
-
 }
 
 void SunSet::setPosition(double lat, double lon, int tz)
 {
-    latitude = lat;
-    longitude = lon;
-    tzOffset = tz;
+    m_latitude = lat;
+    m_longitude = lon;
+    if (tz >= -12 && tz <= 14)
+        m_tzOffset = tz;
+    else
+        m_tzOffset = 0;
+}
+
+void SunSet::setPosition(double lat, double lon, double tz)
+{
+    m_latitude = lat;
+    m_longitude = lon;
+    if (tz >= -12 && tz <= 14)
+        m_tzOffset = tz;
+    else
+        m_tzOffset = 0.0;
 }
 
 double SunSet::degToRad(double angleDeg)
@@ -159,24 +193,33 @@ double SunSet::calcSunDeclination(double t)
   return theta;           // in degrees
 }
 
-double SunSet::calcHourAngleSunrise(double lat, double solarDec)
+double SunSet::calcHourAngleSunrise(double lat, double solarDec, double offset)
 {
   double latRad = degToRad(lat);
   double sdRad  = degToRad(solarDec);
-  double HA = (acos(cos(degToRad(90.833))/(cos(latRad)*cos(sdRad))-tan(latRad) * tan(sdRad)));
+  double HA = (acos(cos(degToRad(offset))/(cos(latRad)*cos(sdRad))-tan(latRad) * tan(sdRad)));
 
   return HA;              // in radians
 }
 
-double SunSet::calcHourAngleSunset(double lat, double solarDec)
+double SunSet::calcHourAngleSunset(double lat, double solarDec, double offset)
 {
   double latRad = degToRad(lat);
   double sdRad  = degToRad(solarDec);
-  double HA = (acos(cos(degToRad(90.833))/(cos(latRad)*cos(sdRad))-tan(latRad) * tan(sdRad)));
+  double HA = (acos(cos(degToRad(offset))/(cos(latRad)*cos(sdRad))-tan(latRad) * tan(sdRad)));
 
   return -HA;              // in radians
 }
 
+/**
+ * \fn double SunSet::calcJD(int y, int m, int d)
+ * \param y Integer year as a 4 digit value
+ * \param m Integer month, not 0 based
+ * \param d Integer day, not 0 based
+ * \return Returns the Julian date as a double for the calculations
+ * 
+ * A well known JD calculator
+ */
 double SunSet::calcJD(int y, int m, int d)
 {
   if (m <= 2) {
@@ -208,115 +251,216 @@ double SunSet::calcSunEqOfCenter(double t)
   return C;		// in degrees
 }
 
+/**
+ * \fn double SunSet::calcAbsSunrise(double offset)
+ * \param offset The specific angle to use when calculating sunrise
+ * \return Returns the time in minutes past midnight in UTC for sunrise at your location
+ * 
+ * This does a bunch of work to get to an accurate angle. Note that it does it 2x, once
+ * to get a rough position, and then it doubles back and redoes the calculations to 
+ * refine the value. The first time through, it will be off by as much as 2 minutes, but
+ * the second time through, it will be nearly perfect.
+ * 
+ * Note that this is the base calculation for all sunrise calls. The others just modify
+ * the offset angle to account for the different needs.
+ */
+double SunSet::calcAbsSunrise(double offset)
+{
+    double t = calcTimeJulianCent(m_julianDate);
+    // *** First pass to approximate sunrise
+    double  eqTime = calcEquationOfTime(t);
+    double  solarDec = calcSunDeclination(t);
+    double  hourAngle = calcHourAngleSunrise(m_latitude, solarDec, offset);
+    double  delta = m_longitude + radToDeg(hourAngle);
+    double  timeDiff = 4 * delta;	// in minutes of time
+    double  timeUTC = 720 - timeDiff - eqTime;	// in minutes
+    double  newt = calcTimeJulianCent(calcJDFromJulianCent(t) + timeUTC/1440.0);
+
+    eqTime = calcEquationOfTime(newt);
+    solarDec = calcSunDeclination(newt);
+
+    hourAngle = calcHourAngleSunrise(m_latitude, solarDec, offset);
+    delta = m_longitude + radToDeg(hourAngle);
+    timeDiff = 4 * delta;
+    timeUTC = 720 - timeDiff - eqTime; // in minutes
+    return timeUTC;
+}
+
+/**
+ * \fn double SunSet::calcAbsSunset(double offset)
+ * \param offset The specific angle to use when calculating sunset
+ * \return Returns the time in minutes past midnight in UTC for sunset at your location
+ * 
+ * This does a bunch of work to get to an accurate angle. Note that it does it 2x, once
+ * to get a rough position, and then it doubles back and redoes the calculations to 
+ * refine the value. The first time through, it will be off by as much as 2 minutes, but
+ * the second time through, it will be nearly perfect.
+ *
+ * Note that this is the base calculation for all sunrise calls. The others just modify
+ * the offset angle to account for the different needs.
+*/
+double SunSet::calcAbsSunset(double offset)
+{
+    double t = calcTimeJulianCent(m_julianDate);
+    // *** First pass to approximate sunset
+    double  eqTime = calcEquationOfTime(t);
+    double  solarDec = calcSunDeclination(t);
+    double  hourAngle = calcHourAngleSunset(m_latitude, solarDec, offset);
+    double  delta = m_longitude + radToDeg(hourAngle);
+    double  timeDiff = 4 * delta;	// in minutes of time
+    double  timeUTC = 720 - timeDiff - eqTime;	// in minutes
+    double  newt = calcTimeJulianCent(calcJDFromJulianCent(t) + timeUTC/1440.0);
+
+    eqTime = calcEquationOfTime(newt);
+    solarDec = calcSunDeclination(newt);
+
+    hourAngle = calcHourAngleSunset(m_latitude, solarDec, offset);
+    delta = m_longitude + radToDeg(hourAngle);
+    timeDiff = 4 * delta;
+    timeUTC = 720 - timeDiff - eqTime; // in minutes
+
+    return timeUTC;	// return time in minutes from midnight
+}
+
+/**
+ * \fn double SunSet::calcSunriseUTC()
+ * \return Returns the UTC time when sunrise occurs in the location provided
+ * 
+ * This is a holdover from the original implementation and to me doesn't
+ * seem to be very useful, it's just confusing. This function is deprecated
+ * but won't be removed unless that becomes necessary.
+ */
 double SunSet::calcSunriseUTC()
 {
-  double t = calcTimeJulianCent(julianDate);
-  // *** First pass to approximate sunrise
-  double  eqTime = calcEquationOfTime(t);
-  double  solarDec = calcSunDeclination(t);
-  double  hourAngle = calcHourAngleSunrise(latitude, solarDec);
-  double  delta = longitude + radToDeg(hourAngle);
-  double  timeDiff = 4 * delta;	// in minutes of time
-  double  timeUTC = 720 - timeDiff - eqTime;	// in minutes
-  double  newt = calcTimeJulianCent(calcJDFromJulianCent(t) + timeUTC/1440.0);
-
-  eqTime = calcEquationOfTime(newt);
-  solarDec = calcSunDeclination(newt);
-
-  hourAngle = calcHourAngleSunrise(latitude, solarDec);
-  delta = longitude + radToDeg(hourAngle);
-  timeDiff = 4 * delta;
-  timeUTC = 720 - timeDiff - eqTime; // in minutes
-
-  return timeUTC;
+    return calcAbsSunrise(SUNSET_OFFICIAL);
 }
 
-double SunSet::calcSunrise()
-{
-  double t = calcTimeJulianCent(julianDate);
-  // *** First pass to approximate sunrise
-  double  eqTime = calcEquationOfTime(t);
-  double  solarDec = calcSunDeclination(t);
-  double  hourAngle = calcHourAngleSunrise(latitude, solarDec);
-  double  delta = longitude + radToDeg(hourAngle);
-  double  timeDiff = 4 * delta;	// in minutes of time
-  double  timeUTC = 720 - timeDiff - eqTime;	// in minutes
-  double  newt = calcTimeJulianCent(calcJDFromJulianCent(t) + timeUTC/1440.0);
-
-  eqTime = calcEquationOfTime(newt);
-  solarDec = calcSunDeclination(newt);
-
-  hourAngle = calcHourAngleSunrise(latitude, solarDec);
-  delta = longitude + radToDeg(hourAngle);
-  timeDiff = 4 * delta;
-  timeUTC = 720 - timeDiff - eqTime; // in minutes
-
-  double localTime = timeUTC + (60 * tzOffset);
-
-  return localTime;	// return time in minutes from midnight
-}
-
+/**
+ * \fn double SunSet::calcSunriseUTC()
+ * \return Returns the UTC time when sunset occurs in the location provided
+ * 
+ * This is a holdover from the original implementation and to me doesn't
+ * seem to be very useful, it's just confusing. This function is deprecated
+ * but won't be removed unless that becomes necessary.
+ */
 double SunSet::calcSunsetUTC()
 {
-  double t = calcTimeJulianCent(julianDate);
-  // *** First pass to approximate sunset
-  double  eqTime = calcEquationOfTime(t);
-  double  solarDec = calcSunDeclination(t);
-  double  hourAngle = calcHourAngleSunset(latitude, solarDec);
-  double  delta = longitude + radToDeg(hourAngle);
-  double  timeDiff = 4 * delta;	// in minutes of time
-  double  timeUTC = 720 - timeDiff - eqTime;	// in minutes
-  double  newt = calcTimeJulianCent(calcJDFromJulianCent(t) + timeUTC/1440.0);
-
-  eqTime = calcEquationOfTime(newt);
-  solarDec = calcSunDeclination(newt);
-
-  hourAngle = calcHourAngleSunset(latitude, solarDec);
-  delta = longitude + radToDeg(hourAngle);
-  timeDiff = 4 * delta;
-  timeUTC = 720 - timeDiff - eqTime; // in minutes
-
-  return timeUTC;	// return time in minutes from midnight
+    return calcAbsSunset(SUNSET_OFFICIAL);
 }
 
+double SunSet::calcAstronomicalSunrise()
+{
+    return calcAbsSunrise(SUNSET_ASTONOMICAL) + (60 * m_tzOffset);
+}
+
+double SunSet::calcAstronomicalSunset()
+{
+    return calcAbsSunset(SUNSET_ASTONOMICAL) + (60 * m_tzOffset);
+}
+
+double SunSet::calcCivilSunrise()
+{
+    return calcAbsSunrise(SUNSET_CIVIL) + (60 * m_tzOffset);
+}
+
+double SunSet::calcCivilSunset()
+{
+    return calcAbsSunset(SUNSET_CIVIL) + (60 * m_tzOffset);
+}
+
+/**
+ * \fn double SunSet::calcNauticalSunset()
+ * \return Returns the Nautical sunset in fractional minutes past midnight
+ * 
+ * This function will return the Nautical sunset in local time for your location
+ */
+double SunSet::calcNauticalSunrise()
+{
+    return calcAbsSunrise(SUNSET_NAUTICAL) + (60 * m_tzOffset);
+}
+
+/**
+ * \fn double SunSet::calcNauticalSunset()
+ * \return Returns the Nautical sunset in fractional minutes past midnight
+ * 
+ * This function will return the Nautical sunset in local time for your location
+ */
+double SunSet::calcNauticalSunset()
+{
+    return calcAbsSunset(SUNSET_NAUTICAL) + (60 * m_tzOffset);
+}
+
+/**
+ * \fn double SunSet::calcSunrise()
+ * \return Returns local sunrise in minutes past midnight.
+ * 
+ * This function supersedes calcSunrise()
+ */
+double SunSet::calcSunrise()
+{
+    return calcAbsSunrise(SUNSET_OFFICIAL) + (60 * m_tzOffset);
+}
+
+/**
+ * \fn double SunSet::calcSunset()
+ * \return Returns local sunrise in minutes past midnight.
+ * 
+ * This function supersedes calcSunset()
+ */
 double SunSet::calcSunset()
 {
-  double t = calcTimeJulianCent(julianDate);
-  // *** First pass to approximate sunset
-  double  eqTime = calcEquationOfTime(t);
-  double  solarDec = calcSunDeclination(t);
-  double  hourAngle = calcHourAngleSunset(latitude, solarDec);
-  double  delta = longitude + radToDeg(hourAngle);
-  double  timeDiff = 4 * delta;	// in minutes of time
-  double  timeUTC = 720 - timeDiff - eqTime;	// in minutes
-  double  newt = calcTimeJulianCent(calcJDFromJulianCent(t) + timeUTC/1440.0);
-
-  eqTime = calcEquationOfTime(newt);
-  solarDec = calcSunDeclination(newt);
-
-  hourAngle = calcHourAngleSunset(latitude, solarDec);
-  delta = longitude + radToDeg(hourAngle);
-  timeDiff = 4 * delta;
-  timeUTC = 720 - timeDiff - eqTime; // in minutes
-  double localTime = timeUTC + (60 * tzOffset);
-
-  return localTime;	// return time in minutes from midnight
+    return calcAbsSunset(SUNSET_OFFICIAL) + (60 * m_tzOffset);
 }
 
+/**
+ * double SunSet::setCurrentDate(int y, int m, int d)
+ * \param y Integer year, must be 4 digits
+ * \param m Integer month, not zero based (Jan = 1)
+ * \param d Integer day of month, not zero based (month starts on day 1)
+ * \return Returns the result of the Julian Date conversion if you want to save it
+ * 
+ * Since these calculations are done based on the Julian Calendar, we must convert
+ * our year month day into Julian before we use it. You get the Julian value for
+ * free if you want it.
+ */
 double SunSet::setCurrentDate(int y, int m, int d)
 {
 	m_year = y;
 	m_month = m;
 	m_day = d;
-	julianDate = calcJD(y, m, d);
-	return julianDate;
+	m_julianDate = calcJD(y, m, d);
+	return m_julianDate;
 }
 
+/**
+ * \fn void SunSet::setTZOffset(int tz)
+ * \param tz Integer timezone, may be positive or negative
+ * 
+ * Critical to set your timezone so results are accurate for your time and date
+ */
 void SunSet::setTZOffset(int tz)
 {
-	tzOffset = tz;
+	m_tzOffset = tz;
 }
 
+/**
+ * \fn void SunSet::setTZOffset(double tz)
+ * \param tz Double timezone, may be positive or negative
+ * 
+ * Critical to set your timezone so results are accurate for your time and date
+ */
+void SunSet::setTZOffset(double tz)
+{
+	m_tzOffset = tz;
+}
+
+/**
+ * \fn int SunSet::moonPhase(int fromepoch)
+ * \param fromepoch time_t seconds from epoch to calculate the moonphase for
+ * 
+ * This is a simple calculation to tell us roughly what the moon phase is
+ * locally. It does not give position.
+ */
 int SunSet::moonPhase(int fromepoch)
 {
 	int moonepoch = 614100;
@@ -329,6 +473,11 @@ int SunSet::moonPhase(int fromepoch)
     return res;
 }
 
+/**
+ * \fn int SunSet::moonPhase()
+ * 
+ * Overload to set the moonphase for right now
+ */
 int SunSet::moonPhase()
 {
     time_t t = std::time(0);
