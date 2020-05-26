@@ -80,7 +80,7 @@ The example below gives some hints for using the library, it's pretty simple. Ev
 SunSet is C++, no C implementation is provided. It is compiled using C++14, and any code using it should use C++14 as well as there is a dependency on C++14 at a minimum. Newer C++ versions work as well.
 
 # Releases
-* 1.0.12 New capabilities. Added Civil, Nautical, and Astronomical sunrise and sunset
+* 1.1.0 New capabilities. Added Civil, Nautical, and Astronomical sunrise and sunset
   * New API's for the new functionality. See the code for details.
   * Begin to deprecate UTC functions. These will not be removed until later if ever. They are not tested as well.
   * Migrate timzone to be a double for fractional timezones. IST for example works correctly now.
