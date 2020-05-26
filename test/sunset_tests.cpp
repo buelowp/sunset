@@ -276,6 +276,7 @@ namespace
         sun.setPosition(LATITUDE_PB, LONGITUDE_PB, TIMEZONE_PB);
         sun.setCurrentDate(2020, 3, 21);
         double rval = sun.calcSunrise();
+
         ss << std::setprecision(8) << rval;
         
         EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();

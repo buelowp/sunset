@@ -73,6 +73,7 @@ To use SunSet, you need to a few bits of local information.
 1. The library returns NaN for instances where there is no real sunrise or sunset value. You MUST check for this as a valid return as there isn't another way to handle the value. I choose not to return 0 in this case as 0 would be a valid sunrise/sunset potentially, and it would be confusing for cases where there isn't a valid value.
    * It has been brough to my attention that for latitudes above 67, the 8266 and possibly other micros may have issues doing the math, though why I do not know. I can't get the library to crash in the same way under Linux, and don't have debug capabilities for similar micros right now. I will investigate why it might crash for that scenario in the future, but for now, be aware that calculations above 67 latitude might cause issues on some devices. https://github.com/buelowp/sunset/issues/16
 
+
 The example below gives some hints for using the library, it's pretty simple. Every time you need the calculation call for it. I wouldn't suggest caching the value unless you can handle changes in date so the calculation is correct relative to a date you need.
 
 SunSet is C++, no C implementation is provided. It is compiled using C++14, and any code using it should use C++14 as well as there is a dependency on C++14 at a minimum. Newer C++ versions work as well.
