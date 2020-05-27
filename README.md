@@ -1,4 +1,4 @@
-# Calculate Sunrise and Sunset based on time and latitude and longitude</h1>
+# Calculate Sunrise and Sunset based on time and latitude and longitude
 This is a modification of the sunrise.c posted by Mike Chirico back in 2004. See the link below to find it. I needed an algorithm that could tell me when it was dark out for all intents and purposes. I found Mike’s code, and modified it a bit to be a library that can be used again and again.
 
 Since then, I have updated it a bit to do some more work. It will calculate the Moon position generically. It also with version 1.1.0 calculate other sunrise/sunset times depending on your needs
