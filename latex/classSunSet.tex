@@ -1,0 +1,206 @@
+\hypertarget{classSunSet}{}\doxysection{Sun\+Set Class Reference}
+\label{classSunSet}\index{SunSet@{SunSet}}
+
+
+{\ttfamily \#include $<$sunset.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classSunSet_a81bcb8696fadcc51cee9d3910b82c17f}{Sun\+Set}} ()
+\item 
+\mbox{\hyperlink{classSunSet_acf4bc17fba80cf6b5d6faca829a96e06}{Sun\+Set}} (double, double, int)
+\item 
+\mbox{\hyperlink{classSunSet_ae9c14394e8fdb12cb6aa950f90af3104}{Sun\+Set}} (double, double, double)
+\item 
+\mbox{\Hypertarget{classSunSet_a4344396e00db353a4713a91152219ef2}\label{classSunSet_a4344396e00db353a4713a91152219ef2}} 
+void {\bfseries set\+Position} (double, double, int)
+\item 
+\mbox{\Hypertarget{classSunSet_acb2d5ac5ebdb8df96be4b4ac007843ba}\label{classSunSet_acb2d5ac5ebdb8df96be4b4ac007843ba}} 
+void {\bfseries set\+Position} (double, double, double)
+\item 
+void \mbox{\hyperlink{classSunSet_aec11da9a176aa7f6967cf7e80bfce006}{set\+T\+Z\+Offset}} (int)
+\item 
+void \mbox{\hyperlink{classSunSet_a7e0f443ceba2013cff22238fa5bb66ae}{set\+T\+Z\+Offset}} (double)
+\item 
+double \mbox{\hyperlink{classSunSet_a2e248952dc8690571a3a6ddbf0fd266f}{set\+Current\+Date}} (int, int, int)
+\item 
+\mbox{\Hypertarget{classSunSet_aa11ad430e7a5a6c5bb60a23e37cbcb34}\label{classSunSet_aa11ad430e7a5a6c5bb60a23e37cbcb34}} 
+double {\bfseries calc\+Nautical\+Sunrise} ()
+\item 
+double \mbox{\hyperlink{classSunSet_a7b89229be2c2d1d14f1bfc1dbfb6492d}{calc\+Nautical\+Sunset}} ()
+\item 
+\mbox{\Hypertarget{classSunSet_a51ece1d3bc339ef6b5fd26ab2e4d8c93}\label{classSunSet_a51ece1d3bc339ef6b5fd26ab2e4d8c93}} 
+double {\bfseries calc\+Civil\+Sunrise} ()
+\item 
+\mbox{\Hypertarget{classSunSet_a6a8c011c981ab78b3c87a3fb0edf2370}\label{classSunSet_a6a8c011c981ab78b3c87a3fb0edf2370}} 
+double {\bfseries calc\+Civil\+Sunset} ()
+\item 
+\mbox{\Hypertarget{classSunSet_a6a4246bd6c1493f8e8ba136420ff9063}\label{classSunSet_a6a4246bd6c1493f8e8ba136420ff9063}} 
+double {\bfseries calc\+Astronomical\+Sunrise} ()
+\item 
+\mbox{\Hypertarget{classSunSet_a4addbb0907be0034e48a9c500528e2c1}\label{classSunSet_a4addbb0907be0034e48a9c500528e2c1}} 
+double {\bfseries calc\+Astronomical\+Sunset} ()
+\item 
+double \mbox{\hyperlink{classSunSet_af5753b0de94d8b7071bcf9f9e149eff5}{calc\+Sunrise\+U\+TC}} ()
+\item 
+\mbox{\Hypertarget{classSunSet_a173f6ada1b57ba3f35d3a544a792c8c3}\label{classSunSet_a173f6ada1b57ba3f35d3a544a792c8c3}} 
+double {\bfseries calc\+Sunset\+U\+TC} ()
+\item 
+double \mbox{\hyperlink{classSunSet_aa3493aaa0a4c1bcf1802d917ff8e87bc}{calc\+Sunrise}} ()
+\item 
+double \mbox{\hyperlink{classSunSet_ab048485fe78623e4bd18b8b60fd202e8}{calc\+Sunset}} ()
+\item 
+int \mbox{\hyperlink{classSunSet_a84ee1c67ac8f53e76bf4d3897fdf27a7}{moon\+Phase}} (int)
+\item 
+int \mbox{\hyperlink{classSunSet_a8199287fe7a00c4f684788591c2824da}{moon\+Phase}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class controls all aspects of the operations. The math is done in private functions, and the public A\+PI\textquotesingle{}s allow for returning a sunrise/sunset value for the given coordinates and timezone. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classSunSet_a81bcb8696fadcc51cee9d3910b82c17f}\label{classSunSet_a81bcb8696fadcc51cee9d3910b82c17f}} 
+\index{SunSet@{SunSet}!SunSet@{SunSet}}
+\index{SunSet@{SunSet}!SunSet@{SunSet}}
+\doxysubsubsection{\texorpdfstring{SunSet()}{SunSet()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Sun\+Set\+::\+Sun\+Set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Default constructor taking no arguments. It will default all values to zero, except the timezones. Note that because I have to return some value when called, this will result in the double timezone being active but it will return a value that is W\+AY off. \mbox{\Hypertarget{classSunSet_acf4bc17fba80cf6b5d6faca829a96e06}\label{classSunSet_acf4bc17fba80cf6b5d6faca829a96e06}} 
+\index{SunSet@{SunSet}!SunSet@{SunSet}}
+\index{SunSet@{SunSet}!SunSet@{SunSet}}
+\doxysubsubsection{\texorpdfstring{SunSet()}{SunSet()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily Sun\+Set\+::\+Sun\+Set (\begin{DoxyParamCaption}\item[{double}]{lat,  }\item[{double}]{lon,  }\item[{int}]{tz }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em lat} & Latitude for this object \\
+\hline
+{\em lon} & Longitude for this object \\
+\hline
+{\em tz} & Integer based timezone for this object\\
+\hline
+\end{DoxyParams}
+This will create an object for a location with an integer based timezone value. \mbox{\Hypertarget{classSunSet_ae9c14394e8fdb12cb6aa950f90af3104}\label{classSunSet_ae9c14394e8fdb12cb6aa950f90af3104}} 
+\index{SunSet@{SunSet}!SunSet@{SunSet}}
+\index{SunSet@{SunSet}!SunSet@{SunSet}}
+\doxysubsubsection{\texorpdfstring{SunSet()}{SunSet()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily Sun\+Set\+::\+Sun\+Set (\begin{DoxyParamCaption}\item[{double}]{lat,  }\item[{double}]{lon,  }\item[{double}]{tz }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em lat} & Latitude for this object \\
+\hline
+{\em lon} & Longitude for this object \\
+\hline
+{\em tz} & Double based timezone for this object\\
+\hline
+\end{DoxyParams}
+This will create an object for a location with an integer based timezone value. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classSunSet_a7b89229be2c2d1d14f1bfc1dbfb6492d}\label{classSunSet_a7b89229be2c2d1d14f1bfc1dbfb6492d}} 
+\index{SunSet@{SunSet}!calcNauticalSunset@{calcNauticalSunset}}
+\index{calcNauticalSunset@{calcNauticalSunset}!SunSet@{SunSet}}
+\doxysubsubsection{\texorpdfstring{calcNauticalSunset()}{calcNauticalSunset()}}
+{\footnotesize\ttfamily double Sun\+Set\+::calc\+Nautical\+Sunset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+Returns the Nautical sunset in fractional minutes past midnight
+\end{DoxyReturn}
+This function will return the Nautical sunset in local time for your location \mbox{\Hypertarget{classSunSet_aa3493aaa0a4c1bcf1802d917ff8e87bc}\label{classSunSet_aa3493aaa0a4c1bcf1802d917ff8e87bc}} 
+\index{SunSet@{SunSet}!calcSunrise@{calcSunrise}}
+\index{calcSunrise@{calcSunrise}!SunSet@{SunSet}}
+\doxysubsubsection{\texorpdfstring{calcSunrise()}{calcSunrise()}}
+{\footnotesize\ttfamily double Sun\+Set\+::calc\+Sunrise (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+Returns local sunrise in minutes past midnight.
+\end{DoxyReturn}
+This function supersedes \mbox{\hyperlink{classSunSet_aa3493aaa0a4c1bcf1802d917ff8e87bc}{calc\+Sunrise()}} \mbox{\Hypertarget{classSunSet_af5753b0de94d8b7071bcf9f9e149eff5}\label{classSunSet_af5753b0de94d8b7071bcf9f9e149eff5}} 
+\index{SunSet@{SunSet}!calcSunriseUTC@{calcSunriseUTC}}
+\index{calcSunriseUTC@{calcSunriseUTC}!SunSet@{SunSet}}
+\doxysubsubsection{\texorpdfstring{calcSunriseUTC()}{calcSunriseUTC()}}
+{\footnotesize\ttfamily double Sun\+Set\+::calc\+Sunrise\+U\+TC (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+Returns the U\+TC time when sunrise occurs in the location provided
+\end{DoxyReturn}
+This is a holdover from the original implementation and to me doesn\textquotesingle{}t seem to be very useful, it\textquotesingle{}s just confusing. This function is deprecated but won\textquotesingle{}t be removed unless that becomes necessary.
+
+\begin{DoxyReturn}{Returns}
+Returns the U\+TC time when sunset occurs in the location provided
+\end{DoxyReturn}
+This is a holdover from the original implementation and to me doesn\textquotesingle{}t seem to be very useful, it\textquotesingle{}s just confusing. This function is deprecated but won\textquotesingle{}t be removed unless that becomes necessary. \mbox{\Hypertarget{classSunSet_ab048485fe78623e4bd18b8b60fd202e8}\label{classSunSet_ab048485fe78623e4bd18b8b60fd202e8}} 
+\index{SunSet@{SunSet}!calcSunset@{calcSunset}}
+\index{calcSunset@{calcSunset}!SunSet@{SunSet}}
+\doxysubsubsection{\texorpdfstring{calcSunset()}{calcSunset()}}
+{\footnotesize\ttfamily double Sun\+Set\+::calc\+Sunset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+Returns local sunrise in minutes past midnight.
+\end{DoxyReturn}
+This function supersedes \mbox{\hyperlink{classSunSet_ab048485fe78623e4bd18b8b60fd202e8}{calc\+Sunset()}} \mbox{\Hypertarget{classSunSet_a8199287fe7a00c4f684788591c2824da}\label{classSunSet_a8199287fe7a00c4f684788591c2824da}} 
+\index{SunSet@{SunSet}!moonPhase@{moonPhase}}
+\index{moonPhase@{moonPhase}!SunSet@{SunSet}}
+\doxysubsubsection{\texorpdfstring{moonPhase()}{moonPhase()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily int Sun\+Set\+::moon\+Phase (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Overload to set the moonphase for right now \mbox{\Hypertarget{classSunSet_a84ee1c67ac8f53e76bf4d3897fdf27a7}\label{classSunSet_a84ee1c67ac8f53e76bf4d3897fdf27a7}} 
+\index{SunSet@{SunSet}!moonPhase@{moonPhase}}
+\index{moonPhase@{moonPhase}!SunSet@{SunSet}}
+\doxysubsubsection{\texorpdfstring{moonPhase()}{moonPhase()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily int Sun\+Set\+::moon\+Phase (\begin{DoxyParamCaption}\item[{int}]{fromepoch }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em fromepoch} & time\+\_\+t seconds from epoch to calculate the moonphase for\\
+\hline
+\end{DoxyParams}
+This is a simple calculation to tell us roughly what the moon phase is locally. It does not give position. \mbox{\Hypertarget{classSunSet_a2e248952dc8690571a3a6ddbf0fd266f}\label{classSunSet_a2e248952dc8690571a3a6ddbf0fd266f}} 
+\index{SunSet@{SunSet}!setCurrentDate@{setCurrentDate}}
+\index{setCurrentDate@{setCurrentDate}!SunSet@{SunSet}}
+\doxysubsubsection{\texorpdfstring{setCurrentDate()}{setCurrentDate()}}
+{\footnotesize\ttfamily double Sun\+Set\+::set\+Current\+Date (\begin{DoxyParamCaption}\item[{int}]{y,  }\item[{int}]{m,  }\item[{int}]{d }\end{DoxyParamCaption})}
+
+double \mbox{\hyperlink{classSunSet_a2e248952dc8690571a3a6ddbf0fd266f}{Sun\+Set\+::set\+Current\+Date(int y, int m, int d)}} 
+\begin{DoxyParams}{Parameters}
+{\em y} & Integer year, must be 4 digits \\
+\hline
+{\em m} & Integer month, not zero based (Jan = 1) \\
+\hline
+{\em d} & Integer day of month, not zero based (month starts on day 1) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the result of the Julian Date conversion if you want to save it
+\end{DoxyReturn}
+Since these calculations are done based on the Julian Calendar, we must convert our year month day into Julian before we use it. You get the Julian value for free if you want it. \mbox{\Hypertarget{classSunSet_a7e0f443ceba2013cff22238fa5bb66ae}\label{classSunSet_a7e0f443ceba2013cff22238fa5bb66ae}} 
+\index{SunSet@{SunSet}!setTZOffset@{setTZOffset}}
+\index{setTZOffset@{setTZOffset}!SunSet@{SunSet}}
+\doxysubsubsection{\texorpdfstring{setTZOffset()}{setTZOffset()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Sun\+Set\+::set\+T\+Z\+Offset (\begin{DoxyParamCaption}\item[{double}]{tz }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em tz} & Double timezone, may be positive or negative\\
+\hline
+\end{DoxyParams}
+Critical to set your timezone so results are accurate for your time and date \mbox{\Hypertarget{classSunSet_aec11da9a176aa7f6967cf7e80bfce006}\label{classSunSet_aec11da9a176aa7f6967cf7e80bfce006}} 
+\index{SunSet@{SunSet}!setTZOffset@{setTZOffset}}
+\index{setTZOffset@{setTZOffset}!SunSet@{SunSet}}
+\doxysubsubsection{\texorpdfstring{setTZOffset()}{setTZOffset()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Sun\+Set\+::set\+T\+Z\+Offset (\begin{DoxyParamCaption}\item[{int}]{tz }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em tz} & Integer timezone, may be positive or negative\\
+\hline
+\end{DoxyParams}
+Critical to set your timezone so results are accurate for your time and date 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/pete/\+Projects/github/sunset-\/html/src/sunset.\+h\item 
+/home/pete/\+Projects/github/sunset-\/html/src/sunset.\+cpp\end{DoxyCompactItemize}
