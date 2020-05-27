@@ -1,0 +1,44 @@
+Doxygen version 1.8.17
+Copyright Dimitri van Heesch 1997-2019
+
+You can use doxygen in a number of ways:
+
+1) Use doxygen to generate a template configuration file:
+    doxygen [-s] -g [configName]
+
+2) Use doxygen to update an old configuration file:
+    doxygen [-s] -u [configName]
+
+3) Use doxygen to generate documentation using an existing configuration file:
+    doxygen [configName]
+
+4) Use doxygen to generate a template file controlling the layout of the
+   generated documentation:
+    doxygen -l [layoutFileName]
+
+    In case layoutFileName is omitted layoutFileName.xml will be used as filename.
+    If - is used for layoutFileName doxygen will write to standard output.
+
+5) Use doxygen to generate a template style sheet file for RTF, HTML or Latex.
+    RTF:        doxygen -w rtf styleSheetFile
+    HTML:       doxygen -w html headerFile footerFile styleSheetFile [configFile]
+    LaTeX:      doxygen -w latex headerFile footerFile styleSheetFile [configFile]
+
+6) Use doxygen to generate a rtf extensions file
+    RTF:   doxygen -e rtf extensionsFile
+
+    If - is used for extensionsFile doxygen will write to standard output.
+
+7) Use doxygen to compare the used configuration file with the template configuration file
+    doxygen -x [configFile]
+
+8) Use doxygen to show a list of built-in emojis.
+    doxygen -f emoji outputFileName
+
+    If - is used for outputFileName doxygen will write to standard output.
+
+If -s is specified the comments of the configuration items in the config file will be omitted.
+If configName is omitted 'Doxyfile' will be used as a default.
+If - is used for configFile doxygen will write / read the configuration to /from standard output / input.
+
+-v print version string
