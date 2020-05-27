@@ -8,6 +8,9 @@ Since then, I have updated it a bit to do some more work. It will calculate the 
 * Can accurately calculate Civil Sunrise and Sunset
 * Can accurately calculate Astronomical Sunrise and Sunset
 
+# New Github Pages
+Find Doxygen documentation at http://buelowp.github.io/sunset/
+ 
 # Version 1.1.1 IMPORTANT changes
 I have migrated to an all lower case file name structure. Starting with master and 1.1.1, you must use
 
