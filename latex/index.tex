@@ -8,7 +8,8 @@ Since then, I have updated it a bit to do some more work. It will calculate the 
 \item Can accurately calculate Nautical Sunrise and Sunset
 \item Can accurately calculate Civil Sunrise and Sunset
 \item Can accurately calculate Astronomical Sunrise and Sunset
-\end{DoxyItemize}\hypertarget{index_autotoc_md1}{}\doxysection{Version 1.\+1.\+1 I\+M\+P\+O\+R\+T\+A\+N\+T changes}\label{index_autotoc_md1}
+\end{DoxyItemize}\hypertarget{index_autotoc_md1}{}\doxysection{New Github Pages}\label{index_autotoc_md1}
+Find Doxygen documentation at \href{http://buelowp.github.io/sunset/}{\texttt{ http\+://buelowp.\+github.\+io/sunset/}}\hypertarget{index_autotoc_md2}{}\doxysection{Version 1.\+1.\+1 I\+M\+P\+O\+R\+T\+A\+N\+T changes}\label{index_autotoc_md2}
 I have migrated to an all lower case file name structure. Starting with master and 1.\+1.\+1, you must use
 
 
@@ -19,9 +20,9 @@ I have migrated to an all lower case file name structure. Starting with master a
 
 Instead of Sun\+Set.\+h in the previous. This change was originally caused by the changes to the Particle build system where I use this library extensively. They forced me to name the file the same as the package name which resulted in an upper and lower case name. Now it\textquotesingle{}s all lower case, pry the way I should have started it.
 
-I\textquotesingle{}ve also change the google test enable variable, though I\textquotesingle{}m not sure many used that. I\textquotesingle{}ve updated the readme below to reflect the change.\hypertarget{index_autotoc_md2}{}\doxysection{License}\label{index_autotoc_md2}
-This is governed by the G\+P\+L2 license. See the License terms in the L\+I\+C\+E\+N\+SE file. Use it as you want, make changes as you want, but please contribute back in accordance with the G\+PL.\hypertarget{index_autotoc_md3}{}\doxysection{Building}\label{index_autotoc_md3}
-\hypertarget{index_autotoc_md4}{}\doxysubsection{Building for any cmake target}\label{index_autotoc_md4}
+I\textquotesingle{}ve also change the google test enable variable, though I\textquotesingle{}m not sure many used that. I\textquotesingle{}ve updated the readme below to reflect the change.\hypertarget{index_autotoc_md3}{}\doxysection{License}\label{index_autotoc_md3}
+This is governed by the G\+P\+L2 license. See the License terms in the L\+I\+C\+E\+N\+SE file. Use it as you want, make changes as you want, but please contribute back in accordance with the G\+PL.\hypertarget{index_autotoc_md4}{}\doxysection{Building}\label{index_autotoc_md4}
+\hypertarget{index_autotoc_md5}{}\doxysubsection{Building for any cmake target}\label{index_autotoc_md5}
 The builder requires C\+Make 3.\+0.\+0 or newer, which should be available in most Linux distributions.
 
 
@@ -34,7 +35,7 @@ The builder requires C\+Make 3.\+0.\+0 or newer, which should be available in mo
 \end{DoxyCode}
 
 
-Note that by default, the installer will attempt to install to /usr/local/include and /usr/local/lib or the equivalent for Windows.\hypertarget{index_autotoc_md5}{}\doxysubsection{Building with Google Test for library verification}\label{index_autotoc_md5}
+Note that by default, the installer will attempt to install to /usr/local/include and /usr/local/lib or the equivalent for Windows.\hypertarget{index_autotoc_md6}{}\doxysubsection{Building with Google Test for library verification}\label{index_autotoc_md6}
 You can use google test by doing the following
 
 
@@ -45,15 +46,15 @@ You can use google test by doing the following
 \DoxyCodeLine{make}
 \DoxyCodeLine{./sunset-\/test}
 \end{DoxyCode}
-\hypertarget{index_autotoc_md6}{}\doxysection{Supported targets}\label{index_autotoc_md6}
+\hypertarget{index_autotoc_md7}{}\doxysection{Supported targets}\label{index_autotoc_md7}
 This should work on any platform that supports C++ 14 and later. There is a hard requirement on 32 bit systems at a minimum due to needing full 32 bit integers for some of the work.
 
-I have used this library on the following systems successfully, and test it on a Raspberry PI. It really does require a 32 bit system at a minimum, and due to the math needs, a 32 bit processor that has native floating point support is best. This does mean that the original Arudino and other similar 8 bit micros cannot use this library correctly.\hypertarget{index_autotoc_md7}{}\doxysubsection{Tested against directly}\label{index_autotoc_md7}
+I have used this library on the following systems successfully, and test it on a Raspberry PI. It really does require a 32 bit system at a minimum, and due to the math needs, a 32 bit processor that has native floating point support is best. This does mean that the original Arudino and other similar 8 bit micros cannot use this library correctly.\hypertarget{index_autotoc_md8}{}\doxysubsection{Tested against directly}\label{index_autotoc_md8}
 
 \begin{DoxyItemize}
 \item Ubuntu 20.\+04 g++
 \item Particle Photon (latest Particle\+OS release 1.\+5.\+2 works with Sunset 1.\+1.\+0)
-\end{DoxyItemize}\hypertarget{index_autotoc_md8}{}\doxysubsection{Used with historically}\label{index_autotoc_md8}
+\end{DoxyItemize}\hypertarget{index_autotoc_md9}{}\doxysubsection{Used with historically}\label{index_autotoc_md9}
 
 \begin{DoxyItemize}
 \item Raspberry PI
@@ -74,8 +75,8 @@ I have used the following build systems with this library as well
 
 I don\textquotesingle{}t use Platform\+IO for much but some compile time testing. I can\textquotesingle{}t help much with that platform.
 
-See notes below for the E\+SP devices, E\+S\+P32 and E\+S\+P8266.\hypertarget{index_autotoc_md9}{}\doxysection{Testing}\label{index_autotoc_md9}
-I primarily use google test to validate the code running under Linux. This is done with the cmake config test above. I also run a small ino on a Particle Photon to prove that it works against a micro as well. Test results can be found for the latest release on the release page.\hypertarget{index_autotoc_md10}{}\doxysection{Details}\label{index_autotoc_md10}
+See notes below for the E\+SP devices, E\+S\+P32 and E\+S\+P8266.\hypertarget{index_autotoc_md10}{}\doxysection{Testing}\label{index_autotoc_md10}
+I primarily use google test to validate the code running under Linux. This is done with the cmake config test above. I also run a small ino on a Particle Photon to prove that it works against a micro as well. Test results can be found for the latest release on the release page.\hypertarget{index_autotoc_md11}{}\doxysection{Details}\label{index_autotoc_md11}
 To use \mbox{\hyperlink{classSunSet}{Sun\+Set}}, you need to a few bits of local information.
 \begin{DoxyEnumerate}
 \item Accurate time. If you’re running this with something that can get G\+PS time or use N\+TP, then results will always be very accurate. If you do not have a good clock source, then the results are going to be very accurate relative to your not so accurate clock. For best results, make sure your clock is accurate to within a second if possible. Note that you also need an accurate timezone as the calculation is to U\+TC, and then the timezone is applied before the value is returned. If your results seem off by some set number of hours, a bad or missing timezone is probably why.
@@ -113,7 +114,7 @@ To use \mbox{\hyperlink{classSunSet}{Sun\+Set}}, you need to a few bits of local
 
 The example below gives some hints for using the library, it\textquotesingle{}s pretty simple. Every time you need the calculation call for it. I wouldn\textquotesingle{}t suggest caching the value unless you can handle changes in date so the calculation is correct relative to a date you need.
 
-\mbox{\hyperlink{classSunSet}{Sun\+Set}} is C++, no C implementation is provided. It is compiled using C++14, and any code using it should use C++14 as well as there is a dependency on C++14 at a minimum. Newer C++ versions work as well.\hypertarget{index_autotoc_md11}{}\doxysection{Releases}\label{index_autotoc_md11}
+\mbox{\hyperlink{classSunSet}{Sun\+Set}} is C++, no C implementation is provided. It is compiled using C++14, and any code using it should use C++14 as well as there is a dependency on C++14 at a minimum. Newer C++ versions work as well.\hypertarget{index_autotoc_md12}{}\doxysection{Releases}\label{index_autotoc_md12}
 
 \begin{DoxyItemize}
 \item 1.\+1.\+0 New capabilities. Added Civil, Nautical, and Astronomical sunrise and sunset
@@ -127,8 +128,8 @@ The example below gives some hints for using the library, it\textquotesingle{}s 
 \item 1.\+0.\+9\+: Revert some imported changes which broke the system.
 \item 1.\+0.\+8\+: Fix installation path issue and update R\+E\+A\+D\+ME to include installation instructions.
 \item 1.\+0.\+7\+: Allowes for use of positive or negative longitude values. Thank you to \href{https://github.com/nliviu}{\texttt{ https\+://github.\+com/nliviu}}
-\end{DoxyItemize}\hypertarget{index_autotoc_md12}{}\doxysection{Moon Phases}\label{index_autotoc_md12}
-This library also allows you to calculate the moon phase for the current day to an integer value. This means it\textquotesingle{}s not perfectly accurate, but it\textquotesingle{}s pretty close. To use it, you call moon\+Phase() with an integer value that is the number of seconds from the January 1, 1970 epoch. It will do some simple math and return an integer value that represents the current phase of the moon, from 0 to 29. In this case, 0 is new, and 29 is new, 15 is full. The code handles times that may cause the calculation to return 30 to avoid some limits confustion (there aren\textquotesingle{}t 30 days in the lunar cycle, but it\textquotesingle{}s close enough that some time values will cause it to return 30 anyway).\hypertarget{index_autotoc_md13}{}\doxysection{Examples}\label{index_autotoc_md13}
+\end{DoxyItemize}\hypertarget{index_autotoc_md13}{}\doxysection{Moon Phases}\label{index_autotoc_md13}
+This library also allows you to calculate the moon phase for the current day to an integer value. This means it\textquotesingle{}s not perfectly accurate, but it\textquotesingle{}s pretty close. To use it, you call moon\+Phase() with an integer value that is the number of seconds from the January 1, 1970 epoch. It will do some simple math and return an integer value that represents the current phase of the moon, from 0 to 29. In this case, 0 is new, and 29 is new, 15 is full. The code handles times that may cause the calculation to return 30 to avoid some limits confustion (there aren\textquotesingle{}t 30 days in the lunar cycle, but it\textquotesingle{}s close enough that some time values will cause it to return 30 anyway).\hypertarget{index_autotoc_md14}{}\doxysection{Examples}\label{index_autotoc_md14}
 This example is relative to an .ino file. Create a global object, and initialize it and use it in loop().
 
 
@@ -192,7 +193,7 @@ This example is for the Raspberry Pi using C++
 \DoxyCodeLine{    int moonphase = sun.moonPhase(static\_cast<int>(rightnow));}
 \DoxyCodeLine{\}}
 \end{DoxyCode}
-\hypertarget{index_autotoc_md14}{}\doxysection{Notes}\label{index_autotoc_md14}
+\hypertarget{index_autotoc_md15}{}\doxysection{Notes}\label{index_autotoc_md15}
 
 \begin{DoxyItemize}
 \item This is a general purpose calculator, so you could calculate when Sunrise was on the day Shakespeare died. Hence some of the design decisions
@@ -203,7 +204,7 @@ This example is for the Raspberry Pi using C++
 \item U\+TC is not the U\+TC sunrise time, it is the time in Greenwhich when the sun would rise at the location specified to the library. It\textquotesingle{}s werid, but allows for some flexibility when doing calcualations depending on how you keep track of time in your system. The U\+TC specific calls are being deprecated starting with 1.\+1.\+0.
 \item Use of Civil, Nautical, and Astronomical values are interesting for lots of new uses of the library. They are added as a convience, but hopefully will prove useful. These functions do not have equal U\+TC functions.
 \item I do not build or test on a Windows target. I don\textquotesingle{}t have a Windows machine to do so. I do test this on a Mac, but only lightly and not every release right now.
-\end{DoxyItemize}\hypertarget{index_autotoc_md15}{}\doxysection{E\+S\+P Devices}\label{index_autotoc_md15}
+\end{DoxyItemize}\hypertarget{index_autotoc_md16}{}\doxysection{E\+S\+P Devices}\label{index_autotoc_md16}
 The popular E\+SP devices seem to have some inconsistencies. Extensive testing by a user on an 8266 has shown that being 32 bit, but without a true F\+PU can cause the micro to hang or fail for some of these calculations. Since the library depends on some very extensive use of double A\+ND standard match functions, it\textquotesingle{}s not possible to optimize this out, hence the 32 bit with an F\+PU requirement. The report was that the library may cause the math to take longer than the watchdog timeout for some combinations of Latitude, specifically above 67.
 
 At this time, using this library with an 8266 is not considered a valid combination. I do have E\+S\+P32 devices, but not available right now, so testing against an E\+SP device with an F\+PU, even if it\textquotesingle{}s a bit hobbled (see links below) has to wait unless I get a volunteer. I\textquotesingle{}ll post results when I can run the tests.
@@ -214,10 +215,10 @@ At this time, using this library with an 8266 is not considered a valid combinat
 \item \href{https://blog.classycode.com/esp32-floating-point-performance-6e9f6f567a69}{\texttt{ https\+://blog.\+classycode.\+com/esp32-\/floating-\/point-\/performance-\/6e9f6f567a69}}
 \end{DoxyItemize}
 
-The conclusions in the links seem to indicate that a lot of the math used by this library is V\+E\+RY slow on the E\+S\+P32 processors. However, very slow in this case is still milliseconds, so it may not matter on the E\+S\+P32 at all. Until I can learn more, your mileage might vary.\hypertarget{index_autotoc_md16}{}\doxysection{Links}\label{index_autotoc_md16}
+The conclusions in the links seem to indicate that a lot of the math used by this library is V\+E\+RY slow on the E\+S\+P32 processors. However, very slow in this case is still milliseconds, so it may not matter on the E\+S\+P32 at all. Until I can learn more, your mileage might vary.\hypertarget{index_autotoc_md17}{}\doxysection{Links}\label{index_autotoc_md17}
 You can find the original math in c code at \href{http://souptonuts.sourceforge.net/code/sunrise.c.html}{\texttt{ http\+://souptonuts.\+sourceforge.\+net/code/sunrise.\+c.\+html}}
 
-I got the moon work from Ben Daglish at \href{http://www.ben-daglish.net/moon.shtml}{\texttt{ http\+://www.\+ben-\/daglish.\+net/moon.\+shtml}}\hypertarget{index_autotoc_md17}{}\doxysection{Thank you to}\label{index_autotoc_md17}
+I got the moon work from Ben Daglish at \href{http://www.ben-daglish.net/moon.shtml}{\texttt{ http\+://www.\+ben-\/daglish.\+net/moon.\+shtml}}\hypertarget{index_autotoc_md18}{}\doxysection{Thank you to}\label{index_autotoc_md18}
 The following contributors have helped me identify issues and add features. The individuals are listed in no particular order.
 
 

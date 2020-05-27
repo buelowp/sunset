@@ -74,17 +74,20 @@ $(function() {
 <li>Can accurately calculate Astronomical Sunrise and Sunset</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md1"></a>
+New Github Pages</h1>
+<p>Find Doxygen documentation at <a href="http://buelowp.github.io/sunset/">http://buelowp.github.io/sunset/</a></p>
+<h1><a class="anchor" id="autotoc_md2"></a>
 Version 1.1.1 IMPORTANT changes</h1>
 <p>I have migrated to an all lower case file name structure. Starting with master and 1.1.1, you must use</p>
 <div class="fragment"><div class="line">#include &lt;sunset.h&gt;</div>
 </div><!-- fragment --><p>Instead of SunSet.h in the previous. This change was originally caused by the changes to the Particle build system where I use this library extensively. They forced me to name the file the same as the package name which resulted in an upper and lower case name. Now it's all lower case, pry the way I should have started it.</p>
 <p>I've also change the google test enable variable, though I'm not sure many used that. I've updated the readme below to reflect the change.</p>
-<h1><a class="anchor" id="autotoc_md2"></a>
+<h1><a class="anchor" id="autotoc_md3"></a>
 License</h1>
 <p>This is governed by the GPL2 license. See the License terms in the LICENSE file. Use it as you want, make changes as you want, but please contribute back in accordance with the GPL.</p>
-<h1><a class="anchor" id="autotoc_md3"></a>
+<h1><a class="anchor" id="autotoc_md4"></a>
 Building</h1>
-<h2><a class="anchor" id="autotoc_md4"></a>
+<h2><a class="anchor" id="autotoc_md5"></a>
 Building for any cmake target</h2>
 <p>The builder requires CMake 3.0.0 or newer, which should be available in most Linux distributions.</p>
 <div class="fragment"><div class="line">mkdir build</div>
@@ -93,7 +96,7 @@ Building for any cmake target</h2>
 <div class="line">make</div>
 <div class="line">make DESTDIR=&lt;some path&gt; install</div>
 </div><!-- fragment --><p>Note that by default, the installer will attempt to install to /usr/local/include and /usr/local/lib or the equivalent for Windows.</p>
-<h2><a class="anchor" id="autotoc_md5"></a>
+<h2><a class="anchor" id="autotoc_md6"></a>
 Building with Google Test for library verification</h2>
 <p>You can use google test by doing the following</p>
 <div class="fragment"><div class="line">mkdir build</div>
@@ -101,17 +104,17 @@ Building with Google Test for library verification</h2>
 <div class="line">cmake -DBUILD_TESTS=ON ..</div>
 <div class="line">make</div>
 <div class="line">./sunset-test</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md7"></a>
 Supported targets</h1>
 <p>This should work on any platform that supports C++ 14 and later. There is a hard requirement on 32 bit systems at a minimum due to needing full 32 bit integers for some of the work.</p>
 <p>I have used this library on the following systems successfully, and test it on a Raspberry PI. It really does require a 32 bit system at a minimum, and due to the math needs, a 32 bit processor that has native floating point support is best. This does mean that the original Arudino and other similar 8 bit micros cannot use this library correctly.</p>
-<h2><a class="anchor" id="autotoc_md7"></a>
+<h2><a class="anchor" id="autotoc_md8"></a>
 Tested against directly</h2>
 <ul>
 <li>Ubuntu 20.04 g++</li>
 <li>Particle Photon (latest ParticleOS release 1.5.2 works with Sunset 1.1.0)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md8"></a>
+<h2><a class="anchor" id="autotoc_md9"></a>
 Used with historically</h2>
 <ul>
 <li>Raspberry PI</li>
@@ -128,10 +131,10 @@ Used with historically</h2>
 </ul>
 <p>I don't use PlatformIO for much but some compile time testing. I can't help much with that platform.</p>
 <p>See notes below for the ESP devices, ESP32 and ESP8266.</p>
-<h1><a class="anchor" id="autotoc_md9"></a>
+<h1><a class="anchor" id="autotoc_md10"></a>
 Testing</h1>
 <p>I primarily use google test to validate the code running under Linux. This is done with the cmake config test above. I also run a small ino on a Particle Photon to prove that it works against a micro as well. Test results can be found for the latest release on the release page.</p>
-<h1><a class="anchor" id="autotoc_md10"></a>
+<h1><a class="anchor" id="autotoc_md11"></a>
 Details</h1>
 <p>To use <a class="el" href="classSunSet.html">SunSet</a>, you need to a few bits of local information.</p><ol type="1">
 <li>Accurate time. If you’re running this with something that can get GPS time or use NTP, then results will always be very accurate. If you do not have a good clock source, then the results are going to be very accurate relative to your not so accurate clock. For best results, make sure your clock is accurate to within a second if possible. Note that you also need an accurate timezone as the calculation is to UTC, and then the timezone is applied before the value is returned. If your results seem off by some set number of hours, a bad or missing timezone is probably why.</li>
@@ -168,7 +171,7 @@ Details</h1>
 </ol>
 <p>The example below gives some hints for using the library, it's pretty simple. Every time you need the calculation call for it. I wouldn't suggest caching the value unless you can handle changes in date so the calculation is correct relative to a date you need.</p>
 <p><a class="el" href="classSunSet.html">SunSet</a> is C++, no C implementation is provided. It is compiled using C++14, and any code using it should use C++14 as well as there is a dependency on C++14 at a minimum. Newer C++ versions work as well.</p>
-<h1><a class="anchor" id="autotoc_md11"></a>
+<h1><a class="anchor" id="autotoc_md12"></a>
 Releases</h1>
 <ul>
 <li>1.1.0 New capabilities. Added Civil, Nautical, and Astronomical sunrise and sunset<ul>
@@ -183,10 +186,10 @@ Releases</h1>
 <li>1.0.8: Fix installation path issue and update README to include installation instructions.</li>
 <li>1.0.7: Allowes for use of positive or negative longitude values. Thank you to <a href="https://github.com/nliviu">https://github.com/nliviu</a></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md12"></a>
+<h1><a class="anchor" id="autotoc_md13"></a>
 Moon Phases</h1>
 <p>This library also allows you to calculate the moon phase for the current day to an integer value. This means it's not perfectly accurate, but it's pretty close. To use it, you call moonPhase() with an integer value that is the number of seconds from the January 1, 1970 epoch. It will do some simple math and return an integer value that represents the current phase of the moon, from 0 to 29. In this case, 0 is new, and 29 is new, 15 is full. The code handles times that may cause the calculation to return 30 to avoid some limits confustion (there aren't 30 days in the lunar cycle, but it's close enough that some time values will cause it to return 30 anyway).</p>
-<h1><a class="anchor" id="autotoc_md13"></a>
+<h1><a class="anchor" id="autotoc_md14"></a>
 Examples</h1>
 <p>This example is relative to an .ino file. Create a global object, and initialize it and use it in loop().</p>
 <div class="fragment"><div class="line">#include &lt;time&gt;</div>
@@ -241,7 +244,7 @@ Examples</h1>
 <div class="line">    double astroSunrise = sun.calcAstronomicalSunrise();</div>
 <div class="line">    int moonphase = sun.moonPhase(static_cast&lt;int&gt;(rightnow));</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md14"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md15"></a>
 Notes</h1>
 <ul>
 <li>This is a general purpose calculator, so you could calculate when Sunrise was on the day Shakespeare died. Hence some of the design decisions</li>
@@ -253,7 +256,7 @@ Notes</h1>
 <li>Use of Civil, Nautical, and Astronomical values are interesting for lots of new uses of the library. They are added as a convience, but hopefully will prove useful. These functions do not have equal UTC functions.</li>
 <li>I do not build or test on a Windows target. I don't have a Windows machine to do so. I do test this on a Mac, but only lightly and not every release right now.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md15"></a>
+<h1><a class="anchor" id="autotoc_md16"></a>
 ESP Devices</h1>
 <p>The popular ESP devices seem to have some inconsistencies. Extensive testing by a user on an 8266 has shown that being 32 bit, but without a true FPU can cause the micro to hang or fail for some of these calculations. Since the library depends on some very extensive use of double AND standard match functions, it's not possible to optimize this out, hence the 32 bit with an FPU requirement. The report was that the library may cause the math to take longer than the watchdog timeout for some combinations of Latitude, specifically above 67.</p>
 <p>At this time, using this library with an 8266 is not considered a valid combination. I do have ESP32 devices, but not available right now, so testing against an ESP device with an FPU, even if it's a bit hobbled (see links below) has to wait unless I get a volunteer. I'll post results when I can run the tests.</p>
@@ -262,11 +265,11 @@ ESP Devices</h1>
 <li><a href="https://blog.classycode.com/esp32-floating-point-performance-6e9f6f567a69">https://blog.classycode.com/esp32-floating-point-performance-6e9f6f567a69</a></li>
 </ul>
 <p>The conclusions in the links seem to indicate that a lot of the math used by this library is VERY slow on the ESP32 processors. However, very slow in this case is still milliseconds, so it may not matter on the ESP32 at all. Until I can learn more, your mileage might vary.</p>
-<h1><a class="anchor" id="autotoc_md16"></a>
+<h1><a class="anchor" id="autotoc_md17"></a>
 Links</h1>
 <p>You can find the original math in c code at <a href="http://souptonuts.sourceforge.net/code/sunrise.c.html">http://souptonuts.sourceforge.net/code/sunrise.c.html</a></p>
 <p>I got the moon work from Ben Daglish at <a href="http://www.ben-daglish.net/moon.shtml">http://www.ben-daglish.net/moon.shtml</a></p>
-<h1><a class="anchor" id="autotoc_md17"></a>
+<h1><a class="anchor" id="autotoc_md18"></a>
 Thank you to</h1>
 <p>The following contributors have helped me identify issues and add features. The individuals are listed in no particular order.</p>
 <ul>
