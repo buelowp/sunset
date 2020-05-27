@@ -62,7 +62,6 @@ I have used this library on the following systems successfully, and test it on a
 ## Used with historically
 * Raspberry PI
 * Omega Onion
-* ESP8266 and ESP32 (see below for notes about the ESP chips)
 * Teensy with GPS
 * SAMD targets using PIO/VSCode
 
@@ -74,6 +73,8 @@ I have used the following build systems with this library as well
 * VS Code for Particle
 
 I don't use PlatformIO for much but some compile time testing. I can't help much with that platform.
+
+See notes below for the ESP devices, ESP32 and ESP8266.
 
 # Testing
 
@@ -186,23 +187,24 @@ void main(int argc, char *argv)
 * Use of Civil, Nautical, and Astronomical values are interesting for lots of new uses of the library. They are added as a convience, but hopefully will prove useful. These functions do not have equal UTC functions.
 * I do not build or test on a Windows target. I don't have a Windows machine to do so. I do test this on a Mac, but only lightly and not every release right now.
 
-## ESP Devices
-ESP devices have a HW floating point capability, but I've been doing some research due to a reported bug. Seems on the ESP devices, the FP performance may be terrible. 
+# ESP Devices
+The popular ESP devices seem to have some inconsistencies. Extensive testing by a user on an 8266 has shown that being 32 bit, but without a true FPU can cause the micro to hang or fail for some of these calculations. Since the library depends on some very extensive use of double AND standard match functions, it's not possible to optimize this out, hence the 32 bit with an FPU requirement. The report was that the library may cause the math to take longer than the watchdog timeout for some combinations of Latitude, specifically above 67. 
+
+At this time, using this library with an 8266 is not considered a valid combination. I do have ESP32 devices, but not available right now, so testing against an ESP device with an FPU, even if it's a bit hobbled (see links below) has to wait unless I get a volunteer. I'll post results when I can run the tests.
 
 * https://www.esp32.com/viewtopic.php?f=14&t=800
 * https://blog.classycode.com/esp32-floating-point-performance-6e9f6f567a69
 
-The conclusions in the links seem to indicate that a lot of the math used by this library is VERY slow on the ESP processors. The bug report was about watchdog resets, which may be due to how long it took to do the calculations. I can't say for sure, I haven't had a chance to check this out myself for lack of any ESP devices at this time. However, if you plan to use this library with an ESP, please note that your results and timing may be impacted, possibly significantly.
+The conclusions in the links seem to indicate that a lot of the math used by this library is VERY slow on the ESP32 processors. However, very slow in this case is still milliseconds, so it may not matter on the ESP32 at all. Until I can learn more, your mileage might vary.
 
 # Links
 You can find the original math in c code at http://souptonuts.sourceforge.net/code/sunrise.c.html
 
 I got the moon work from Ben Daglish at http://www.ben-daglish.net/moon.shtml
 
-
 # Thank you to
 
-The following contributors have helped me identify issues and add features. The individuals are in no particular order.
+The following contributors have helped me identify issues and add features. The individuals are listed in no particular order.
 
 * https://github.com/ASL07
 * https://github.com/ThothK
