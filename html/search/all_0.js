@@ -10,5 +10,5 @@ var searchData=
   ['calcsunriseutc_7',['calcSunriseUTC',['../classSunSet.html#af5753b0de94d8b7071bcf9f9e149eff5',1,'SunSet']]],
   ['calcsunset_8',['calcSunset',['../classSunSet.html#ab048485fe78623e4bd18b8b60fd202e8',1,'SunSet']]],
   ['calcsunsetutc_9',['calcSunsetUTC',['../classSunSet.html#a173f6ada1b57ba3f35d3a544a792c8c3',1,'SunSet']]],
-  ['calculate_20sunrise_20and_20sunset_20based_20on_20time_20and_20latitude_20and_20longitude_3c_2fh1_3e_10',['Calculate Sunrise and Sunset based on time and latitude and longitude&lt;/h1&gt;',['../index.html',1,'']]]
+  ['calculate_20sunrise_20and_20sunset_20based_20on_20time_20and_20latitude_20and_20longitude_10',['Calculate Sunrise and Sunset based on time and latitude and longitude',['../index.html',1,'']]]
 ];
