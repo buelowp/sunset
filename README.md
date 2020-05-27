@@ -103,7 +103,9 @@ The example below gives some hints for using the library, it's pretty simple. Ev
 SunSet is C++, no C implementation is provided. It is compiled using C++14, and any code using it should use C++14 as well as there is a dependency on C++14 at a minimum. Newer C++ versions work as well.
 
 # Releases
-* 1.1.0 New capabilities. Added Civil, Nautical, and Astronomical sunrise and sunset
+* 1.1.2 Bumping the library.properties license field to be correct. This forced a new release number so it would work with build systems.
+* 1.1.1 Changes to support case insensitive file systems.
+* 1.1.0 New capabilities. Added Civil, Nautical, and Astronomical sunrise and sunset.
   * New API's for the new functionality. See the code for details.
   * Begin to deprecate UTC functions. These will not be removed until later if ever. They are not tested as well.
   * Migrate timzone to be a double for fractional timezones. IST for example works correctly now.
@@ -111,7 +113,7 @@ SunSet is C++, no C implementation is provided. It is compiled using C++14, and 
 * 1.0.10 Fixed a bug in a header file, it should build for all platforms now.
 * 1.0.9: Revert some imported changes which broke the system.
 * 1.0.8: Fix installation path issue and update README to include installation instructions.
-* 1.0.7: Allowes for use of positive or negative longitude values. Thank you to https://github.com/nliviu
+* 1.0.7: Allowes for use of positive or negative longitude values. Thank you to https://github.com/nliviu.
 
 # Moon Phases
 This library also allows you to calculate the moon phase for the current day to an integer value. This means it's not perfectly accurate, but it's pretty close. To use it, you call moonPhase() with an integer value that is the number of seconds from the January 1, 1970 epoch. It will do some simple math and return an integer value that represents the current phase of the moon, from 0 to 29. In this case, 0 is new, and 29 is new, 15 is full. The code handles times that may cause the calculation to return 30 to avoid some limits confustion (there aren't 30 days in the lunar cycle, but it's close enough that some time values will cause it to return 30 anyway).
