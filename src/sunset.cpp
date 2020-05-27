@@ -101,7 +101,7 @@ void SunSet::setPosition(double lat, double lon, int tz)
 }
 
 /**
- * \fn void SunSet::setPosition(double lat, double lon, int tz)
+ * \fn void SunSet::setPosition(double lat, double lon, double tz)
  * \param lat double Latitude value
  * \param lon double Longitude value
  * \param tz double timezone offset
@@ -373,7 +373,7 @@ double SunSet::calcSunriseUTC()
 }
 
 /**
- * \fn double SunSet::calcSunriseUTC()
+ * \fn double SunSet::calcSunsetUTC()
  * \return Returns the UTC time when sunset occurs in the location provided
  * 
  * This is a holdover from the original implementation and to me doesn't
@@ -430,7 +430,7 @@ double SunSet::calcCivilSunset()
 }
 
 /**
- * \fn double SunSet::calcNauticalSunset()
+ * \fn double SunSet::calcNauticalSunrise()
  * \return Returns the Nautical sunset in fractional minutes past midnight
  * 
  * This function will return the Nautical sunset in local time for your location
@@ -515,8 +515,8 @@ void SunSet::setTZOffset(int tz)
 }
 
 /**
- * \fn void SunSet::setTZOffset(int tz)
- * \param tz Integer timezone, may be positive or negative
+ * \fn void SunSet::setTZOffset(double tz)
+ * \param tz Double timezone, may be positive or negative
  * 
  * Critical to set your timezone so results are accurate for your time and date.
  * This function is critical to make sure the system works correctly. If you
@@ -537,7 +537,9 @@ void SunSet::setTZOffset(double tz)
  * \param fromepoch time_t seconds from epoch to calculate the moonphase for
  * 
  * This is a simple calculation to tell us roughly what the moon phase is
- * locally. It does not give position.
+ * locally. It does not give position. It's roughly accurate, but not great.
+ * 
+ * The return value is 0 to 29, with 0 and 29 being hidden and 14 being full.
  */
 int SunSet::moonPhase(int fromepoch)
 {
