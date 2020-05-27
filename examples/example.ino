@@ -1,5 +1,5 @@
 #include "SparkTime/SparkTime.h"
-#include "SunSet/SunSet.h"
+#include "sunset/sunset.h"
 
 /* I'm in the midwest, so this is what I use for my home */
 #define LATITUDE        41.12345

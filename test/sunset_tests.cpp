@@ -4,7 +4,7 @@
 #include <sstream>
 #include <math.h>
 
-#include "SunSet.h"
+#include "sunset.h"
 
 #define LATITUDE_AH     42.058102
 #define LONGITUDE_AH    -87.984189

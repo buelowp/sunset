@@ -8,6 +8,17 @@ Since then, I have updated it a bit to do some more work. It will calculate the 
 * Can accurately calculate Civil Sunrise and Sunset
 * Can accurately calculate Astronomical Sunrise and Sunset
 
+# Version 1.1.1 IMPORTANT changes
+I have migrated to an all lower case file name structure. Starting with master and 1.1.1, you must use
+
+```
+#include <sunset.h>
+```
+
+Instead of SunSet.h in the previous. This change was originally caused by the changes to the Particle build system where I use this library extensively. They forced me to name the file the same as the package name which resulted in an upper and lower case name. Now it's all lower case, pry the way I should have started it.
+
+I've also change the google test enable variable, though I'm not sure many used that. I've updated the readme below to reflect the change.
+
 # License
 This is governed by the GPL2 license. See the License terms in the LICENSE file. Use it as you want, make changes as you want, but please contribute back in accordance with the GPL.
 
@@ -33,7 +44,7 @@ You can use google test by doing the following
 ```
 mkdir build
 cd build
-cmake -DPLATFORM_TESTING=ON ..
+cmake -DBUILD_TESTS=ON ..
 make
 ./sunset-test
 ```
