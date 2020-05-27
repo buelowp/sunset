@@ -28,9 +28,9 @@
  * \fn SunSet::SunSet()
  * 
  * Default constructor taking no arguments. It will default all values
- * to zero, except the timezones. Note that because I have to return some
- * value when called, this will result in the double timezone being active
- * but it will return a value that is WAY off.
+ * to zero. It is possible to call calcSunrise() on this type of initialization
+ * and it will not fail, but it is unlikely you are at 0,0, TZ=0. This also
+ * will not include an initialized date to work from.
  */
 SunSet::SunSet() : m_latitude(0.0), m_longitude(0.0), m_julianDate(0.0), m_tzOffset(0.0)
 {
@@ -43,7 +43,9 @@ SunSet::SunSet() : m_latitude(0.0), m_longitude(0.0), m_julianDate(0.0), m_tzOff
  * \param tz Integer based timezone for this object
  * 
  * This will create an object for a location with an integer based
- * timezone value.
+ * timezone value. This constructor is a relic of the original design. 
+ * It is not deprecated, as this is a valid construction, but the double is
+ * preferred for correctness.
  */
 SunSet::SunSet(double lat, double lon, int tz) : m_latitude(lat), m_longitude(lon), m_julianDate(0.0), m_tzOffset(tz)
 {
@@ -55,17 +57,39 @@ SunSet::SunSet(double lat, double lon, int tz) : m_latitude(lat), m_longitude(lo
  * \param lon Longitude for this object
  * \param tz Double based timezone for this object
  * 
- * This will create an object for a location with an integer based
+ * This will create an object for a location with an double based
  * timezone value.
  */
 SunSet::SunSet(double lat, double lon, double tz) : m_latitude(lat), m_longitude(lon), m_julianDate(0.0), m_tzOffset(tz)
 {
 }
 
+/**
+ * \fn SunSet::~SunSet()
+ * 
+ * The constructor has no value and does nothing.
+ */
 SunSet::~SunSet()
 {
 }
 
+/**
+ * \fn void SunSet::setPosition(double lat, double lon, int tz)
+ * \param lat double Latitude value
+ * \param lon double Longitude value
+ * \param tz Integer timezone offset
+ * 
+ * This will set the location the library uses for it's math. The
+ * timezone is included in this as it's not valid to call
+ * any of the calc functions until you have set a timezone.
+ * It is possible to simply call setPosition one time, with a timezone
+ * and not use the setTZOffset() function ever, if you never
+ * change timezone values.
+ * 
+ * This is the old versoin of the setPosition using an integer
+ * timezone, and will not be deprecated. However, it is preferred to
+ * use the double version going forward.
+ */
 void SunSet::setPosition(double lat, double lon, int tz)
 {
     m_latitude = lat;
@@ -73,9 +97,22 @@ void SunSet::setPosition(double lat, double lon, int tz)
     if (tz >= -12 && tz <= 14)
         m_tzOffset = tz;
     else
-        m_tzOffset = 0;
+        m_tzOffset = 0.0;
 }
 
+/**
+ * \fn void SunSet::setPosition(double lat, double lon, int tz)
+ * \param lat double Latitude value
+ * \param lon double Longitude value
+ * \param tz double timezone offset
+ * 
+ * This will set the location the library uses for it's math. The
+ * timezone is included in this as it's not valid to call
+ * any of the calc functions until you have set a timezone.
+ * It is possible to simply call setPosition one time, with a timezone
+ * and not use the setTZOffset() function ever, if you never
+ * change timezone values.
+ */
 void SunSet::setPosition(double lat, double lon, double tz)
 {
     m_latitude = lat;
@@ -348,21 +385,45 @@ double SunSet::calcSunsetUTC()
     return calcAbsSunset(SUNSET_OFFICIAL);
 }
 
+/**
+ * \fn double SunSet::calcAstronomicalSunrise()
+ * \return Returns the Astronomical sunrise in fractional minutes past midnight
+ * 
+ * This function will return the Astronomical sunrise in local time for your location
+ */
 double SunSet::calcAstronomicalSunrise()
 {
     return calcAbsSunrise(SUNSET_ASTONOMICAL) + (60 * m_tzOffset);
 }
 
+/**
+ * \fn double SunSet::calcAstronomicalSunset()
+ * \return Returns the Astronomical sunset in fractional minutes past midnight
+ * 
+ * This function will return the Astronomical sunset in local time for your location
+ */
 double SunSet::calcAstronomicalSunset()
 {
     return calcAbsSunset(SUNSET_ASTONOMICAL) + (60 * m_tzOffset);
 }
 
+/**
+ * \fn double SunSet::calcCivilSunrise()
+ * \return Returns the Civil sunrise in fractional minutes past midnight
+ * 
+ * This function will return the Civil sunrise in local time for your location
+ */
 double SunSet::calcCivilSunrise()
 {
     return calcAbsSunrise(SUNSET_CIVIL) + (60 * m_tzOffset);
 }
 
+/**
+ * \fn double SunSet::calcCivilSunset()
+ * \return Returns the Civil sunset in fractional minutes past midnight
+ * 
+ * This function will return the Civil sunset in local time for your location
+ */
 double SunSet::calcCivilSunset()
 {
     return calcAbsSunset(SUNSET_CIVIL) + (60 * m_tzOffset);
@@ -436,22 +497,39 @@ double SunSet::setCurrentDate(int y, int m, int d)
  * \fn void SunSet::setTZOffset(int tz)
  * \param tz Integer timezone, may be positive or negative
  * 
- * Critical to set your timezone so results are accurate for your time and date
+ * Critical to set your timezone so results are accurate for your time and date.
+ * This function is critical to make sure the system works correctly. If you
+ * do not set the timezone correctly, the return value will not be correct for
+ * your location. Forgetting this will result in return values that may actually
+ * be negative in some cases.
+ * 
+ * This function is a holdover from the previous design using an integer timezone
+ * and will not be deprecated. It is preferred to use the setTZOffset(doubble).
  */
 void SunSet::setTZOffset(int tz)
 {
-	m_tzOffset = tz;
+    if (tz >= -12 && tz <= 14)
+        m_tzOffset = static_cast<double>(tz);
+    else
+        m_tzOffset = 0.0;
 }
 
 /**
- * \fn void SunSet::setTZOffset(double tz)
- * \param tz Double timezone, may be positive or negative
+ * \fn void SunSet::setTZOffset(int tz)
+ * \param tz Integer timezone, may be positive or negative
  * 
- * Critical to set your timezone so results are accurate for your time and date
+ * Critical to set your timezone so results are accurate for your time and date.
+ * This function is critical to make sure the system works correctly. If you
+ * do not set the timezone correctly, the return value will not be correct for
+ * your location. Forgetting this will result in return values that may actually
+ * be negative in some cases.
  */
 void SunSet::setTZOffset(double tz)
 {
-	m_tzOffset = tz;
+    if (tz >= -12 && tz <= 14)
+        m_tzOffset = tz;
+    else
+        m_tzOffset = 0.0;
 }
 
 /**

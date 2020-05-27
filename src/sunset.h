@@ -43,6 +43,22 @@
  * This class controls all aspects of the operations. The math is done in private
  * functions, and the public API's allow for returning a sunrise/sunset value for the
  * given coordinates and timezone.
+ * 
+ * You can instantiate this class a few different ways, depending on your needs. It's possible
+ * to set your location one time and forget about doing that again if you don't plan to move.
+ * Then you only need to change the date and timezone to get correct data. Or, you can
+ * simply create an object with no location or time data and then do that later. This is
+ * a good mechanism for the setup()/loop() construct.
+ * 
+ * The most important thing to remember is to make sure the library knows the exact date and
+ * timezone for the sunrise/sunset you are trying to calculate. Not doing so means you are going
+ * to have very odd results. It's reasonably easy to know when you've forgotten one or the other
+ * by looking at the time the sun would rise and noticing that it is X hours earlier or later.
+ * That is, if you get a return of 128 minutes (2:08 AM) past midnight when the sun should rise 
+ * at 308 (6:08 AM), then you probably forgot to set your EST timezone.
+ * 
+ * The library also has no idea about daylight savings time. If your timezone changes during the
+ * year to account for savings time, you must update your timezone accordingly.
  */
 class SunSet {
 public:

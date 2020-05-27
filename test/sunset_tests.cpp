@@ -34,6 +34,9 @@
 #define LONGITUDE_ND    77.2090
 #define TIMEZONE_ND     5.5
 
+#define INVALID_NEG_TZ  -13
+#define INVALID_POS_TZ  15
+
 namespace
 {
     TEST(SunsetTesting, ValidReturnValueSunrise)
@@ -293,4 +296,31 @@ namespace
         EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
     }
 
+    TEST(SunsetTesting, InvalidNegativeTimezone)
+    {
+        SunSet sun;
+
+        std::string expected("821.48674");
+        std::stringstream ss(std::stringstream::in | std::stringstream::out);
+        
+        sun.setPosition(LATITUDE_ND, LONGITUDE_ND, INVALID_NEG_TZ);
+        sun.setCurrentDate(2020, 5, 26);
+        ss << std::setprecision(8) << sun.calcSunset();
+        
+        EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
+    }
+
+    TEST(SunsetTesting, InvalidPositiveTimezone)
+    {
+        SunSet sun;
+
+        std::string expected("821.48674");
+        std::stringstream ss(std::stringstream::in | std::stringstream::out);
+        
+        sun.setPosition(LATITUDE_ND, LONGITUDE_ND, INVALID_POS_TZ);
+        sun.setCurrentDate(2020, 5, 26);
+        ss << std::setprecision(8) << sun.calcSunset();
+        
+        EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
+    }
 }
