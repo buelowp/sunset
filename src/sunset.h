@@ -44,6 +44,13 @@
  * functions, and the public API's allow for returning a sunrise/sunset value for the
  * given coordinates and timezone.
  * 
+ * The resulting calculations are relative to midnight of the day you set in the
+ * setCurrentDate() function. It does not return a time_t value for delta from the
+ * current epoch as that would not make sense as the sunrise/sunset can be calculated
+ * thousands of years in the past. The library acts on a day timeframe, and doesn't
+ * try to assume anything about any other unit of measurement other than the current
+ * set day.
+ * 
  * You can instantiate this class a few different ways, depending on your needs. It's possible
  * to set your location one time and forget about doing that again if you don't plan to move.
  * Then you only need to change the date and timezone to get correct data. Or, you can
