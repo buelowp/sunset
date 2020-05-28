@@ -66,7 +66,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>This is a modification of the sunrise.c posted by Mike Chirico back in 2004. See the link below to find it. I needed an algorithm that could tell me when it was dark out for all intents and purposes. I found Mike’s code, and modified it a bit to be a library that can be used again and again.</p>
-<p>Since then, I have updated it a bit to do some more work. It will calculate the Moon position generically. It also with version 1.1.0 calculate other sunrise/sunset times depending on your needs</p>
+<p>Since then, I have updated it a bit to do some more work. It will calculate the Moon position generically. Since version 1.1.0, it will also calculate other sunrise/sunset times depending on your needs.</p>
 <ul>
 <li>Can accurately calculate Standard Sunrise and Sunset</li>
 <li>Can accurately calculate Nautical Sunrise and Sunset</li>
@@ -80,7 +80,7 @@ New Github Pages</h1>
 Version 1.1.1 IMPORTANT changes</h1>
 <p>I have migrated to an all lower case file name structure. Starting with master and 1.1.1, you must use</p>
 <div class="fragment"><div class="line">#include &lt;sunset.h&gt;</div>
-</div><!-- fragment --><p>Instead of SunSet.h in the previous. This change was originally caused by the changes to the Particle build system where I use this library extensively. They forced me to name the file the same as the package name which resulted in an upper and lower case name. Now it's all lower case, pry the way I should have started it.</p>
+</div><!-- fragment --><p>Instead of SunSet.h in the previous versions. This change was originally caused by the changes to the Particle build system where I use this library extensively. They forced me to name the file the same as the package name which resulted in an upper and lower case name. Now it's all lower case, pry the way I should have started it.</p>
 <p>I've also change the google test enable variable, though I'm not sure many used that. I've updated the readme below to reflect the change.</p>
 <h1><a class="anchor" id="autotoc_md3"></a>
 License</h1>
@@ -169,7 +169,7 @@ Details</h1>
 </ul>
 </li>
 </ol>
-<p>The example below gives some hints for using the library, it's pretty simple. Every time you need the calculation call for it. I wouldn't suggest caching the value unless you can handle changes in date so the calculation is correct relative to a date you need.</p>
+<p>The example below gives some hints for using the library, it's pretty simple. Every time you need the calculation, call for it. I wouldn't suggest caching the value unless you can handle changes in date so the calculation is correct relative to a date you need.</p>
 <p><a class="el" href="classSunSet.html">SunSet</a> is C++, no C implementation is provided. It is compiled using C++14, and any code using it should use C++14 as well as there is a dependency on C++14 at a minimum. Newer C++ versions work as well.</p>
 <h1><a class="anchor" id="autotoc_md12"></a>
 Releases</h1>
@@ -180,23 +180,23 @@ Releases</h1>
 <li>1.1.0 New capabilities. Added Civil, Nautical, and Astronomical sunrise and sunset.<ul>
 <li>New API's for the new functionality. See the code for details.</li>
 <li>Begin to deprecate UTC functions. These will not be removed until later if ever. They are not tested as well.</li>
-<li>Migrate timzone to be a double for fractional timezones. IST for example works correctly now.</li>
+<li>Migrate timezone to be a double for fractional timezones. IST for example works correctly now.</li>
 </ul>
 </li>
 <li>1.0.11 Fixes related to making SAMD targets compile. SAMD doesn't like std::chrono it seems.</li>
 <li>1.0.10 Fixed a bug in a header file, it should build for all platforms now.</li>
 <li>1.0.9: Revert some imported changes which broke the system.</li>
 <li>1.0.8: Fix installation path issue and update README to include installation instructions.</li>
-<li>1.0.7: Allowes for use of positive or negative longitude values. Thank you to <a href="https://github.com/nliviu">https://github.com/nliviu</a>.</li>
+<li>1.0.7: Allows for use of positive or negative longitude values. Thank you to <a href="https://github.com/nliviu">https://github.com/nliviu</a>.</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md13"></a>
 Moon Phases</h1>
-<p>This library also allows you to calculate the moon phase for the current day to an integer value. This means it's not perfectly accurate, but it's pretty close. To use it, you call moonPhase() with an integer value that is the number of seconds from the January 1, 1970 epoch. It will do some simple math and return an integer value that represents the current phase of the moon, from 0 to 29. In this case, 0 is new, and 29 is new, 15 is full. The code handles times that may cause the calculation to return 30 to avoid some limits confustion (there aren't 30 days in the lunar cycle, but it's close enough that some time values will cause it to return 30 anyway).</p>
+<p>This library also allows you to calculate the moon phase for the current day to an integer value. This means it's not perfectly accurate, but it's pretty close. To use it, you call moonPhase() with an integer value that is the number of seconds from the January 1, 1970 epoch. It will do some simple math and return an integer value that represents the current phase of the moon, from 0 to 29. In this case, 0 is new, and 29 is new, 15 is full. The code handles times that may cause the calculation to return 30 to avoid some limits confusion (there aren't 30 days in the lunar cycle, but it's close enough that some time values will cause it to return 30 anyway).</p>
 <h1><a class="anchor" id="autotoc_md14"></a>
 Examples</h1>
-<p>This example is relative to an .ino file. Create a global object, and initialize it and use it in loop().</p>
+<p>This example is relative to an .ino file. Create a global object, initialize it and use it in loop().</p>
 <div class="fragment"><div class="line">#include &lt;time&gt;</div>
-<div class="line">#include &lt;SunSet.h&gt;</div>
+<div class="line">#include &lt;sunset.h&gt;</div>
 <div class="line">#define TIMEZONE    -5</div>
 <div class="line">#define LATITUDE    40.0000</div>
 <div class="line">#define LONGITUDE   -89.0000</div>
@@ -224,7 +224,7 @@ Examples</h1>
 <div class="line">}</div>
 </div><!-- fragment --><p>This example is for the Raspberry Pi using C++</p>
 <div class="fragment"><div class="line">#include &lt;ctime&gt;</div>
-<div class="line">#include &lt;SunSet.h&gt;</div>
+<div class="line">#include &lt;sunset.h&gt;</div>
 <div class="line"> </div>
 <div class="line">#define ONE_HOUR    (60 * 60)</div>
 <div class="line">#define TIMEZONE    -5</div>
@@ -238,8 +238,8 @@ Examples</h1>
 <div class="line">    auto rightnow = std::time(nullptr);</div>
 <div class="line">    struct tm *tad = std::localtime(&amp;rightnow);</div>
 <div class="line">    </div>
-<div class="line">    m_sun.setPosition(lat, lon, tad-&gt;tm_gmtoff / ONE_HOUR);</div>
-<div class="line">    m_sun.setCurrentDate(tad-&gt;tm_year + 1900, tad-&gt;tm_mon + 1, tad-&gt;tm_mday);</div>
+<div class="line">    sun.setPosition(lat, lon, tad-&gt;tm_gmtoff / ONE_HOUR);</div>
+<div class="line">    sun.setCurrentDate(tad-&gt;tm_year + 1900, tad-&gt;tm_mon + 1, tad-&gt;tm_mday);</div>
 <div class="line">    double sunrise = sun.calcSunrise();</div>
 <div class="line">    double sunset = sun.calcSunsetLocal();</div>
 <div class="line">    double civilSunrise = sun.calcCivilSunrise();</div>
@@ -250,18 +250,18 @@ Examples</h1>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md15"></a>
 Notes</h1>
 <ul>
-<li>This is a general purpose calculator, so you could calculate when Sunrise was on the day Shakespeare died. Hence some of the design decisions</li>
-<li>Date values are absolute, are not zero based, and should not be abbreviated (e.g. don’t use 15 for 2015 or 0 for January)</li>
+<li>This is a general purpose calculator, so you could calculate when Sunrise was on the day Shakespeare died. Hence some of the design decisions.</li>
+<li>Date values are absolute, are not zero based, and should not be abbreviated. (e.g. don’t use 15 for 2015 or 0 for January)</li>
 <li>This library has a hard requirement on a 32 bit micro with native hard float. Soft float micros <em>do</em> work, but may have issues. The math is pretty intensive.</li>
-<li>It is important to remember you MUST have accurate date and time. The calculations are time sensitive, and if you aren't accurate the results will be obvious. Note that the library does not use hours, minutes, or seconds, just the date, so syncing time a lot won't help, just making sure it's accurate at midnight so you can set the date before calling the calc functions. Knowing when to update the timzone for savings time if applicaple is also pretty important.</li>
-<li>It can be used as a general purpose library on any Linux machine as well as on an Arduino or Particle Photon. You just need to compile it into your RPI or Beagle project using cmake 3.0 or later.</li>
-<li>UTC is not the UTC sunrise time, it is the time in Greenwhich when the sun would rise at the location specified to the library. It's werid, but allows for some flexibility when doing calcualations depending on how you keep track of time in your system. The UTC specific calls are being deprecated starting with 1.1.0.</li>
-<li>Use of Civil, Nautical, and Astronomical values are interesting for lots of new uses of the library. They are added as a convience, but hopefully will prove useful. These functions do not have equal UTC functions.</li>
+<li>It is important to remember you MUST have accurate date and time. The calculations are time sensitive, and if you aren't accurate, the results will be obvious. Note that the library does not use hours, minutes, or seconds, just the date, so syncing time a lot won't help, just making sure it's accurate at midnight so you can set the date before calling the calc functions. Knowing when to update the timzone for savings time if applicaple is also pretty important.</li>
+<li>It can be used as a general purpose library on any Linux machine, as well as on an Arduino or Particle Photon. You just need to compile it into your RPI or Beagle project using cmake 3.0 or later.</li>
+<li>UTC is not the UTC sunrise time, it is the time in Greenwhich when the sun would rise at the location specified to the library. It's weird, but allows for some flexibility when doing calcualations depending on how you keep track of time in your system. The UTC specific calls are being deprecated starting with 1.1.0.</li>
+<li>Use of Civil, Nautical, and Astronomical values are interesting for lots of new uses of the library. They are added as a convenience, but hopefully will prove useful. These functions do not have equal UTC functions.</li>
 <li>I do not build or test on a Windows target. I don't have a Windows machine to do so. I do test this on a Mac, but only lightly and not every release right now.</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md16"></a>
 ESP Devices</h1>
-<p>The popular ESP devices seem to have some inconsistencies. While it is possible to run on the 8266, which has no FPU but is 32bit, the math is slow, and if you are doing time constrained activities, there is no specific guaruntee that this library will work for you. Testing shows it does work well enough, but specific timings on how long it takes to do calculations, especially above 67 degrees, have not been done. Use it at your own risk.</p>
+<p>The popular ESP devices seem to have some inconsistencies. While it is possible to run on the 8266, which has no FPU but is 32bit, the math is slow, and if you are doing time constrained activities, there is no specific guarantee that this library will work for you. Testing shows it does work well enough, but use it at your own risk.</p>
 <p>At this time, using this library with an 8266 is not considered a valid combination, though it may work for you.</p>
 <p>The ESP32 also has some FPU issues, though at this time, there is no indication this library will not work on that micro.</p>
 <ul>

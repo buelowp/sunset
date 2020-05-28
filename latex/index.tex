@@ -1,6 +1,6 @@
 This is a modification of the sunrise.\+c posted by Mike Chirico back in 2004. See the link below to find it. I needed an algorithm that could tell me when it was dark out for all intents and purposes. I found Mike’s code, and modified it a bit to be a library that can be used again and again.
 
-Since then, I have updated it a bit to do some more work. It will calculate the Moon position generically. It also with version 1.\+1.\+0 calculate other sunrise/sunset times depending on your needs
+Since then, I have updated it a bit to do some more work. It will calculate the Moon position generically. Since version 1.\+1.\+0, it will also calculate other sunrise/sunset times depending on your needs.
 
 
 \begin{DoxyItemize}
@@ -18,7 +18,7 @@ I have migrated to an all lower case file name structure. Starting with master a
 \end{DoxyCode}
 
 
-Instead of Sun\+Set.\+h in the previous. This change was originally caused by the changes to the Particle build system where I use this library extensively. They forced me to name the file the same as the package name which resulted in an upper and lower case name. Now it\textquotesingle{}s all lower case, pry the way I should have started it.
+Instead of Sun\+Set.\+h in the previous versions. This change was originally caused by the changes to the Particle build system where I use this library extensively. They forced me to name the file the same as the package name which resulted in an upper and lower case name. Now it\textquotesingle{}s all lower case, pry the way I should have started it.
 
 I\textquotesingle{}ve also change the google test enable variable, though I\textquotesingle{}m not sure many used that. I\textquotesingle{}ve updated the readme below to reflect the change.\hypertarget{index_autotoc_md3}{}\doxysection{License}\label{index_autotoc_md3}
 This is governed by the G\+P\+L2 license. See the License terms in the L\+I\+C\+E\+N\+SE file. Use it as you want, make changes as you want, but please contribute back in accordance with the G\+PL.\hypertarget{index_autotoc_md4}{}\doxysection{Building}\label{index_autotoc_md4}
@@ -112,7 +112,7 @@ To use \mbox{\hyperlink{classSunSet}{Sun\+Set}}, you need to a few bits of local
 \end{DoxyItemize}
 \end{DoxyEnumerate}
 
-The example below gives some hints for using the library, it\textquotesingle{}s pretty simple. Every time you need the calculation call for it. I wouldn\textquotesingle{}t suggest caching the value unless you can handle changes in date so the calculation is correct relative to a date you need.
+The example below gives some hints for using the library, it\textquotesingle{}s pretty simple. Every time you need the calculation, call for it. I wouldn\textquotesingle{}t suggest caching the value unless you can handle changes in date so the calculation is correct relative to a date you need.
 
 \mbox{\hyperlink{classSunSet}{Sun\+Set}} is C++, no C implementation is provided. It is compiled using C++14, and any code using it should use C++14 as well as there is a dependency on C++14 at a minimum. Newer C++ versions work as well.\hypertarget{index_autotoc_md12}{}\doxysection{Releases}\label{index_autotoc_md12}
 
@@ -124,21 +124,21 @@ The example below gives some hints for using the library, it\textquotesingle{}s 
 \begin{DoxyItemize}
 \item New A\+PI\textquotesingle{}s for the new functionality. See the code for details.
 \item Begin to deprecate U\+TC functions. These will not be removed until later if ever. They are not tested as well.
-\item Migrate timzone to be a double for fractional timezones. I\+ST for example works correctly now.
+\item Migrate timezone to be a double for fractional timezones. I\+ST for example works correctly now.
 \end{DoxyItemize}
 \item 1.\+0.\+11 Fixes related to making S\+A\+MD targets compile. S\+A\+MD doesn\textquotesingle{}t like std\+::chrono it seems.
 \item 1.\+0.\+10 Fixed a bug in a header file, it should build for all platforms now.
 \item 1.\+0.\+9\+: Revert some imported changes which broke the system.
 \item 1.\+0.\+8\+: Fix installation path issue and update R\+E\+A\+D\+ME to include installation instructions.
-\item 1.\+0.\+7\+: Allowes for use of positive or negative longitude values. Thank you to \href{https://github.com/nliviu}{\texttt{ https\+://github.\+com/nliviu}}.
+\item 1.\+0.\+7\+: Allows for use of positive or negative longitude values. Thank you to \href{https://github.com/nliviu}{\texttt{ https\+://github.\+com/nliviu}}.
 \end{DoxyItemize}\hypertarget{index_autotoc_md13}{}\doxysection{Moon Phases}\label{index_autotoc_md13}
-This library also allows you to calculate the moon phase for the current day to an integer value. This means it\textquotesingle{}s not perfectly accurate, but it\textquotesingle{}s pretty close. To use it, you call moon\+Phase() with an integer value that is the number of seconds from the January 1, 1970 epoch. It will do some simple math and return an integer value that represents the current phase of the moon, from 0 to 29. In this case, 0 is new, and 29 is new, 15 is full. The code handles times that may cause the calculation to return 30 to avoid some limits confustion (there aren\textquotesingle{}t 30 days in the lunar cycle, but it\textquotesingle{}s close enough that some time values will cause it to return 30 anyway).\hypertarget{index_autotoc_md14}{}\doxysection{Examples}\label{index_autotoc_md14}
-This example is relative to an .ino file. Create a global object, and initialize it and use it in loop().
+This library also allows you to calculate the moon phase for the current day to an integer value. This means it\textquotesingle{}s not perfectly accurate, but it\textquotesingle{}s pretty close. To use it, you call moon\+Phase() with an integer value that is the number of seconds from the January 1, 1970 epoch. It will do some simple math and return an integer value that represents the current phase of the moon, from 0 to 29. In this case, 0 is new, and 29 is new, 15 is full. The code handles times that may cause the calculation to return 30 to avoid some limits confusion (there aren\textquotesingle{}t 30 days in the lunar cycle, but it\textquotesingle{}s close enough that some time values will cause it to return 30 anyway).\hypertarget{index_autotoc_md14}{}\doxysection{Examples}\label{index_autotoc_md14}
+This example is relative to an .ino file. Create a global object, initialize it and use it in loop().
 
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\#include <time>}
-\DoxyCodeLine{\#include <SunSet.h>}
+\DoxyCodeLine{\#include <sunset.h>}
 \DoxyCodeLine{\#define TIMEZONE    -\/5}
 \DoxyCodeLine{\#define LATITUDE    40.0000}
 \DoxyCodeLine{\#define LONGITUDE   -\/89.0000}
@@ -172,7 +172,7 @@ This example is for the Raspberry Pi using C++
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\#include <ctime>}
-\DoxyCodeLine{\#include <SunSet.h>}
+\DoxyCodeLine{\#include <sunset.h>}
 \DoxyCodeLine{}
 \DoxyCodeLine{\#define ONE\_HOUR    (60 * 60)}
 \DoxyCodeLine{\#define TIMEZONE    -\/5}
@@ -186,8 +186,8 @@ This example is for the Raspberry Pi using C++
 \DoxyCodeLine{    auto rightnow = std::time(nullptr);}
 \DoxyCodeLine{    struct tm *tad = std::localtime(\&rightnow);}
 \DoxyCodeLine{    }
-\DoxyCodeLine{    m\_sun.setPosition(lat, lon, tad-\/>tm\_gmtoff / ONE\_HOUR);}
-\DoxyCodeLine{    m\_sun.setCurrentDate(tad-\/>tm\_year + 1900, tad-\/>tm\_mon + 1, tad-\/>tm\_mday);}
+\DoxyCodeLine{    sun.setPosition(lat, lon, tad-\/>tm\_gmtoff / ONE\_HOUR);}
+\DoxyCodeLine{    sun.setCurrentDate(tad-\/>tm\_year + 1900, tad-\/>tm\_mon + 1, tad-\/>tm\_mday);}
 \DoxyCodeLine{    double sunrise = sun.calcSunrise();}
 \DoxyCodeLine{    double sunset = sun.calcSunsetLocal();}
 \DoxyCodeLine{    double civilSunrise = sun.calcCivilSunrise();}
@@ -199,16 +199,16 @@ This example is for the Raspberry Pi using C++
 \hypertarget{index_autotoc_md15}{}\doxysection{Notes}\label{index_autotoc_md15}
 
 \begin{DoxyItemize}
-\item This is a general purpose calculator, so you could calculate when Sunrise was on the day Shakespeare died. Hence some of the design decisions
-\item Date values are absolute, are not zero based, and should not be abbreviated (e.\+g. don’t use 15 for 2015 or 0 for January)
+\item This is a general purpose calculator, so you could calculate when Sunrise was on the day Shakespeare died. Hence some of the design decisions.
+\item Date values are absolute, are not zero based, and should not be abbreviated. (e.\+g. don’t use 15 for 2015 or 0 for January)
 \item This library has a hard requirement on a 32 bit micro with native hard float. Soft float micros {\itshape do} work, but may have issues. The math is pretty intensive.
-\item It is important to remember you M\+U\+ST have accurate date and time. The calculations are time sensitive, and if you aren\textquotesingle{}t accurate the results will be obvious. Note that the library does not use hours, minutes, or seconds, just the date, so syncing time a lot won\textquotesingle{}t help, just making sure it\textquotesingle{}s accurate at midnight so you can set the date before calling the calc functions. Knowing when to update the timzone for savings time if applicaple is also pretty important.
-\item It can be used as a general purpose library on any Linux machine as well as on an Arduino or Particle Photon. You just need to compile it into your R\+PI or Beagle project using cmake 3.\+0 or later.
-\item U\+TC is not the U\+TC sunrise time, it is the time in Greenwhich when the sun would rise at the location specified to the library. It\textquotesingle{}s werid, but allows for some flexibility when doing calcualations depending on how you keep track of time in your system. The U\+TC specific calls are being deprecated starting with 1.\+1.\+0.
-\item Use of Civil, Nautical, and Astronomical values are interesting for lots of new uses of the library. They are added as a convience, but hopefully will prove useful. These functions do not have equal U\+TC functions.
+\item It is important to remember you M\+U\+ST have accurate date and time. The calculations are time sensitive, and if you aren\textquotesingle{}t accurate, the results will be obvious. Note that the library does not use hours, minutes, or seconds, just the date, so syncing time a lot won\textquotesingle{}t help, just making sure it\textquotesingle{}s accurate at midnight so you can set the date before calling the calc functions. Knowing when to update the timzone for savings time if applicaple is also pretty important.
+\item It can be used as a general purpose library on any Linux machine, as well as on an Arduino or Particle Photon. You just need to compile it into your R\+PI or Beagle project using cmake 3.\+0 or later.
+\item U\+TC is not the U\+TC sunrise time, it is the time in Greenwhich when the sun would rise at the location specified to the library. It\textquotesingle{}s weird, but allows for some flexibility when doing calcualations depending on how you keep track of time in your system. The U\+TC specific calls are being deprecated starting with 1.\+1.\+0.
+\item Use of Civil, Nautical, and Astronomical values are interesting for lots of new uses of the library. They are added as a convenience, but hopefully will prove useful. These functions do not have equal U\+TC functions.
 \item I do not build or test on a Windows target. I don\textquotesingle{}t have a Windows machine to do so. I do test this on a Mac, but only lightly and not every release right now.
 \end{DoxyItemize}\hypertarget{index_autotoc_md16}{}\doxysection{E\+S\+P Devices}\label{index_autotoc_md16}
-The popular E\+SP devices seem to have some inconsistencies. While it is possible to run on the 8266, which has no F\+PU but is 32bit, the math is slow, and if you are doing time constrained activities, there is no specific guaruntee that this library will work for you. Testing shows it does work well enough, but specific timings on how long it takes to do calculations, especially above 67 degrees, have not been done. Use it at your own risk.
+The popular E\+SP devices seem to have some inconsistencies. While it is possible to run on the 8266, which has no F\+PU but is 32bit, the math is slow, and if you are doing time constrained activities, there is no specific guarantee that this library will work for you. Testing shows it does work well enough, but use it at your own risk.
 
 At this time, using this library with an 8266 is not considered a valid combination, though it may work for you.
 
