@@ -170,8 +170,8 @@ void main(int argc, char *argv)
     auto rightnow = std::time(nullptr);
     struct tm *tad = std::localtime(&rightnow);
     
-    m_sun.setPosition(lat, lon, tad->tm_gmtoff / ONE_HOUR);
-    m_sun.setCurrentDate(tad->tm_year + 1900, tad->tm_mon + 1, tad->tm_mday);
+    sun.setPosition(lat, lon, tad->tm_gmtoff / ONE_HOUR);
+    sun.setCurrentDate(tad->tm_year + 1900, tad->tm_mon + 1, tad->tm_mday);
     double sunrise = sun.calcSunrise();
     double sunset = sun.calcSunsetLocal();
     double civilSunrise = sun.calcCivilSunrise();
