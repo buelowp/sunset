@@ -94,8 +94,8 @@ To use SunSet, you need to a few bits of local information.
    * This isn't very useful in the long run, so the UTC functions will be deprecated. The new civil, astro, and nautical API's do not include the UTC analog. This is by design.
 1. The library returns a double that indicates how many minutes past midnight relative to the set date that sunrise or sunset will happen. If the sun will rise at 6am local to the set location and date, then you will get a return value of 360.0. Decimal points indicate fractions of a minute.
    * Note that the library may return 359.89 for a 6 AM result. Doubles don't map to times very well, so the actual return value IS correct, but should be rounded up if so desired to match other calculators.
-1. The library returns NaN for instances where there is no real sunrise or sunset value. You MUST check for this as a valid return as there isn't another way to handle the value. I choose not to return 0 in this case as 0 would be a valid sunrise/sunset potentially, and it would be confusing for cases where there isn't a valid value.
-   * It has been brough to my attention that for latitudes above 67, the 8266 and possibly other micros may have issues doing the math, though why I do not know. I can't get the library to crash in the same way under Linux, and don't have debug capabilities for similar micros right now. I will investigate why it might crash for that scenario in the future, but for now, be aware that calculations above 67 latitude might cause issues on some devices. https://github.com/buelowp/sunset/issues/16
+1. The library may return NaN or 0 for instances where there is no real sunrise or sunset value (above the arctic circle in summer as an example). The differences seem to be compiler and platform related, and is not something I am currently doing something about. Correctly checking for return value is a critical need and not ignoring 0 or NaN will make this library work better for you in the long run.
+   * This library does some pretty intensive math, so devices without an FPU are going to run slower because of it. As of version 1.1.3, this library does work for the ESP8266, but this is not an indication that it will run on all non FPU enabled devices.
 
 
 The example below gives some hints for using the library, it's pretty simple. Every time you need the calculation call for it. I wouldn't suggest caching the value unless you can handle changes in date so the calculation is correct relative to a date you need.
@@ -103,6 +103,7 @@ The example below gives some hints for using the library, it's pretty simple. Ev
 SunSet is C++, no C implementation is provided. It is compiled using C++14, and any code using it should use C++14 as well as there is a dependency on C++14 at a minimum. Newer C++ versions work as well.
 
 # Releases
+* 1.1.3 Performance improvements to enable the ESP8266 to function better. Thank you to https://github.com/Glichy.
 * 1.1.2 Bumping the library.properties license field to be correct. This forced a new release number so it would work with build systems.
 * 1.1.1 Changes to support case insensitive file systems.
 * 1.1.0 New capabilities. Added Civil, Nautical, and Astronomical sunrise and sunset.
@@ -193,9 +194,11 @@ void main(int argc, char *argv)
 * I do not build or test on a Windows target. I don't have a Windows machine to do so. I do test this on a Mac, but only lightly and not every release right now.
 
 # ESP Devices
-The popular ESP devices seem to have some inconsistencies. Extensive testing by a user on an 8266 has shown that being 32 bit, but without a true FPU can cause the micro to hang or fail for some of these calculations. Since the library depends on some very extensive use of double AND standard match functions, it's not possible to optimize this out, hence the 32 bit with an FPU requirement. The report was that the library may cause the math to take longer than the watchdog timeout for some combinations of Latitude, specifically above 67. 
+The popular ESP devices seem to have some inconsistencies. While it is possible to run on the 8266, which has no FPU but is 32bit, the math is slow, and if you are doing time constrained activities, there is no specific guaruntee that this library will work for you. Testing shows it does work well enough, but specific timings on how long it takes to do calculations, especially above 67 degrees, have not been done. Use it at your own risk.
 
-At this time, using this library with an 8266 is not considered a valid combination. I do have ESP32 devices, but not available right now, so testing against an ESP device with an FPU, even if it's a bit hobbled (see links below) has to wait unless I get a volunteer. I'll post results when I can run the tests.
+At this time, using this library with an 8266 is not considered a valid combination, though it may work for you.
+
+The ESP32 also has some FPU issues, though at this time, there is no indication this library will not work on that micro.
 
 * https://www.esp32.com/viewtopic.php?f=14&t=800
 * https://blog.classycode.com/esp32-floating-point-performance-6e9f6f567a69
