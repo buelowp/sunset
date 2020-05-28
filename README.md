@@ -1,7 +1,7 @@
 # Calculate Sunrise and Sunset based on time and latitude and longitude
 This is a modification of the sunrise.c posted by Mike Chirico back in 2004. See the link below to find it. I needed an algorithm that could tell me when it was dark out for all intents and purposes. I found Mike’s code, and modified it a bit to be a library that can be used again and again.
 
-Since then, I have updated it a bit to do some more work. It will calculate the Moon position generically. It also with version 1.1.0 calculate other sunrise/sunset times depending on your needs
+Since then, I have updated it a bit to do some more work. It will calculate the Moon position generically. Since version 1.1.0, it will also calculate other sunrise/sunset times depending on your needs.
 
 * Can accurately calculate Standard Sunrise and Sunset
 * Can accurately calculate Nautical Sunrise and Sunset
@@ -18,7 +18,7 @@ I have migrated to an all lower case file name structure. Starting with master a
 #include <sunset.h>
 ```
 
-Instead of SunSet.h in the previous. This change was originally caused by the changes to the Particle build system where I use this library extensively. They forced me to name the file the same as the package name which resulted in an upper and lower case name. Now it's all lower case, pry the way I should have started it.
+Instead of SunSet.h in the previous versions. This change was originally caused by the changes to the Particle build system where I use this library extensively. They forced me to name the file the same as the package name which resulted in an upper and lower case name. Now it's all lower case, pry the way I should have started it.
 
 I've also change the google test enable variable, though I'm not sure many used that. I've updated the readme below to reflect the change.
 
@@ -98,7 +98,7 @@ To use SunSet, you need to a few bits of local information.
    * This library does some pretty intensive math, so devices without an FPU are going to run slower because of it. As of version 1.1.3, this library does work for the ESP8266, but this is not an indication that it will run on all non FPU enabled devices.
 
 
-The example below gives some hints for using the library, it's pretty simple. Every time you need the calculation call for it. I wouldn't suggest caching the value unless you can handle changes in date so the calculation is correct relative to a date you need.
+The example below gives some hints for using the library, it's pretty simple. Every time you need the calculation, call for it. I wouldn't suggest caching the value unless you can handle changes in date so the calculation is correct relative to a date you need.
 
 SunSet is C++, no C implementation is provided. It is compiled using C++14, and any code using it should use C++14 as well as there is a dependency on C++14 at a minimum. Newer C++ versions work as well.
 
@@ -109,22 +109,22 @@ SunSet is C++, no C implementation is provided. It is compiled using C++14, and 
 * 1.1.0 New capabilities. Added Civil, Nautical, and Astronomical sunrise and sunset.
   * New API's for the new functionality. See the code for details.
   * Begin to deprecate UTC functions. These will not be removed until later if ever. They are not tested as well.
-  * Migrate timzone to be a double for fractional timezones. IST for example works correctly now.
+  * Migrate timezone to be a double for fractional timezones. IST for example works correctly now.
 * 1.0.11 Fixes related to making SAMD targets compile. SAMD doesn't like std::chrono it seems.
 * 1.0.10 Fixed a bug in a header file, it should build for all platforms now.
 * 1.0.9: Revert some imported changes which broke the system.
 * 1.0.8: Fix installation path issue and update README to include installation instructions.
-* 1.0.7: Allowes for use of positive or negative longitude values. Thank you to https://github.com/nliviu.
+* 1.0.7: Allows for use of positive or negative longitude values. Thank you to https://github.com/nliviu.
 
 # Moon Phases
-This library also allows you to calculate the moon phase for the current day to an integer value. This means it's not perfectly accurate, but it's pretty close. To use it, you call moonPhase() with an integer value that is the number of seconds from the January 1, 1970 epoch. It will do some simple math and return an integer value that represents the current phase of the moon, from 0 to 29. In this case, 0 is new, and 29 is new, 15 is full. The code handles times that may cause the calculation to return 30 to avoid some limits confustion (there aren't 30 days in the lunar cycle, but it's close enough that some time values will cause it to return 30 anyway).
+This library also allows you to calculate the moon phase for the current day to an integer value. This means it's not perfectly accurate, but it's pretty close. To use it, you call moonPhase() with an integer value that is the number of seconds from the January 1, 1970 epoch. It will do some simple math and return an integer value that represents the current phase of the moon, from 0 to 29. In this case, 0 is new, and 29 is new, 15 is full. The code handles times that may cause the calculation to return 30 to avoid some limits confusion (there aren't 30 days in the lunar cycle, but it's close enough that some time values will cause it to return 30 anyway).
 
 # Examples
-This example is relative to an .ino file. Create a global object, and initialize it and use it in loop().
+This example is relative to an .ino file. Create a global object, initialize it and use it in loop().
 
 ```
 #include <time>
-#include <SunSet.h>
+#include <sunset.h>
 #define TIMEZONE	-5
 #define LATITUDE	40.0000
 #define LONGITUDE	-89.0000
@@ -156,7 +156,7 @@ This example is for the Raspberry Pi using C++
 
 ```
 #include <ctime>
-#include <SunSet.h>
+#include <sunset.h>
 
 #define ONE_HOUR	(60 * 60)
 #define TIMEZONE	-5
@@ -170,8 +170,8 @@ void main(int argc, char *argv)
     auto rightnow = std::time(nullptr);
     struct tm *tad = std::localtime(&rightnow);
     
-    m_sun.setPosition(lat, lon, tad->tm_gmtoff / ONE_HOUR);
-    m_sun.setCurrentDate(tad->tm_year + 1900, tad->tm_mon + 1, tad->tm_mday);
+    sun.setPosition(lat, lon, tad->tm_gmtoff / ONE_HOUR);
+    sun.setCurrentDate(tad->tm_year + 1900, tad->tm_mon + 1, tad->tm_mday);
     double sunrise = sun.calcSunrise();
     double sunset = sun.calcSunsetLocal();
     double civilSunrise = sun.calcCivilSunrise();
@@ -184,17 +184,17 @@ void main(int argc, char *argv)
 
 # Notes
 
-* This is a general purpose calculator, so you could calculate when Sunrise was on the day Shakespeare died. Hence some of the design decisions
-* Date values are absolute, are not zero based, and should not be abbreviated (e.g. don’t use 15 for 2015 or 0 for January)
+* This is a general purpose calculator, so you could calculate when Sunrise was on the day Shakespeare died. Hence some of the design decisions.
+* Date values are absolute, are not zero based, and should not be abbreviated. (e.g. don’t use 15 for 2015 or 0 for January)
 * This library has a hard requirement on a 32 bit micro with native hard float. Soft float micros *do* work, but may have issues. The math is pretty intensive.
-* It is important to remember you MUST have accurate date and time. The calculations are time sensitive, and if you aren't accurate the results will be obvious. Note that the library does not use hours, minutes, or seconds, just the date, so syncing time a lot won't help, just making sure it's accurate at midnight so you can set the date before calling the calc functions. Knowing when to update the timzone for savings time if applicaple is also pretty important.
-* It can be used as a general purpose library on any Linux machine as well as on an Arduino or Particle Photon. You just need to compile it into your RPI or Beagle project using cmake 3.0 or later.
-* UTC is not the UTC sunrise time, it is the time in Greenwhich when the sun would rise at the location specified to the library. It's werid, but allows for some flexibility when doing calcualations depending on how you keep track of time in your system. The UTC specific calls are being deprecated starting with 1.1.0.
-* Use of Civil, Nautical, and Astronomical values are interesting for lots of new uses of the library. They are added as a convience, but hopefully will prove useful. These functions do not have equal UTC functions.
+* It is important to remember you MUST have accurate date and time. The calculations are time sensitive, and if you aren't accurate, the results will be obvious. Note that the library does not use hours, minutes, or seconds, just the date, so syncing time a lot won't help, just making sure it's accurate at midnight so you can set the date before calling the calc functions. Knowing when to update the timzone for savings time if applicaple is also pretty important.
+* It can be used as a general purpose library on any Linux machine, as well as on an Arduino or Particle Photon. You just need to compile it into your RPI or Beagle project using cmake 3.0 or later.
+* UTC is not the UTC sunrise time, it is the time in Greenwhich when the sun would rise at the location specified to the library. It's weird, but allows for some flexibility when doing calcualations depending on how you keep track of time in your system. The UTC specific calls are being deprecated starting with 1.1.0.
+* Use of Civil, Nautical, and Astronomical values are interesting for lots of new uses of the library. They are added as a convenience, but hopefully will prove useful. These functions do not have equal UTC functions.
 * I do not build or test on a Windows target. I don't have a Windows machine to do so. I do test this on a Mac, but only lightly and not every release right now.
 
 # ESP Devices
-The popular ESP devices seem to have some inconsistencies. While it is possible to run on the 8266, which has no FPU but is 32bit, the math is slow, and if you are doing time constrained activities, there is no specific guaruntee that this library will work for you. Testing shows it does work well enough, but specific timings on how long it takes to do calculations, especially above 67 degrees, have not been done. Use it at your own risk.
+The popular ESP devices seem to have some inconsistencies. While it is possible to run on the 8266, which has no FPU but is 32bit, the math is slow, and if you are doing time constrained activities, there is no specific guarantee that this library will work for you. Testing shows it does work well enough, but use it at your own risk.
 
 At this time, using this library with an 8266 is not considered a valid combination, though it may work for you.
 

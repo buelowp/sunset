@@ -1,6 +1,6 @@
 /*
  * Provides the ability to calculate the local time for sunrise,
- * sunwet, and moonrise at any point in time at any location in the world
+ * sunset, and moonrise at any point in time at any location in the world
  *
  * Original work used with permission maintaining license
  * Copyright (GPL) 2004 Mike Chirico mchirico@comcast.net
@@ -38,8 +38,8 @@ SunSet::SunSet() : m_latitude(0.0), m_longitude(0.0), m_julianDate(0.0), m_tzOff
 
 /**
  * \fn SunSet::SunSet(double lat, double lon, int tz)
- * \param lat Latitude for this object
- * \param lon Longitude for this object
+ * \param lat Double Latitude for this object
+ * \param lon Double Longitude for this object
  * \param tz Integer based timezone for this object
  * 
  * This will create an object for a location with an integer based
@@ -53,11 +53,11 @@ SunSet::SunSet(double lat, double lon, int tz) : m_latitude(lat), m_longitude(lo
 
 /**
  * \fn SunSet::SunSet(double lat, double lon, double tz)
- * \param lat Latitude for this object
- * \param lon Longitude for this object
+ * \param lat Double Latitude for this object
+ * \param lon Double Longitude for this object
  * \param tz Double based timezone for this object
  * 
- * This will create an object for a location with an double based
+ * This will create an object for a location with a double based
  * timezone value.
  */
 SunSet::SunSet(double lat, double lon, double tz) : m_latitude(lat), m_longitude(lon), m_julianDate(0.0), m_tzOffset(tz)
@@ -75,9 +75,9 @@ SunSet::~SunSet()
 
 /**
  * \fn void SunSet::setPosition(double lat, double lon, int tz)
- * \param lat double Latitude value
- * \param lon double Longitude value
- * \param tz Integer timezone offset
+ * \param lat Double Latitude value
+ * \param lon Double Longitude value
+ * \param tz Integer Timezone offset
  * 
  * This will set the location the library uses for it's math. The
  * timezone is included in this as it's not valid to call
@@ -102,9 +102,9 @@ void SunSet::setPosition(double lat, double lon, int tz)
 
 /**
  * \fn void SunSet::setPosition(double lat, double lon, double tz)
- * \param lat double Latitude value
- * \param lon double Longitude value
- * \param tz double timezone offset
+ * \param lat Double Latitude value
+ * \param lon Double Longitude value
+ * \param tz Double Timezone offset
  * 
  * This will set the location the library uses for it's math. The
  * timezone is included in this as it's not valid to call
@@ -287,7 +287,7 @@ double SunSet::calcSunEqOfCenter(double t)
 
 /**
  * \fn double SunSet::calcAbsSunrise(double offset)
- * \param offset The specific angle to use when calculating sunrise
+ * \param offset Double The specific angle to use when calculating sunrise
  * \return Returns the time in minutes past midnight in UTC for sunrise at your location
  * 
  * This does a bunch of work to get to an accurate angle. Note that it does it 2x, once
@@ -317,12 +317,12 @@ double SunSet::calcAbsSunrise(double offset)
     delta = m_longitude + radToDeg(hourAngle);
     timeDiff = 4 * delta;
     timeUTC = 720 - timeDiff - eqTime; // in minutes
-    return timeUTC;
+    return timeUTC;	// return time in minutes from midnight
 }
 
 /**
  * \fn double SunSet::calcAbsSunset(double offset)
- * \param offset The specific angle to use when calculating sunset
+ * \param offset Double The specific angle to use when calculating sunset
  * \return Returns the time in minutes past midnight in UTC for sunset at your location
  * 
  * This does a bunch of work to get to an accurate angle. Note that it does it 2x, once
@@ -330,7 +330,7 @@ double SunSet::calcAbsSunrise(double offset)
  * refine the value. The first time through, it will be off by as much as 2 minutes, but
  * the second time through, it will be nearly perfect.
  *
- * Note that this is the base calculation for all sunrise calls. The others just modify
+ * Note that this is the base calculation for all sunset calls. The others just modify
  * the offset angle to account for the different needs.
 */
 double SunSet::calcAbsSunset(double offset)
@@ -428,9 +428,9 @@ double SunSet::calcCivilSunset()
 
 /**
  * \fn double SunSet::calcNauticalSunrise()
- * \return Returns the Nautical sunset in fractional minutes past midnight
+ * \return Returns the Nautical sunrise in fractional minutes past midnight
  * 
- * This function will return the Nautical sunset in local time for your location
+ * This function will return the Nautical sunrise in local time for your location
  */
 double SunSet::calcNauticalSunrise()
 {
@@ -452,7 +452,7 @@ double SunSet::calcNauticalSunset()
  * \fn double SunSet::calcSunrise()
  * \return Returns local sunrise in minutes past midnight.
  * 
- * This function supersedes calcSunrise()
+ * This function will return the Official sunrise in local time for your location
  */
 double SunSet::calcSunrise()
 {
@@ -461,9 +461,9 @@ double SunSet::calcSunrise()
 
 /**
  * \fn double SunSet::calcSunset()
- * \return Returns local sunrise in minutes past midnight.
+ * \return Returns local sunset in minutes past midnight.
  * 
- * This function supersedes calcSunset()
+ * This function will return the Official sunset in local time for your location
  */
 double SunSet::calcSunset()
 {
