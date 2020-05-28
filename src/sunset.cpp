@@ -143,6 +143,9 @@ double SunSet::calcMeanObliquityOfEcliptic(double t)
 
 double SunSet::calcGeomMeanLongSun(double t)
 {
+  if (std::isnan(t)) {
+    return nan("");
+  }
   double L = 280.46646 + t * (36000.76983 + 0.0003032 * t);
 
   while ((int) L > 360) {
