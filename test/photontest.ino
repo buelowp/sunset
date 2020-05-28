@@ -38,7 +38,7 @@ String Tests[] = {
     "Moonphase",                                    // 2
     "Capetown Sunrise",                             // 3
     "Moscow Sunrise",                               // 4
-    "Buenos Airies Sunrise",                        // 5
+    "Buenos Aires Sunrise",                        // 5
     "Astronomical Sunrise in Arlington Heights",    // 6
     "Astronomical Sunset in Arlington Heights",     // 7
     "Nautical Sunrise in Arlington Heights",        // 8
@@ -47,10 +47,10 @@ String Tests[] = {
     "Civil Sunset in Arlington Heights",            // 11
     "Valid Julian Date",                            // 12
     "Point Barrow Summer",                          // 13
-    "Point Barrow Sprint",                          // 14
+    "Point Barrow Spring",                          // 14
     "Point Barrow Winter",                          // 15
-    "Usharia Argentina May",                        // 16
-    "Usharia Argentina Winter",                     // 17
+    "Ushuaia Argentina May",                        // 16
+    "Ushuaia Argentina Winter",                     // 17
     "Fractional Sunrise IST",                       // 18
     "Fractional Sunset IST",                        // 19
     "Check above 67",                               // 20
