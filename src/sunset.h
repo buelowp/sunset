@@ -1,6 +1,6 @@
 /*
  * Provides the ability to calculate the local time for sunrise,
- * sunwet, and moonrise at any point in time at any location in the world
+ * sunset, and moonrise at any point in time at any location in the world
  *
  * Original work used with permission maintaining license
  * Copyright (GPL) 2004 Mike Chirico mchirico@comcast.net
