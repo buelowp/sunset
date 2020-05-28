@@ -164,8 +164,8 @@ Details</h1>
 </li>
 </ol>
 <ol type="1">
-<li>The library returns NaN for instances where there is no real sunrise or sunset value. You MUST check for this as a valid return as there isn't another way to handle the value. I choose not to return 0 in this case as 0 would be a valid sunrise/sunset potentially, and it would be confusing for cases where there isn't a valid value.<ul>
-<li>It has been brough to my attention that for latitudes above 67, the 8266 and possibly other micros may have issues doing the math, though why I do not know. I can't get the library to crash in the same way under Linux, and don't have debug capabilities for similar micros right now. I will investigate why it might crash for that scenario in the future, but for now, be aware that calculations above 67 latitude might cause issues on some devices. <a href="https://github.com/buelowp/sunset/issues/16">https://github.com/buelowp/sunset/issues/16</a></li>
+<li>The library may return NaN or 0 for instances where there is no real sunrise or sunset value (above the arctic circle in summer as an example). The differences seem to be compiler and platform related, and is not something I am currently doing something about. Correctly checking for return value is a critical need and not ignoring 0 or NaN will make this library work better for you in the long run.<ul>
+<li>This library does some pretty intensive math, so devices without an FPU are going to run slower because of it. As of version 1.1.3, this library does work for the ESP8266, but this is not an indication that it will run on all non FPU enabled devices.</li>
 </ul>
 </li>
 </ol>
@@ -174,6 +174,7 @@ Details</h1>
 <h1><a class="anchor" id="autotoc_md12"></a>
 Releases</h1>
 <ul>
+<li>1.1.3 Performance improvements to enable the ESP8266 to function better. Thank you to <a href="https://github.com/Glichy">https://github.com/Glichy</a>.</li>
 <li>1.1.2 Bumping the library.properties license field to be correct. This forced a new release number so it would work with build systems.</li>
 <li>1.1.1 Changes to support case insensitive file systems.</li>
 <li>1.1.0 New capabilities. Added Civil, Nautical, and Astronomical sunrise and sunset.<ul>
@@ -260,8 +261,9 @@ Notes</h1>
 </ul>
 <h1><a class="anchor" id="autotoc_md16"></a>
 ESP Devices</h1>
-<p>The popular ESP devices seem to have some inconsistencies. Extensive testing by a user on an 8266 has shown that being 32 bit, but without a true FPU can cause the micro to hang or fail for some of these calculations. Since the library depends on some very extensive use of double AND standard match functions, it's not possible to optimize this out, hence the 32 bit with an FPU requirement. The report was that the library may cause the math to take longer than the watchdog timeout for some combinations of Latitude, specifically above 67.</p>
-<p>At this time, using this library with an 8266 is not considered a valid combination. I do have ESP32 devices, but not available right now, so testing against an ESP device with an FPU, even if it's a bit hobbled (see links below) has to wait unless I get a volunteer. I'll post results when I can run the tests.</p>
+<p>The popular ESP devices seem to have some inconsistencies. While it is possible to run on the 8266, which has no FPU but is 32bit, the math is slow, and if you are doing time constrained activities, there is no specific guaruntee that this library will work for you. Testing shows it does work well enough, but specific timings on how long it takes to do calculations, especially above 67 degrees, have not been done. Use it at your own risk.</p>
+<p>At this time, using this library with an 8266 is not considered a valid combination, though it may work for you.</p>
+<p>The ESP32 also has some FPU issues, though at this time, there is no indication this library will not work on that micro.</p>
 <ul>
 <li><a href="https://www.esp32.com/viewtopic.php?f=14&t=800">https://www.esp32.com/viewtopic.php?f=14&amp;t=800</a></li>
 <li><a href="https://blog.classycode.com/esp32-floating-point-performance-6e9f6f567a69">https://blog.classycode.com/esp32-floating-point-performance-6e9f6f567a69</a></li>
