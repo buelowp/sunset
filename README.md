@@ -103,6 +103,7 @@ The example below gives some hints for using the library, it's pretty simple. Ev
 SunSet is C++, no C implementation is provided. It is compiled using C++14, and any code using it should use C++14 as well as there is a dependency on C++14 at a minimum. Newer C++ versions work as well.
 
 # Releases
+* 1.1.4 Making this work for Arduino and the library manager via Include Library
 * 1.1.3 Performance improvements to enable the ESP8266 to function better. Thank you to https://github.com/Glichy.
 * 1.1.2 Bumping the library.properties license field to be correct. This forced a new release number so it would work with build systems.
 * 1.1.1 Changes to support case insensitive file systems.
@@ -198,12 +199,12 @@ The popular ESP devices seem to have some inconsistencies. While it is possible 
 
 At this time, using this library with an 8266 is not considered a valid combination, though it may work for you.
 
-The ESP32 also has some FPU issues, though at this time, there is no indication this library will not work on that micro.
+The ESP32 also has some FPU issues, though at this time, testing confirms it works very well and does not slow the system in any measurable way.
 
 * https://www.esp32.com/viewtopic.php?f=14&t=800
 * https://blog.classycode.com/esp32-floating-point-performance-6e9f6f567a69
 
-The conclusions in the links seem to indicate that a lot of the math used by this library is VERY slow on the ESP32 processors. However, very slow in this case is still milliseconds, so it may not matter on the ESP32 at all. Until I can learn more, your mileage might vary.
+The conclusions in the links seem to indicate that a lot of the math used by this library may be slow on the ESP8266 processors. However, slow in this case is still milliseconds, so it may not matter on the 8266 at all. Your mileage might vary.
 
 # Links
 You can find the original math in c code at http://souptonuts.sourceforge.net/code/sunrise.c.html
