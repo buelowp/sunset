@@ -117,6 +117,7 @@ The example below gives some hints for using the library, it\textquotesingle{}s 
 \mbox{\hyperlink{classSunSet}{Sun\+Set}} is C++, no C implementation is provided. It is compiled using C++14, and any code using it should use C++14 as well as there is a dependency on C++14 at a minimum. Newer C++ versions work as well.\hypertarget{index_autotoc_md12}{}\doxysection{Releases}\label{index_autotoc_md12}
 
 \begin{DoxyItemize}
+\item 1.\+1.\+4 Making this work for Arduino and the library manager via Include Library
 \item 1.\+1.\+3 Performance improvements to enable the E\+S\+P8266 to function better. Thank you to \href{https://github.com/Glichy}{\texttt{ https\+://github.\+com/\+Glichy}}.
 \item 1.\+1.\+2 Bumping the library.\+properties license field to be correct. This forced a new release number so it would work with build systems.
 \item 1.\+1.\+1 Changes to support case insensitive file systems.
@@ -212,7 +213,7 @@ The popular E\+SP devices seem to have some inconsistencies. While it is possibl
 
 At this time, using this library with an 8266 is not considered a valid combination, though it may work for you.
 
-The E\+S\+P32 also has some F\+PU issues, though at this time, there is no indication this library will not work on that micro.
+The E\+S\+P32 also has some F\+PU issues, though at this time, testing confirms it works very well and does not slow the system in any measurable way.
 
 
 \begin{DoxyItemize}
@@ -220,7 +221,7 @@ The E\+S\+P32 also has some F\+PU issues, though at this time, there is no indic
 \item \href{https://blog.classycode.com/esp32-floating-point-performance-6e9f6f567a69}{\texttt{ https\+://blog.\+classycode.\+com/esp32-\/floating-\/point-\/performance-\/6e9f6f567a69}}
 \end{DoxyItemize}
 
-The conclusions in the links seem to indicate that a lot of the math used by this library is V\+E\+RY slow on the E\+S\+P32 processors. However, very slow in this case is still milliseconds, so it may not matter on the E\+S\+P32 at all. Until I can learn more, your mileage might vary.\hypertarget{index_autotoc_md17}{}\doxysection{Links}\label{index_autotoc_md17}
+The conclusions in the links seem to indicate that a lot of the math used by this library may be slow on the E\+S\+P8266 processors. However, slow in this case is still milliseconds, so it may not matter on the 8266 at all. Your mileage might vary.\hypertarget{index_autotoc_md17}{}\doxysection{Links}\label{index_autotoc_md17}
 You can find the original math in c code at \href{http://souptonuts.sourceforge.net/code/sunrise.c.html}{\texttt{ http\+://souptonuts.\+sourceforge.\+net/code/sunrise.\+c.\+html}}
 
 I got the moon work from Ben Daglish at \href{http://www.ben-daglish.net/moon.shtml}{\texttt{ http\+://www.\+ben-\/daglish.\+net/moon.\+shtml}}\hypertarget{index_autotoc_md18}{}\doxysection{Thank you to}\label{index_autotoc_md18}
