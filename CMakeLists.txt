@@ -8,8 +8,6 @@ file (GLOB SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 file (GLOB HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h")
 
 set (CMAKE_CXX_STANDARD 14)
-set (SOURCES src/sunset.cpp)
-set (HEADERS src/sunset.h)
 set (CMAKE_CXX_FLAGS -pthread)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-long-long -pedantic")
 
