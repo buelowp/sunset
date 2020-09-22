@@ -13,6 +13,10 @@
 #include <TimeLib.h>
 #include <sunset.h>
 
+/**
+ * This library only works for 32 bit platforms. It will not work for 8 bit AVR platforms
+ */
+
 /* I'm in the midwest, so this is what I use for my home */
 #define LATITUDE        41.12345
 #define LONGITUDE       -87.98765
