@@ -86,7 +86,7 @@ SunSet::~SunSet()
  * and not use the setTZOffset() function ever, if you never
  * change timezone values.
  * 
- * This is the old versoin of the setPosition using an integer
+ * This is the old version of the setPosition using an integer
  * timezone, and will not be deprecated. However, it is preferred to
  * use the double version going forward.
  */
