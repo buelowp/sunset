@@ -148,9 +148,7 @@ double SunSet::calcGeomMeanLongSun(double t)
     }
     double L = 280.46646 + t * (36000.76983 + 0.0003032 * t);
 
-    std::fmod(L, 360.0);
-  
-    return L;              // in degrees
+    return std::fmod(L, 360.0);
 }
 
 double SunSet::calcObliquityCorrection(double t)
