@@ -8,14 +8,13 @@ file (GLOB SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 file (GLOB HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h")
 
 set (CMAKE_CXX_STANDARD 14)
-set (CMAKE_CXX_FLAGS -pthread)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-long-long -pedantic")
 
 include_directories(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
 set(PROJ_VERSION_MAJOR 1)
 set(PROJ_VERSION_MINOR 1)
-set(PROJ_VERSION_PATCH 3)
+set(PROJ_VERSION_PATCH 4)
 set(PROJ_VERSION ${PROJ_VERSION_MAJOR}.${PROJ_VERSION_MINOR}.${PROJ_VERSION_PATCH} )
 
 add_library (${PROJECT_NAME} SHARED ${SOURCES})
@@ -25,12 +24,19 @@ install (TARGETS ${PROJECT_NAME} DESTINATION lib)
 install (FILES ${HEADERS} DESTINATION include)
 
 if (BUILD_TESTS)
-    FILE (GLOB TESTS "${CMAKE_CURRENT_SOURCE_DIR}/test/*.cpp")
     enable_testing()
     find_package (GTest REQUIRED)
+    find_package(Threads REQUIRED)
+
+    file (GLOB TESTS "${CMAKE_CURRENT_SOURCE_DIR}/test/*.cpp")
+    
+    if(THREADS_HAVE_PTHREAD_ARG)
+        target_compile_options(${PROJECT_NAME}-test PUBLIC "-pthread")
+    endif()
+    
     include_directories(${GTEST_INCLUDE_DIR})
     add_executable(${PROJECT_NAME}-test ${TESTS} ${HEADERS})
-    target_link_libraries(${PROJECT_NAME}-test ${GTEST_LIBRARIES} ${PROJECT_NAME})
+    target_link_libraries(${PROJECT_NAME}-test ${GTEST_LIBRARIES} ${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT})
 endif()
 
 
