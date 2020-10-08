@@ -123,17 +123,17 @@ void SunSet::setPosition(double lat, double lon, double tz)
         m_tzOffset = 0.0;
 }
 
-double SunSet::degToRad(double angleDeg)
+double SunSet::degToRad(double angleDeg) const
 {
     return (M_PI * angleDeg / 180.0);
 }
 
-double SunSet::radToDeg(double angleRad)
+double SunSet::radToDeg(double angleRad) const
 {
     return (180.0 * angleRad / M_PI);
 }
 
-double SunSet::calcMeanObliquityOfEcliptic(double t)
+double SunSet::calcMeanObliquityOfEcliptic(double t) const
 {
     double seconds = 21.448 - t*(46.8150 + t*(0.00059 - t*(0.001813)));
     double e0 = 23.0 + (26.0 + (seconds/60.0))/60.0;
@@ -141,7 +141,7 @@ double SunSet::calcMeanObliquityOfEcliptic(double t)
     return e0;              // in degrees
 }
 
-double SunSet::calcGeomMeanLongSun(double t)
+double SunSet::calcGeomMeanLongSun(double t) const
 {
     if (std::isnan(t)) {
         return nan("");
@@ -151,7 +151,7 @@ double SunSet::calcGeomMeanLongSun(double t)
     return std::fmod(L, 360.0);
 }
 
-double SunSet::calcObliquityCorrection(double t)
+double SunSet::calcObliquityCorrection(double t) const
 {
     double e0 = calcMeanObliquityOfEcliptic(t);
     double omega = 125.04 - 1934.136 * t;
@@ -160,19 +160,19 @@ double SunSet::calcObliquityCorrection(double t)
     return e;               // in degrees
 }
 
-double SunSet::calcEccentricityEarthOrbit(double t)
+double SunSet::calcEccentricityEarthOrbit(double t) const
 {
     double e = 0.016708634 - t * (0.000042037 + 0.0000001267 * t);
     return e;               // unitless
 }
 
-double SunSet::calcGeomMeanAnomalySun(double t)
+double SunSet::calcGeomMeanAnomalySun(double t) const
 {
     double M = 357.52911 + t * (35999.05029 - 0.0001537 * t);
     return M;               // in degrees
 }
 
-double SunSet::calcEquationOfTime(double t)
+double SunSet::calcEquationOfTime(double t) const
 {
     double epsilon = calcObliquityCorrection(t);
     double l0 = calcGeomMeanLongSun(t);
@@ -191,13 +191,13 @@ double SunSet::calcEquationOfTime(double t)
     return radToDeg(Etime)*4.0;	// in minutes of time
 }
 
-double SunSet::calcTimeJulianCent(double jd)
+double SunSet::calcTimeJulianCent(double jd) const
 {
     double T = ( jd - 2451545.0)/36525.0;
     return T;
 }
 
-double SunSet::calcSunTrueLong(double t)
+double SunSet::calcSunTrueLong(double t) const
 {
     double l0 = calcGeomMeanLongSun(t);
     double c = calcSunEqOfCenter(t);
@@ -206,7 +206,7 @@ double SunSet::calcSunTrueLong(double t)
     return O;               // in degrees
 }
 
-double SunSet::calcSunApparentLong(double t)
+double SunSet::calcSunApparentLong(double t) const
 {
     double o = calcSunTrueLong(t);
 
@@ -215,7 +215,7 @@ double SunSet::calcSunApparentLong(double t)
     return lambda;          // in degrees
 }
 
-double SunSet::calcSunDeclination(double t)
+double SunSet::calcSunDeclination(double t) const
 {
     double e = calcObliquityCorrection(t);
     double lambda = calcSunApparentLong(t);
@@ -225,7 +225,7 @@ double SunSet::calcSunDeclination(double t)
     return theta;           // in degrees
 }
 
-double SunSet::calcHourAngleSunrise(double lat, double solarDec, double offset)
+double SunSet::calcHourAngleSunrise(double lat, double solarDec, double offset) const
 {
     double latRad = degToRad(lat);
     double sdRad  = degToRad(solarDec);
@@ -234,7 +234,7 @@ double SunSet::calcHourAngleSunrise(double lat, double solarDec, double offset)
     return HA;              // in radians
 }
 
-double SunSet::calcHourAngleSunset(double lat, double solarDec, double offset)
+double SunSet::calcHourAngleSunset(double lat, double solarDec, double offset) const
 {
     double latRad = degToRad(lat);
     double sdRad  = degToRad(solarDec);
@@ -244,7 +244,7 @@ double SunSet::calcHourAngleSunset(double lat, double solarDec, double offset)
 }
 
 /**
- * \fn double SunSet::calcJD(int y, int m, int d)
+ * \fn double SunSet::calcJD(int y, int m, int d) const
  * \param y Integer year as a 4 digit value
  * \param m Integer month, not 0 based
  * \param d Integer day, not 0 based
@@ -252,7 +252,7 @@ double SunSet::calcHourAngleSunset(double lat, double solarDec, double offset)
  * 
  * A well known JD calculator
  */
-double SunSet::calcJD(int y, int m, int d)
+double SunSet::calcJD(int y, int m, int d) const
 {
     if (m <= 2) {
         y -= 1;
@@ -265,13 +265,13 @@ double SunSet::calcJD(int y, int m, int d)
     return JD;
 }
 
-double SunSet::calcJDFromJulianCent(double t)
+double SunSet::calcJDFromJulianCent(double t) const
 {
     double JD = t * 36525.0 + 2451545.0;
     return JD;
 }
 
-double SunSet::calcSunEqOfCenter(double t)
+double SunSet::calcSunEqOfCenter(double t) const
 {
     double m = calcGeomMeanAnomalySun(t);
     double mrad = degToRad(m);
@@ -284,7 +284,7 @@ double SunSet::calcSunEqOfCenter(double t)
 }
 
 /**
- * \fn double SunSet::calcAbsSunrise(double offset)
+ * \fn double SunSet::calcAbsSunrise(double offset) const
  * \param offset Double The specific angle to use when calculating sunrise
  * \return Returns the time in minutes past midnight in UTC for sunrise at your location
  * 
@@ -296,7 +296,7 @@ double SunSet::calcSunEqOfCenter(double t)
  * Note that this is the base calculation for all sunrise calls. The others just modify
  * the offset angle to account for the different needs.
  */
-double SunSet::calcAbsSunrise(double offset)
+double SunSet::calcAbsSunrise(double offset) const
 {
     double t = calcTimeJulianCent(m_julianDate);
     // *** First pass to approximate sunrise
@@ -319,7 +319,7 @@ double SunSet::calcAbsSunrise(double offset)
 }
 
 /**
- * \fn double SunSet::calcAbsSunset(double offset)
+ * \fn double SunSet::calcAbsSunset(double offset) const
  * \param offset Double The specific angle to use when calculating sunset
  * \return Returns the time in minutes past midnight in UTC for sunset at your location
  * 
@@ -331,7 +331,7 @@ double SunSet::calcAbsSunrise(double offset)
  * Note that this is the base calculation for all sunset calls. The others just modify
  * the offset angle to account for the different needs.
 */
-double SunSet::calcAbsSunset(double offset)
+double SunSet::calcAbsSunset(double offset) const
 {
     double t = calcTimeJulianCent(m_julianDate);
     // *** First pass to approximate sunset
@@ -368,7 +368,7 @@ double SunSet::calcSunriseUTC()
 }
 
 /**
- * \fn double SunSet::calcSunsetUTC()
+ * \fn double SunSet::calcSunsetUTC() const
  * \return Returns the UTC time when sunset occurs in the location provided
  * 
  * This is a holdover from the original implementation and to me doesn't
@@ -386,84 +386,84 @@ double SunSet::calcSunsetUTC()
  * 
  * This function will return the Astronomical sunrise in local time for your location
  */
-double SunSet::calcAstronomicalSunrise()
+double SunSet::calcAstronomicalSunrise() const
 {
     return calcAbsSunrise(SUNSET_ASTONOMICAL) + (60 * m_tzOffset);
 }
 
 /**
- * \fn double SunSet::calcAstronomicalSunset()
+ * \fn double SunSet::calcAstronomicalSunset() const
  * \return Returns the Astronomical sunset in fractional minutes past midnight
  * 
  * This function will return the Astronomical sunset in local time for your location
  */
-double SunSet::calcAstronomicalSunset()
+double SunSet::calcAstronomicalSunset() const
 {
     return calcAbsSunset(SUNSET_ASTONOMICAL) + (60 * m_tzOffset);
 }
 
 /**
- * \fn double SunSet::calcCivilSunrise()
+ * \fn double SunSet::calcCivilSunrise() const
  * \return Returns the Civil sunrise in fractional minutes past midnight
  * 
  * This function will return the Civil sunrise in local time for your location
  */
-double SunSet::calcCivilSunrise()
+double SunSet::calcCivilSunrise() const
 {
     return calcAbsSunrise(SUNSET_CIVIL) + (60 * m_tzOffset);
 }
 
 /**
- * \fn double SunSet::calcCivilSunset()
+ * \fn double SunSet::calcCivilSunset() const
  * \return Returns the Civil sunset in fractional minutes past midnight
  * 
  * This function will return the Civil sunset in local time for your location
  */
-double SunSet::calcCivilSunset()
+double SunSet::calcCivilSunset() const
 {
     return calcAbsSunset(SUNSET_CIVIL) + (60 * m_tzOffset);
 }
 
 /**
- * \fn double SunSet::calcNauticalSunrise()
+ * \fn double SunSet::calcNauticalSunrise() const
  * \return Returns the Nautical sunrise in fractional minutes past midnight
  * 
  * This function will return the Nautical sunrise in local time for your location
  */
-double SunSet::calcNauticalSunrise()
+double SunSet::calcNauticalSunrise() const
 {
     return calcAbsSunrise(SUNSET_NAUTICAL) + (60 * m_tzOffset);
 }
 
 /**
- * \fn double SunSet::calcNauticalSunset()
+ * \fn double SunSet::calcNauticalSunset() const
  * \return Returns the Nautical sunset in fractional minutes past midnight
  * 
  * This function will return the Nautical sunset in local time for your location
  */
-double SunSet::calcNauticalSunset()
+double SunSet::calcNauticalSunset() const
 {
     return calcAbsSunset(SUNSET_NAUTICAL) + (60 * m_tzOffset);
 }
 
 /**
- * \fn double SunSet::calcSunrise()
+ * \fn double SunSet::calcSunrise() const
  * \return Returns local sunrise in minutes past midnight.
  * 
  * This function will return the Official sunrise in local time for your location
  */
-double SunSet::calcSunrise()
+double SunSet::calcSunrise() const
 {
     return calcAbsSunrise(SUNSET_OFFICIAL) + (60 * m_tzOffset);
 }
 
 /**
- * \fn double SunSet::calcSunset()
+ * \fn double SunSet::calcSunset() const
  * \return Returns local sunset in minutes past midnight.
  * 
  * This function will return the Official sunset in local time for your location
  */
-double SunSet::calcSunset()
+double SunSet::calcSunset() const
 {
     return calcAbsSunset(SUNSET_OFFICIAL) + (60 * m_tzOffset);
 }
@@ -528,7 +528,7 @@ void SunSet::setTZOffset(double tz)
 }
 
 /**
- * \fn int SunSet::moonPhase(int fromepoch)
+ * \fn int SunSet::moonPhase(int fromepoch) const
  * \param fromepoch time_t seconds from epoch to calculate the moonphase for
  * 
  * This is a simple calculation to tell us roughly what the moon phase is
@@ -536,7 +536,7 @@ void SunSet::setTZOffset(double tz)
  * 
  * The return value is 0 to 29, with 0 and 29 being hidden and 14 being full.
  */
-int SunSet::moonPhase(int fromepoch)
+int SunSet::moonPhase(int fromepoch) const
 {
 	int moonepoch = 614100;
     int phase = (fromepoch - moonepoch) % 2551443;
@@ -549,11 +549,11 @@ int SunSet::moonPhase(int fromepoch)
 }
 
 /**
- * \fn int SunSet::moonPhase()
+ * \fn int SunSet::moonPhase() const
  * 
  * Overload to set the moonphase for right now
  */
-int SunSet::moonPhase()
+int SunSet::moonPhase() const
 {
     time_t t = std::time(0);
     return moonPhase(static_cast<int>(t));
