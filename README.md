@@ -220,3 +220,5 @@ The following contributors have helped me identify issues and add features. The 
 * https://github.com/CaspianMaster
 * https://github.com/rhn
 * https://github.com/Glichy
+* https://github.com/enbyted
+* https://github.com/kebekus
