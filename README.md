@@ -197,9 +197,9 @@ void main(int argc, char *argv)
 # ESP Devices
 The popular ESP devices seem to have some inconsistencies. While it is possible to run on the 8266, which has no FPU but is 32bit, the math is slow, and if you are doing time constrained activities, there is no specific guarantee that this library will work for you. Testing shows it does work well enough, but use it at your own risk.
 
-At this time, using this library with an 8266 is not considered a valid combination, though it may work for you.
+Using this library with an ESP8266 is not considered a valid or tested combination, though it may work for you. I will not attempt to support any issues raised against the 8266 that can't be duplicated on an ESP32.
 
-The ESP32 also has some FPU issues, though at this time, testing confirms it works very well and does not slow the system in any measurable way.
+The ESP32 also has some FPU issues, though testing confirms it works very well and does not slow the system in any measurable way.
 
 * https://www.esp32.com/viewtopic.php?f=14&t=800
 * https://blog.classycode.com/esp32-floating-point-performance-6e9f6f567a69
