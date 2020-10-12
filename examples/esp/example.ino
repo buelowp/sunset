@@ -129,6 +129,8 @@ void loop()
     double astrosunset;
     double nauticalsunrise;
     double nauticalsunset;
+    double customsunrise;
+    double customsunset;
 
     if (currentDay != day()) {
         sun.setCurrentDate(year(), month(), day());
@@ -142,6 +144,8 @@ void loop()
     nauticalsunset = sun.calcNauticalSunset();
     astrosunrise = sun.calcAstronomicalSunrise();
     astrosunset = sun.calcAstronomicalSunset();
+    customsunrise = sun.calcCustomSunrise(90.0);
+    customsunset = sun.calcCustomSuset(90.0);
 
     Serial.print("Sunrise at ");
     Serial.print(sunrise/60);
