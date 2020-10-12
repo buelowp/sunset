@@ -66,6 +66,33 @@ namespace
         EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
     }
 
+    TEST(SunsetTesting, ValidReturnValueCustomSunrise)
+    {
+        SunSet sun;
+        std::string expected("437.817");
+        std::stringstream ss(std::stringstream::in | std::stringstream::out);
+        
+        sun.setPosition(LATITUDE_AH, LONGITUDE_AH, TIMEZONE_AH);
+        sun.setCurrentDate(2020, 1, 15);
+        ss << std::setprecision(6) << sun.calcCustomSunrise(90.833);
+        
+        EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
+    }
+    
+    TEST(SunsetTesting, ValidReturnValueCustomSunset)
+    {
+        SunSet sun;
+
+        std::string expected("1005.0013");
+        std::stringstream ss(std::stringstream::in | std::stringstream::out);
+        
+        sun.setPosition(LATITUDE_AH, LONGITUDE_AH, TIMEZONE_AH);
+        sun.setCurrentDate(2020, 1, 15);
+        ss << std::setprecision(8) << sun.calcCustomSunset(90.833);
+        
+        EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
+    }
+
     TEST(SunsetTesting, MoonPhase)
     {
         SunSet sun;

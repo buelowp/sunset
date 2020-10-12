@@ -68,7 +68,7 @@ public:
 
     static constexpr double SUNSET_OFFICIAL = 90.833;       /**< Standard sun angle for sunset */
     static constexpr double SUNSET_NAUTICAL = 102.0;        /**< Nautical sun angle for sunset */
-    static constexpr double SUNSET_CIVIL = 96.0;            /**< Civial sun angle for sunset */
+    static constexpr double SUNSET_CIVIL = 96.0;            /**< Civil sun angle for sunset */
     static constexpr double SUNSET_ASTONOMICAL = 108.0;     /**< Astronomical sun angle for sunset */
     
     void setPosition(double, double, int);
@@ -82,6 +82,8 @@ public:
     double calcCivilSunset() const;
     double calcAstronomicalSunrise() const;
     double calcAstronomicalSunset() const;
+    double calcCustomSunrise(double) const;
+    double calcCustomSunset(double) const;
     [[deprecated("UTC specific calls may not be supported in the future")]] double calcSunriseUTC();
     [[deprecated("UTC specific calls may not be supported in the future")]] double calcSunsetUTC();
     double calcSunrise() const;

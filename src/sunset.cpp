@@ -469,6 +469,32 @@ double SunSet::calcSunset() const
 }
 
 /**
+ * \fn double SunSet::calcCustomSunrise(double angle) const
+ * \param angle The angle in degrees over the horizon at which to calculate the sunset time
+ * \return Returns sunrise at angle degrees in minutes past midnight.
+ * 
+ * This function will return the sunrise in local time for your location for any
+ * angle over the horizon, where < 90 would be above the horizon, and > 90 would be at or below.
+ */
+double SunSet::calcCustomSunrise(double angle) const
+{
+    return calcAbsSunrise(angle) + (60 * m_tzOffset);
+}
+
+/**
+ * \fn double SunSet::calcCustomSunset(double angle) const
+ * \param angle The angle in degrees over the horizon at which to calculate the sunset time
+ * \return Returns sunset at angle degrees in minutes past midnight.
+ * 
+ * This function will return the sunset in local time for your location for any
+ * angle over the horizon, where < 90 would be above the horizon, and > 90 would be at or below.
+ */
+double SunSet::calcCustomSunset(double angle) const
+{
+    return calcAbsSunset(angle) + (60 * m_tzOffset);
+}
+
+/**
  * double SunSet::setCurrentDate(int y, int m, int d)
  * \param y Integer year, must be 4 digits
  * \param m Integer month, not zero based (Jan = 1)
