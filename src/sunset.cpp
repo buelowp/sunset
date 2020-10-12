@@ -388,7 +388,7 @@ double SunSet::calcSunsetUTC()
  */
 double SunSet::calcAstronomicalSunrise() const
 {
-    return calcAbsSunrise(SUNSET_ASTONOMICAL) + (60 * m_tzOffset);
+    return calcCustomSunrise(SUNSET_ASTONOMICAL);
 }
 
 /**
@@ -399,7 +399,7 @@ double SunSet::calcAstronomicalSunrise() const
  */
 double SunSet::calcAstronomicalSunset() const
 {
-    return calcAbsSunset(SUNSET_ASTONOMICAL) + (60 * m_tzOffset);
+    return calcCustomSunset(SUNSET_ASTONOMICAL);
 }
 
 /**
@@ -410,7 +410,7 @@ double SunSet::calcAstronomicalSunset() const
  */
 double SunSet::calcCivilSunrise() const
 {
-    return calcAbsSunrise(SUNSET_CIVIL) + (60 * m_tzOffset);
+    return calcCustomSunrise(SUNSET_CIVIL);
 }
 
 /**
@@ -421,7 +421,7 @@ double SunSet::calcCivilSunrise() const
  */
 double SunSet::calcCivilSunset() const
 {
-    return calcAbsSunset(SUNSET_CIVIL) + (60 * m_tzOffset);
+    return calcCustomSunset(SUNSET_CIVIL);
 }
 
 /**
@@ -432,7 +432,7 @@ double SunSet::calcCivilSunset() const
  */
 double SunSet::calcNauticalSunrise() const
 {
-    return calcAbsSunrise(SUNSET_NAUTICAL) + (60 * m_tzOffset);
+    return calcCustomSunrise(SUNSET_NAUTICAL);
 }
 
 /**
@@ -443,7 +443,7 @@ double SunSet::calcNauticalSunrise() const
  */
 double SunSet::calcNauticalSunset() const
 {
-    return calcAbsSunset(SUNSET_NAUTICAL) + (60 * m_tzOffset);
+    return calcCustomSunset(SUNSET_NAUTICAL);
 }
 
 /**
@@ -454,7 +454,7 @@ double SunSet::calcNauticalSunset() const
  */
 double SunSet::calcSunrise() const
 {
-    return calcAbsSunrise(SUNSET_OFFICIAL) + (60 * m_tzOffset);
+    return calcCustomSunrise(SUNSET_OFFICIAL);
 }
 
 /**
@@ -465,7 +465,7 @@ double SunSet::calcSunrise() const
  */
 double SunSet::calcSunset() const
 {
-    return calcAbsSunset(SUNSET_OFFICIAL) + (60 * m_tzOffset);
+    return calcCustomSunset(SUNSET_OFFICIAL);
 }
 
 /**
