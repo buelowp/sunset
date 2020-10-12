@@ -29,14 +29,6 @@
 #include <cmath>
 #include <ctime>
 
-#define SUNSET_OFFICIAL         90.833
-#define SUNSET_NAUTICAL         102
-#define SUNSET_CIVIL            96
-#define SUNSET_ASTONOMICAL      108
-
-#define SUNSET_INVALID_TZ_D     99.9
-#define SUNSET_INVALID_TZ_I     99
-
 /**
  * \class SunSet
  * 
@@ -74,6 +66,11 @@ public:
     SunSet(double, double, double);
     ~SunSet();
 
+    static constexpr double SUNSET_OFFICIAL = 90.833;       /**< Standard sun angle for sunset */
+    static constexpr double SUNSET_NAUTICAL = 102.0;        /**< Nautical sun angle for sunset */
+    static constexpr double SUNSET_CIVIL = 96.0;            /**< Civial sun angle for sunset */
+    static constexpr double SUNSET_ASTONOMICAL = 108.0;     /**< Astronomical sun angle for sunset */
+    
     void setPosition(double, double, int);
     void setPosition(double, double, double);
     void setTZOffset(int);
@@ -91,7 +88,7 @@ public:
     double calcSunset() const;
     int moonPhase(int) const;
     int moonPhase() const;
-
+    
 private:
     double degToRad(double) const;
     double radToDeg(double) const;
