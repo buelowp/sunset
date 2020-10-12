@@ -25,29 +25,44 @@ void \mbox{\hyperlink{classSunSet_a7e0f443ceba2013cff22238fa5bb66ae}{set\+T\+Z\+
 \item 
 double \mbox{\hyperlink{classSunSet_a2e248952dc8690571a3a6ddbf0fd266f}{set\+Current\+Date}} (int, int, int)
 \item 
-double \mbox{\hyperlink{classSunSet_aa11ad430e7a5a6c5bb60a23e37cbcb34}{calc\+Nautical\+Sunrise}} ()
+double \mbox{\hyperlink{classSunSet_a058731e1cfe93f1076e21ebba8482794}{calc\+Nautical\+Sunrise}} () const
 \item 
-double \mbox{\hyperlink{classSunSet_a7b89229be2c2d1d14f1bfc1dbfb6492d}{calc\+Nautical\+Sunset}} ()
+double \mbox{\hyperlink{classSunSet_a533e32197af245a82fff3f1ef6ea6fe3}{calc\+Nautical\+Sunset}} () const
 \item 
-double \mbox{\hyperlink{classSunSet_a51ece1d3bc339ef6b5fd26ab2e4d8c93}{calc\+Civil\+Sunrise}} ()
+double \mbox{\hyperlink{classSunSet_a58227e0d136a978cb8da69008806a25b}{calc\+Civil\+Sunrise}} () const
 \item 
-double \mbox{\hyperlink{classSunSet_a6a8c011c981ab78b3c87a3fb0edf2370}{calc\+Civil\+Sunset}} ()
+double \mbox{\hyperlink{classSunSet_af5dc1397f34206886229ac811d19309e}{calc\+Civil\+Sunset}} () const
 \item 
-double \mbox{\hyperlink{classSunSet_a6a4246bd6c1493f8e8ba136420ff9063}{calc\+Astronomical\+Sunrise}} ()
+double \mbox{\hyperlink{classSunSet_acd0d0daaaf75c2acb827f9af6f5aeb2c}{calc\+Astronomical\+Sunrise}} () const
 \item 
-double \mbox{\hyperlink{classSunSet_a4addbb0907be0034e48a9c500528e2c1}{calc\+Astronomical\+Sunset}} ()
+double \mbox{\hyperlink{classSunSet_aa55b362e1e06e69f64345acf6fcca2a4}{calc\+Astronomical\+Sunset}} () const
+\item 
+double \mbox{\hyperlink{classSunSet_aa7deeaad516d124f75ff8e3bb9050a29}{calc\+Custom\+Sunrise}} (double) const
+\item 
+double \mbox{\hyperlink{classSunSet_af022664c21fca8e778c54ba5cb640e7b}{calc\+Custom\+Sunset}} (double) const
 \item 
 double \mbox{\hyperlink{classSunSet_af5753b0de94d8b7071bcf9f9e149eff5}{calc\+Sunrise\+U\+TC}} ()
 \item 
 double \mbox{\hyperlink{classSunSet_a173f6ada1b57ba3f35d3a544a792c8c3}{calc\+Sunset\+U\+TC}} ()
 \item 
-double \mbox{\hyperlink{classSunSet_aa3493aaa0a4c1bcf1802d917ff8e87bc}{calc\+Sunrise}} ()
+double \mbox{\hyperlink{classSunSet_ac0f377fa2ffdf6f37eaff4574cb6d93e}{calc\+Sunrise}} () const
 \item 
-double \mbox{\hyperlink{classSunSet_ab048485fe78623e4bd18b8b60fd202e8}{calc\+Sunset}} ()
+double \mbox{\hyperlink{classSunSet_aea80d1b9e05c9d6f097ea530749f744d}{calc\+Sunset}} () const
 \item 
-int \mbox{\hyperlink{classSunSet_a84ee1c67ac8f53e76bf4d3897fdf27a7}{moon\+Phase}} (int)
+int \mbox{\hyperlink{classSunSet_aa899ebc9c9bbfd51f78d1109df3d55ec}{moon\+Phase}} (int) const
 \item 
-int \mbox{\hyperlink{classSunSet_a8199287fe7a00c4f684788591c2824da}{moon\+Phase}} ()
+int \mbox{\hyperlink{classSunSet_a90b76258d0d1c00b9139b8834da800ef}{moon\+Phase}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr double \mbox{\hyperlink{classSunSet_af459326264de32d4cdb1d1e981642e05}{S\+U\+N\+S\+E\+T\+\_\+\+O\+F\+F\+I\+C\+I\+AL}} = 90.\+833
+\item 
+static constexpr double \mbox{\hyperlink{classSunSet_a1a233aa8dd518db5e2e478541840a8c0}{S\+U\+N\+S\+E\+T\+\_\+\+N\+A\+U\+T\+I\+C\+AL}} = 102.\+0
+\item 
+static constexpr double \mbox{\hyperlink{classSunSet_ad6b44cf813b73a4e5294bbeb470541a8}{S\+U\+N\+S\+E\+T\+\_\+\+C\+I\+V\+IL}} = 96.\+0
+\item 
+static constexpr double \mbox{\hyperlink{classSunSet_a8b915a3546b9a3ed4b183e441b167e68}{S\+U\+N\+S\+E\+T\+\_\+\+A\+S\+T\+O\+N\+O\+M\+I\+C\+AL}} = 108.\+0
 \end{DoxyCompactItemize}
 
 
@@ -69,7 +84,7 @@ The library also has no idea about daylight savings time. If your timezone chang
 \doxysubsubsection{\texorpdfstring{SunSet()}{SunSet()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
 {\footnotesize\ttfamily Sun\+Set\+::\+Sun\+Set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-Default constructor taking no arguments. It will default all values to zero. It is possible to call \mbox{\hyperlink{classSunSet_aa3493aaa0a4c1bcf1802d917ff8e87bc}{calc\+Sunrise()}} on this type of initialization and it will not fail, but it is unlikely you are at 0,0, TZ=0. This also will not include an initialized date to work from. \mbox{\Hypertarget{classSunSet_acf4bc17fba80cf6b5d6faca829a96e06}\label{classSunSet_acf4bc17fba80cf6b5d6faca829a96e06}} 
+Default constructor taking no arguments. It will default all values to zero. It is possible to call \mbox{\hyperlink{classSunSet_ac0f377fa2ffdf6f37eaff4574cb6d93e}{calc\+Sunrise()}} on this type of initialization and it will not fail, but it is unlikely you are at 0,0, TZ=0. This also will not include an initialized date to work from. \mbox{\Hypertarget{classSunSet_acf4bc17fba80cf6b5d6faca829a96e06}\label{classSunSet_acf4bc17fba80cf6b5d6faca829a96e06}} 
 \index{SunSet@{SunSet}!SunSet@{SunSet}}
 \index{SunSet@{SunSet}!SunSet@{SunSet}}
 \doxysubsubsection{\texorpdfstring{SunSet()}{SunSet()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
@@ -108,65 +123,93 @@ This will create an object for a location with a double based timezone value. \m
 The constructor has no value and does nothing. 
 
 \doxysubsection{Member Function Documentation}
-\mbox{\Hypertarget{classSunSet_a6a4246bd6c1493f8e8ba136420ff9063}\label{classSunSet_a6a4246bd6c1493f8e8ba136420ff9063}} 
+\mbox{\Hypertarget{classSunSet_acd0d0daaaf75c2acb827f9af6f5aeb2c}\label{classSunSet_acd0d0daaaf75c2acb827f9af6f5aeb2c}} 
 \index{SunSet@{SunSet}!calcAstronomicalSunrise@{calcAstronomicalSunrise}}
 \index{calcAstronomicalSunrise@{calcAstronomicalSunrise}!SunSet@{SunSet}}
 \doxysubsubsection{\texorpdfstring{calcAstronomicalSunrise()}{calcAstronomicalSunrise()}}
-{\footnotesize\ttfamily double Sun\+Set\+::calc\+Astronomical\+Sunrise (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily double Sun\+Set\+::calc\+Astronomical\+Sunrise (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 \begin{DoxyReturn}{Returns}
 Returns the Astronomical sunrise in fractional minutes past midnight
 \end{DoxyReturn}
-This function will return the Astronomical sunrise in local time for your location \mbox{\Hypertarget{classSunSet_a4addbb0907be0034e48a9c500528e2c1}\label{classSunSet_a4addbb0907be0034e48a9c500528e2c1}} 
+This function will return the Astronomical sunrise in local time for your location \mbox{\Hypertarget{classSunSet_aa55b362e1e06e69f64345acf6fcca2a4}\label{classSunSet_aa55b362e1e06e69f64345acf6fcca2a4}} 
 \index{SunSet@{SunSet}!calcAstronomicalSunset@{calcAstronomicalSunset}}
 \index{calcAstronomicalSunset@{calcAstronomicalSunset}!SunSet@{SunSet}}
 \doxysubsubsection{\texorpdfstring{calcAstronomicalSunset()}{calcAstronomicalSunset()}}
-{\footnotesize\ttfamily double Sun\+Set\+::calc\+Astronomical\+Sunset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily double Sun\+Set\+::calc\+Astronomical\+Sunset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 \begin{DoxyReturn}{Returns}
 Returns the Astronomical sunset in fractional minutes past midnight
 \end{DoxyReturn}
-This function will return the Astronomical sunset in local time for your location \mbox{\Hypertarget{classSunSet_a51ece1d3bc339ef6b5fd26ab2e4d8c93}\label{classSunSet_a51ece1d3bc339ef6b5fd26ab2e4d8c93}} 
+This function will return the Astronomical sunset in local time for your location \mbox{\Hypertarget{classSunSet_a58227e0d136a978cb8da69008806a25b}\label{classSunSet_a58227e0d136a978cb8da69008806a25b}} 
 \index{SunSet@{SunSet}!calcCivilSunrise@{calcCivilSunrise}}
 \index{calcCivilSunrise@{calcCivilSunrise}!SunSet@{SunSet}}
 \doxysubsubsection{\texorpdfstring{calcCivilSunrise()}{calcCivilSunrise()}}
-{\footnotesize\ttfamily double Sun\+Set\+::calc\+Civil\+Sunrise (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily double Sun\+Set\+::calc\+Civil\+Sunrise (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 \begin{DoxyReturn}{Returns}
 Returns the Civil sunrise in fractional minutes past midnight
 \end{DoxyReturn}
-This function will return the Civil sunrise in local time for your location \mbox{\Hypertarget{classSunSet_a6a8c011c981ab78b3c87a3fb0edf2370}\label{classSunSet_a6a8c011c981ab78b3c87a3fb0edf2370}} 
+This function will return the Civil sunrise in local time for your location \mbox{\Hypertarget{classSunSet_af5dc1397f34206886229ac811d19309e}\label{classSunSet_af5dc1397f34206886229ac811d19309e}} 
 \index{SunSet@{SunSet}!calcCivilSunset@{calcCivilSunset}}
 \index{calcCivilSunset@{calcCivilSunset}!SunSet@{SunSet}}
 \doxysubsubsection{\texorpdfstring{calcCivilSunset()}{calcCivilSunset()}}
-{\footnotesize\ttfamily double Sun\+Set\+::calc\+Civil\+Sunset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily double Sun\+Set\+::calc\+Civil\+Sunset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 \begin{DoxyReturn}{Returns}
 Returns the Civil sunset in fractional minutes past midnight
 \end{DoxyReturn}
-This function will return the Civil sunset in local time for your location \mbox{\Hypertarget{classSunSet_aa11ad430e7a5a6c5bb60a23e37cbcb34}\label{classSunSet_aa11ad430e7a5a6c5bb60a23e37cbcb34}} 
+This function will return the Civil sunset in local time for your location \mbox{\Hypertarget{classSunSet_aa7deeaad516d124f75ff8e3bb9050a29}\label{classSunSet_aa7deeaad516d124f75ff8e3bb9050a29}} 
+\index{SunSet@{SunSet}!calcCustomSunrise@{calcCustomSunrise}}
+\index{calcCustomSunrise@{calcCustomSunrise}!SunSet@{SunSet}}
+\doxysubsubsection{\texorpdfstring{calcCustomSunrise()}{calcCustomSunrise()}}
+{\footnotesize\ttfamily double Sun\+Set\+::calc\+Custom\+Sunrise (\begin{DoxyParamCaption}\item[{double}]{angle }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyParams}{Parameters}
+{\em angle} & The angle in degrees over the horizon at which to calculate the sunset time \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns sunrise at angle degrees in minutes past midnight.
+\end{DoxyReturn}
+This function will return the sunrise in local time for your location for any angle over the horizon, where $<$ 90 would be above the horizon, and $>$ 90 would be at or below. \mbox{\Hypertarget{classSunSet_af022664c21fca8e778c54ba5cb640e7b}\label{classSunSet_af022664c21fca8e778c54ba5cb640e7b}} 
+\index{SunSet@{SunSet}!calcCustomSunset@{calcCustomSunset}}
+\index{calcCustomSunset@{calcCustomSunset}!SunSet@{SunSet}}
+\doxysubsubsection{\texorpdfstring{calcCustomSunset()}{calcCustomSunset()}}
+{\footnotesize\ttfamily double Sun\+Set\+::calc\+Custom\+Sunset (\begin{DoxyParamCaption}\item[{double}]{angle }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyParams}{Parameters}
+{\em angle} & The angle in degrees over the horizon at which to calculate the sunset time \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns sunset at angle degrees in minutes past midnight.
+\end{DoxyReturn}
+This function will return the sunset in local time for your location for any angle over the horizon, where $<$ 90 would be above the horizon, and $>$ 90 would be at or below. \mbox{\Hypertarget{classSunSet_a058731e1cfe93f1076e21ebba8482794}\label{classSunSet_a058731e1cfe93f1076e21ebba8482794}} 
 \index{SunSet@{SunSet}!calcNauticalSunrise@{calcNauticalSunrise}}
 \index{calcNauticalSunrise@{calcNauticalSunrise}!SunSet@{SunSet}}
 \doxysubsubsection{\texorpdfstring{calcNauticalSunrise()}{calcNauticalSunrise()}}
-{\footnotesize\ttfamily double Sun\+Set\+::calc\+Nautical\+Sunrise (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily double Sun\+Set\+::calc\+Nautical\+Sunrise (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 \begin{DoxyReturn}{Returns}
 Returns the Nautical sunrise in fractional minutes past midnight
 \end{DoxyReturn}
-This function will return the Nautical sunrise in local time for your location \mbox{\Hypertarget{classSunSet_a7b89229be2c2d1d14f1bfc1dbfb6492d}\label{classSunSet_a7b89229be2c2d1d14f1bfc1dbfb6492d}} 
+This function will return the Nautical sunrise in local time for your location \mbox{\Hypertarget{classSunSet_a533e32197af245a82fff3f1ef6ea6fe3}\label{classSunSet_a533e32197af245a82fff3f1ef6ea6fe3}} 
 \index{SunSet@{SunSet}!calcNauticalSunset@{calcNauticalSunset}}
 \index{calcNauticalSunset@{calcNauticalSunset}!SunSet@{SunSet}}
 \doxysubsubsection{\texorpdfstring{calcNauticalSunset()}{calcNauticalSunset()}}
-{\footnotesize\ttfamily double Sun\+Set\+::calc\+Nautical\+Sunset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily double Sun\+Set\+::calc\+Nautical\+Sunset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 \begin{DoxyReturn}{Returns}
 Returns the Nautical sunset in fractional minutes past midnight
 \end{DoxyReturn}
-This function will return the Nautical sunset in local time for your location \mbox{\Hypertarget{classSunSet_aa3493aaa0a4c1bcf1802d917ff8e87bc}\label{classSunSet_aa3493aaa0a4c1bcf1802d917ff8e87bc}} 
+This function will return the Nautical sunset in local time for your location \mbox{\Hypertarget{classSunSet_ac0f377fa2ffdf6f37eaff4574cb6d93e}\label{classSunSet_ac0f377fa2ffdf6f37eaff4574cb6d93e}} 
 \index{SunSet@{SunSet}!calcSunrise@{calcSunrise}}
 \index{calcSunrise@{calcSunrise}!SunSet@{SunSet}}
 \doxysubsubsection{\texorpdfstring{calcSunrise()}{calcSunrise()}}
-{\footnotesize\ttfamily double Sun\+Set\+::calc\+Sunrise (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily double Sun\+Set\+::calc\+Sunrise (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 \begin{DoxyReturn}{Returns}
 Returns local sunrise in minutes past midnight.
@@ -180,11 +223,11 @@ This function will return the Official sunrise in local time for your location \
 \begin{DoxyReturn}{Returns}
 Returns the U\+TC time when sunrise occurs in the location provided
 \end{DoxyReturn}
-This is a holdover from the original implementation and to me doesn\textquotesingle{}t seem to be very useful, it\textquotesingle{}s just confusing. This function is deprecated but won\textquotesingle{}t be removed unless that becomes necessary. \mbox{\Hypertarget{classSunSet_ab048485fe78623e4bd18b8b60fd202e8}\label{classSunSet_ab048485fe78623e4bd18b8b60fd202e8}} 
+This is a holdover from the original implementation and to me doesn\textquotesingle{}t seem to be very useful, it\textquotesingle{}s just confusing. This function is deprecated but won\textquotesingle{}t be removed unless that becomes necessary. \mbox{\Hypertarget{classSunSet_aea80d1b9e05c9d6f097ea530749f744d}\label{classSunSet_aea80d1b9e05c9d6f097ea530749f744d}} 
 \index{SunSet@{SunSet}!calcSunset@{calcSunset}}
 \index{calcSunset@{calcSunset}!SunSet@{SunSet}}
 \doxysubsubsection{\texorpdfstring{calcSunset()}{calcSunset()}}
-{\footnotesize\ttfamily double Sun\+Set\+::calc\+Sunset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily double Sun\+Set\+::calc\+Sunset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 \begin{DoxyReturn}{Returns}
 Returns local sunset in minutes past midnight.
@@ -198,17 +241,17 @@ This function will return the Official sunset in local time for your location \m
 \begin{DoxyReturn}{Returns}
 Returns the U\+TC time when sunset occurs in the location provided
 \end{DoxyReturn}
-This is a holdover from the original implementation and to me doesn\textquotesingle{}t seem to be very useful, it\textquotesingle{}s just confusing. This function is deprecated but won\textquotesingle{}t be removed unless that becomes necessary. \mbox{\Hypertarget{classSunSet_a8199287fe7a00c4f684788591c2824da}\label{classSunSet_a8199287fe7a00c4f684788591c2824da}} 
+This is a holdover from the original implementation and to me doesn\textquotesingle{}t seem to be very useful, it\textquotesingle{}s just confusing. This function is deprecated but won\textquotesingle{}t be removed unless that becomes necessary. \mbox{\Hypertarget{classSunSet_a90b76258d0d1c00b9139b8834da800ef}\label{classSunSet_a90b76258d0d1c00b9139b8834da800ef}} 
 \index{SunSet@{SunSet}!moonPhase@{moonPhase}}
 \index{moonPhase@{moonPhase}!SunSet@{SunSet}}
 \doxysubsubsection{\texorpdfstring{moonPhase()}{moonPhase()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily int Sun\+Set\+::moon\+Phase (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int Sun\+Set\+::moon\+Phase (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
-Overload to set the moonphase for right now \mbox{\Hypertarget{classSunSet_a84ee1c67ac8f53e76bf4d3897fdf27a7}\label{classSunSet_a84ee1c67ac8f53e76bf4d3897fdf27a7}} 
+Overload to set the moonphase for right now \mbox{\Hypertarget{classSunSet_aa899ebc9c9bbfd51f78d1109df3d55ec}\label{classSunSet_aa899ebc9c9bbfd51f78d1109df3d55ec}} 
 \index{SunSet@{SunSet}!moonPhase@{moonPhase}}
 \index{moonPhase@{moonPhase}!SunSet@{SunSet}}
 \doxysubsubsection{\texorpdfstring{moonPhase()}{moonPhase()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily int Sun\+Set\+::moon\+Phase (\begin{DoxyParamCaption}\item[{int}]{fromepoch }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int Sun\+Set\+::moon\+Phase (\begin{DoxyParamCaption}\item[{int}]{fromepoch }\end{DoxyParamCaption}) const}
 
 
 \begin{DoxyParams}{Parameters}
@@ -267,7 +310,7 @@ This will set the location the library uses for it\textquotesingle{}s math. The 
 \end{DoxyParams}
 This will set the location the library uses for it\textquotesingle{}s math. The timezone is included in this as it\textquotesingle{}s not valid to call any of the calc functions until you have set a timezone. It is possible to simply call set\+Position one time, with a timezone and not use the \mbox{\hyperlink{classSunSet_aec11da9a176aa7f6967cf7e80bfce006}{set\+T\+Z\+Offset()}} function ever, if you never change timezone values.
 
-This is the old versoin of the set\+Position using an integer timezone, and will not be deprecated. However, it is preferred to use the double version going forward. \mbox{\Hypertarget{classSunSet_a7e0f443ceba2013cff22238fa5bb66ae}\label{classSunSet_a7e0f443ceba2013cff22238fa5bb66ae}} 
+This is the old version of the set\+Position using an integer timezone, and will not be deprecated. However, it is preferred to use the double version going forward. \mbox{\Hypertarget{classSunSet_a7e0f443ceba2013cff22238fa5bb66ae}\label{classSunSet_a7e0f443ceba2013cff22238fa5bb66ae}} 
 \index{SunSet@{SunSet}!setTZOffset@{setTZOffset}}
 \index{setTZOffset@{setTZOffset}!SunSet@{SunSet}}
 \doxysubsubsection{\texorpdfstring{setTZOffset()}{setTZOffset()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
@@ -293,7 +336,34 @@ Critical to set your timezone so results are accurate for your time and date. Th
 
 This function is a holdover from the previous design using an integer timezone and will not be deprecated. It is preferred to use the set\+T\+Z\+Offset(doubble). 
 
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classSunSet_a8b915a3546b9a3ed4b183e441b167e68}\label{classSunSet_a8b915a3546b9a3ed4b183e441b167e68}} 
+\index{SunSet@{SunSet}!SUNSET\_ASTONOMICAL@{SUNSET\_ASTONOMICAL}}
+\index{SUNSET\_ASTONOMICAL@{SUNSET\_ASTONOMICAL}!SunSet@{SunSet}}
+\doxysubsubsection{\texorpdfstring{SUNSET\_ASTONOMICAL}{SUNSET\_ASTONOMICAL}}
+{\footnotesize\ttfamily constexpr double Sun\+Set\+::\+S\+U\+N\+S\+E\+T\+\_\+\+A\+S\+T\+O\+N\+O\+M\+I\+C\+AL = 108.\+0\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+Astronomical sun angle for sunset \mbox{\Hypertarget{classSunSet_ad6b44cf813b73a4e5294bbeb470541a8}\label{classSunSet_ad6b44cf813b73a4e5294bbeb470541a8}} 
+\index{SunSet@{SunSet}!SUNSET\_CIVIL@{SUNSET\_CIVIL}}
+\index{SUNSET\_CIVIL@{SUNSET\_CIVIL}!SunSet@{SunSet}}
+\doxysubsubsection{\texorpdfstring{SUNSET\_CIVIL}{SUNSET\_CIVIL}}
+{\footnotesize\ttfamily constexpr double Sun\+Set\+::\+S\+U\+N\+S\+E\+T\+\_\+\+C\+I\+V\+IL = 96.\+0\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+Civil sun angle for sunset \mbox{\Hypertarget{classSunSet_a1a233aa8dd518db5e2e478541840a8c0}\label{classSunSet_a1a233aa8dd518db5e2e478541840a8c0}} 
+\index{SunSet@{SunSet}!SUNSET\_NAUTICAL@{SUNSET\_NAUTICAL}}
+\index{SUNSET\_NAUTICAL@{SUNSET\_NAUTICAL}!SunSet@{SunSet}}
+\doxysubsubsection{\texorpdfstring{SUNSET\_NAUTICAL}{SUNSET\_NAUTICAL}}
+{\footnotesize\ttfamily constexpr double Sun\+Set\+::\+S\+U\+N\+S\+E\+T\+\_\+\+N\+A\+U\+T\+I\+C\+AL = 102.\+0\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+Nautical sun angle for sunset \mbox{\Hypertarget{classSunSet_af459326264de32d4cdb1d1e981642e05}\label{classSunSet_af459326264de32d4cdb1d1e981642e05}} 
+\index{SunSet@{SunSet}!SUNSET\_OFFICIAL@{SUNSET\_OFFICIAL}}
+\index{SUNSET\_OFFICIAL@{SUNSET\_OFFICIAL}!SunSet@{SunSet}}
+\doxysubsubsection{\texorpdfstring{SUNSET\_OFFICIAL}{SUNSET\_OFFICIAL}}
+{\footnotesize\ttfamily constexpr double Sun\+Set\+::\+S\+U\+N\+S\+E\+T\+\_\+\+O\+F\+F\+I\+C\+I\+AL = 90.\+833\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+Standard sun angle for sunset 
+
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-/home/pete/\+Projects/github/sunset/src/sunset.\+h\item 
-/home/pete/\+Projects/github/sunset/src/sunset.\+cpp\end{DoxyCompactItemize}
+/home/peter/\+Projects/github/sunset/src/sunset.\+h\item 
+/home/peter/\+Projects/github/sunset/src/sunset.\+cpp\end{DoxyCompactItemize}
