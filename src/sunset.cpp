@@ -566,7 +566,7 @@ int SunSet::moonPhase(int fromepoch) const
 {
 	int moonepoch = 614100;
     int phase = (fromepoch - moonepoch) % 2551443;
-    int res = floor(phase / (24 * 3600)) + 1;
+    int res = static_cast<int>(floor(phase / (24 * 3600))) + 1;
 	
     if (res == 30)
         res = 0;
