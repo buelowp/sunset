@@ -258,8 +258,8 @@ double SunSet::calcJD(int y, int m, int d) const
         y -= 1;
         m += 12;
     }
-    int A = floor(y/100);
-    int B = 2 - A + floor(A/4);
+    double A = floor(y/100);
+    double B = 2.0 - A + floor(A/4);
 
     double JD = floor(365.25*(y + 4716)) + floor(30.6001*(m+1)) + d + B - 1524.5;
     return JD;
