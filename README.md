@@ -96,6 +96,7 @@ To use SunSet, you need to a few bits of local information.
    * Note that the library may return 359.89 for a 6 AM result. Doubles don't map to times very well, so the actual return value IS correct, but should be rounded up if so desired to match other calculators.
 1. The library may return NaN or 0 for instances where there is no real sunrise or sunset value (above the arctic circle in summer as an example). The differences seem to be compiler and platform related, and is not something I am currently doing something about. Correctly checking for return value is a critical need and not ignoring 0 or NaN will make this library work better for you in the long run.
    * This library does some pretty intensive math, so devices without an FPU are going to run slower because of it. As of version 1.1.3, this library does work for the ESP8266, but this is not an indication that it will run on all non FPU enabled devices.
+1. This library has a hard requirement on 32 bit precision for the device you are using. 8 or 16 bit micros are not supported.
 
 
 The example below gives some hints for using the library, it's pretty simple. Every time you need the calculation, call for it. I wouldn't suggest caching the value unless you can handle changes in date so the calculation is correct relative to a date you need.
