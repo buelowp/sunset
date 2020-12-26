@@ -27,8 +27,8 @@ const uint8_t _usDSTEnd[22]   = { 1, 7, 6, 5, 3, 2, 1, 7, 5, 4, 3, 2, 7, 6, 5, 4
 static const char ntpServerName[] = "us.pool.ntp.org";
 const int NTP_PACKET_SIZE = 48; // NTP time is in the first 48 bytes of message
 byte packetBuffer[NTP_PACKET_SIZE]; //buffer to hold incoming & outgoing packets
-const char ssid[] = "buelows";  //  your network SSID (name)
-const char pass[] = "Motorazr2V8";       // your network password
+const char ssid[] = "";  //  your network SSID (name)
+const char pass[] = "";       // your network password
 
 WiFiUDP Udp;
 unsigned int localPort = 8888;  // local port to listen for UDP packets
