@@ -145,7 +145,7 @@ void loop()
     astrosunrise = sun.calcAstronomicalSunrise();
     astrosunset = sun.calcAstronomicalSunset();
     customsunrise = sun.calcCustomSunrise(90.0);
-    customsunset = sun.calcCustomSuset(90.0);
+    customsunset = sun.calcCustomSunset(90.0);
 
     Serial.print("Sunrise at ");
     Serial.print(sunrise/60);
