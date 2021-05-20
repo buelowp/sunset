@@ -104,6 +104,15 @@ The example below gives some hints for using the library, it's pretty simple. Ev
 SunSet is C++, no C implementation is provided. It is compiled using C++14, and any code using it should use C++14 as well as there is a dependency on C++14 at a minimum. Newer C++ versions work as well.
 
 # Releases
+* 1.1.5 Bug fixes
+  * Issue #26 - Code quality issue in function calcGeomMeanLongSun?
+  * Issue #28 - Add option to override cmake build settings via variables
+  * Issue #29 - Fix warning for platforms that cannot build shared objects
+  * Issue #31 - Member functions that should be const aren't
+  * Issue #32 - Expose calcAbsSunset style interface, so custom offsets can be used
+  * Issue #33 - Remove unnecessary define statements
+  * Issue #34 - Fix missing precision cast in calcJD
+  * Issue #37 - typo in examples/esp/example.ino
 * 1.1.4 Making this work for Arduino and the library manager via Include Library
 * 1.1.3 Performance improvements to enable the ESP8266 to function better. Thank you to https://github.com/Glichy.
 * 1.1.2 Bumping the library.properties license field to be correct. This forced a new release number so it would work with build systems.
