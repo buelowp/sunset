@@ -21,6 +21,7 @@
 #define LATITUDE        41.12345
 #define LONGITUDE       -87.98765
 #define DST_OFFSET      -5
+#define LED             2
 
 const uint8_t _usDSTStart[22] = { 8,14,13,12,10, 9, 8,14,12,11,10, 9,14,13,12,11, 9};
 const uint8_t _usDSTEnd[22]   = { 1, 7, 6, 5, 3, 2, 1, 7, 5, 4, 3, 2, 7, 6, 5, 4, 2};
@@ -33,6 +34,7 @@ const char pass[] = "";       // your network password
 WiFiUDP Udp;
 unsigned int localPort = 8888;  // local port to listen for UDP packets
 SunSet sun;
+int mpm;
 
 time_t getNtpTime()
 {
@@ -104,6 +106,8 @@ void setup()
 {
     Serial.begin(115200);
     
+    pinMode(LED, OUTPUT);
+    digitalWrite(LED, LOW);
     WiFi.begin(ssid, pass);
     while (WiFi.status() != WL_CONNECTED) {
         delay(500);
@@ -136,6 +140,7 @@ void loop()
         sun.setCurrentDate(year(), month(), day());
         currentDay = day();
     }
+    mpm = hour() * 60 + minute();
     sunrise = static_cast<int>(sun.calcSunrise());
     sunset = static_cast<int>(sun.calcSunset());
     civilsunrise = sun.calcCivilSunrise();
@@ -156,6 +161,12 @@ void loop()
     Serial.print(":");
     Serial.print(twoDigits(sunset%60));
     Serial.println("pm");
+
+    if (mpm >= sunset)
+        digitalWrite(LED, HIGH);
+    else
+        digitalWrite(LED, LOW);
+
     delay(1000);
 }
 
