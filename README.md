@@ -131,6 +131,8 @@ SunSet is C++, no C implementation is provided. It is compiled using C++14, and 
 # Moon Phases
 This library also allows you to calculate the moon phase for the current day to an integer value. This means it's not perfectly accurate, but it's pretty close. To use it, you call moonPhase() with an integer value that is the number of seconds from the January 1, 1970 epoch. It will do some simple math and return an integer value that represents the current phase of the moon, from 0 to 29. In this case, 0 is new, and 29 is new, 15 is full. The code handles times that may cause the calculation to return 30 to avoid some limits confusion (there aren't 30 days in the lunar cycle, but it's close enough that some time values will cause it to return 30 anyway).
 
+* Moon phase is calculated based on current time, not just the current date. As a result, if you don't populate the system time on the device you are using, the return value will be -6, which is clearly incorrect. To use the moon phase, please make sure to keep the system clock accurate, OR, you can pass the time elapsed from the Unix EPOCH in seconds as a positive value. Either will work, but using the system clock is less confusing.
+
 # Examples
 This example is relative to an .ino file. Create a global object, initialize it and use it in loop().
 

@@ -350,4 +350,21 @@ namespace
         
         EXPECT_EQ(ss.str(), expected) << "Returned: " << ss.str();
     }
+    
+    TEST(SunsetTesting, MoonphaseNoArgs)
+    {
+        SunSet sun;
+        
+        EXPECT_EQ(sun.moonPhase(), 4) << "Returned: " << sun.moonPhase() << ", epoch is " << 1579097467;
+    }
+    
+    TEST(SunsetTesting, MoonphaseZeroEpoch)
+    {
+        SunSet sun;
+        
+        sun.setPosition(LATITUDE_AH, LONGITUDE_AH, TIMEZONE_AH);
+        sun.setCurrentDate(2020, 1, 15);
+        
+        EXPECT_EQ(sun.moonPhase(0), -6) << "Returned: " << sun.moonPhase() << ", epoch is " << 0;
+    }
 }
