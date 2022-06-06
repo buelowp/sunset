@@ -94,8 +94,8 @@ To use SunSet, you need to a few bits of local information.
    * This isn't very useful in the long run, so the UTC functions will be deprecated. The new civil, astro, and nautical API's do not include the UTC analog. This is by design.
 1. The library returns a double that indicates how many minutes past midnight relative to the set date that sunrise or sunset will happen. If the sun will rise at 6am local to the set location and date, then you will get a return value of 360.0. Decimal points indicate fractions of a minute.
    * Note that the library may return 359.89 for a 6 AM result. Doubles don't map to times very well, so the actual return value IS correct, but should be rounded up if so desired to match other calculators.
-1. The library may return NaN or 0 for instances where there is no real sunrise or sunset value (above the arctic circle in summer as an example). The differences seem to be compiler and platform related, and is not something I am currently doing something about. Correctly checking for return value is a critical need and not ignoring 0 or NaN will make this library work better for you in the long run.
-   * This library does some pretty intensive math, so devices without an FPU are going to run slower because of it. As of version 1.1.3, this library does work for the ESP8266, but this is not an indication that it will run on all non FPU enabled devices.
+1. The library may return NaN for instances where there is no real sunrise or sunset value (above the arctic circle in summer as an example). Checking for std::isnan() is critical if you are in a location or are calculating for a location which may not have a valid sunrise/sunset. If you get NaN, then either the sun is always up or always down.
+1. This library does some pretty intensive math, so devices without an FPU are going to run slower because of it. As of version 1.1.3, this library does work for the ESP8266, but this is not an indication that it will run on all non FPU enabled devices.
 1. This library has a hard requirement on 32 bit precision for the device you are using. 8 or 16 bit micros are not supported.
 
 
