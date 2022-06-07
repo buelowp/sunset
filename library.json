@@ -8,13 +8,10 @@
     "type" : "git",
     "url" : "https://github.com/buelowp/sunset"
   },
-  "authors" :
-  [
-    {
+  "authors" : {
       "name" : "Peter Buelow",
       "email" : "goballstate@gmail.com",
-    }
-  ],
+  },
   "license" : "GPL-2.0-only",
   "platforms" : "espressif8266, espressif32"
 }
