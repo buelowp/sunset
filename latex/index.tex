@@ -1,3 +1,5 @@
+\label{index_md__home_pete_Projects_sunset_README}%
+\Hypertarget{index_md__home_pete_Projects_sunset_README}%
 This is a modification of the sunrise.\+c posted by Mike Chirico back in 2004. See the link below to find it. I needed an algorithm that could tell me when it was dark out for all intents and purposes. I found Mike’s code, and modified it a bit to be a library that can be used again and again.
 
 Since then, I have updated it a bit to do some more work. It will calculate the Moon position generically. Since version 1.\+1.\+0, it will also calculate other sunrise/sunset times depending on your needs.
@@ -9,21 +11,22 @@ Since then, I have updated it a bit to do some more work. It will calculate the 
 \item Can accurately calculate Civil Sunrise and Sunset
 \item Can accurately calculate Astronomical Sunrise and Sunset
 \end{DoxyItemize}\hypertarget{index_autotoc_md1}{}\doxysection{New Github Pages}\label{index_autotoc_md1}
-Find Doxygen documentation at \href{http://buelowp.github.io/sunset/}{\texttt{ http\+://buelowp.\+github.\+io/sunset/}}\hypertarget{index_autotoc_md2}{}\doxysection{Version 1.\+1.\+1 I\+M\+P\+O\+R\+T\+A\+N\+T changes}\label{index_autotoc_md2}
+Find Doxygen documentation at \href{https://buelowp.github.io/sunset/}{\texttt{ https\+://buelowp.\+github.\+io/sunset/}}\hypertarget{index_autotoc_md2}{}\doxysection{Version 1.\+1.\+1 IMPORTANT changes}\label{index_autotoc_md2}
 I have migrated to an all lower case file name structure. Starting with master and 1.\+1.\+1, you must use
 
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\#include <sunset.h>}
+
 \end{DoxyCode}
 
 
 Instead of Sun\+Set.\+h in the previous versions. This change was originally caused by the changes to the Particle build system where I use this library extensively. They forced me to name the file the same as the package name which resulted in an upper and lower case name. Now it\textquotesingle{}s all lower case, pry the way I should have started it.
 
 I\textquotesingle{}ve also change the google test enable variable, though I\textquotesingle{}m not sure many used that. I\textquotesingle{}ve updated the readme below to reflect the change.\hypertarget{index_autotoc_md3}{}\doxysection{License}\label{index_autotoc_md3}
-This is governed by the G\+P\+L2 license. See the License terms in the L\+I\+C\+E\+N\+SE file. Use it as you want, make changes as you want, but please contribute back in accordance with the G\+PL.\hypertarget{index_autotoc_md4}{}\doxysection{Building}\label{index_autotoc_md4}
+This is governed by the GPL2 license. See the License terms in the LICENSE file. Use it as you want, make changes as you want, but please contribute back in accordance with the GPL.\hypertarget{index_autotoc_md4}{}\doxysection{Building}\label{index_autotoc_md4}
 \hypertarget{index_autotoc_md5}{}\doxysubsection{Building for any cmake target}\label{index_autotoc_md5}
-The builder requires C\+Make 3.\+0.\+0 or newer, which should be available in most Linux distributions.
+The builder requires CMake 3.\+0.\+0 or newer, which should be available in most Linux distributions.
 
 
 \begin{DoxyCode}{0}
@@ -32,6 +35,7 @@ The builder requires C\+Make 3.\+0.\+0 or newer, which should be available in mo
 \DoxyCodeLine{cmake ..}
 \DoxyCodeLine{make}
 \DoxyCodeLine{make DESTDIR=<some path> install}
+
 \end{DoxyCode}
 
 
@@ -45,6 +49,7 @@ You can use google test by doing the following
 \DoxyCodeLine{cmake -\/DBUILD\_TESTS=ON ..}
 \DoxyCodeLine{make}
 \DoxyCodeLine{./sunset-\/test}
+
 \end{DoxyCode}
 \hypertarget{index_autotoc_md7}{}\doxysection{Supported targets}\label{index_autotoc_md7}
 This should work on any platform that supports C++ 14 and later. There is a hard requirement on 32 bit systems at a minimum due to needing full 32 bit integers for some of the work.
@@ -59,8 +64,8 @@ I have used this library on the following systems successfully, and test it on a
 \begin{DoxyItemize}
 \item Raspberry PI
 \item Omega Onion
-\item Teensy with G\+PS
-\item S\+A\+MD targets using P\+I\+O/\+V\+S\+Code
+\item Teensy with GPS
+\item SAMD targets using PIO/\+VSCode
 \end{DoxyItemize}
 
 I have used the following build systems with this library as well
@@ -68,35 +73,35 @@ I have used the following build systems with this library as well
 
 \begin{DoxyItemize}
 \item Raspberry PI command line
-\item Onion cross compiled using K\+Develop and Eclipse
-\item Arudino I\+DE (must be for 32 bit micros)
+\item Onion cross compiled using KDevelop and Eclipse
+\item Arudino IDE (must be for 32 bit micros)
 \item VS Code for Particle
 \end{DoxyItemize}
 
 I don\textquotesingle{}t use Platform\+IO for much but some compile time testing. I can\textquotesingle{}t help much with that platform.
 
-See notes below for the E\+SP devices, E\+S\+P32 and E\+S\+P8266.\hypertarget{index_autotoc_md10}{}\doxysection{Testing}\label{index_autotoc_md10}
+See notes below for the ESP devices, ESP32 and ESP8266.\hypertarget{index_autotoc_md10}{}\doxysection{Testing}\label{index_autotoc_md10}
 I primarily use google test to validate the code running under Linux. This is done with the cmake config test above. I also run a small ino on a Particle Photon to prove that it works against a micro as well. Test results can be found for the latest release on the release page.\hypertarget{index_autotoc_md11}{}\doxysection{Details}\label{index_autotoc_md11}
 To use \mbox{\hyperlink{classSunSet}{Sun\+Set}}, you need to a few bits of local information.
 \begin{DoxyEnumerate}
-\item Accurate time. If you’re running this with something that can get G\+PS time or use N\+TP, then results will always be very accurate. If you do not have a good clock source, then the results are going to be very accurate relative to your not so accurate clock. For best results, make sure your clock is accurate to within a second if possible. Note that you also need an accurate timezone as the calculation is to U\+TC, and then the timezone is applied before the value is returned. If your results seem off by some set number of hours, a bad or missing timezone is probably why.
+\item Accurate time. If you’re running this with something that can get GPS time or use NTP, then results will always be very accurate. If you do not have a good clock source, then the results are going to be very accurate relative to your not so accurate clock. For best results, make sure your clock is accurate to within a second if possible. Note that you also need an accurate timezone as the calculation is to UTC, and then the timezone is applied before the value is returned. If your results seem off by some set number of hours, a bad or missing timezone is probably why.
 \end{DoxyEnumerate}
 \begin{DoxyEnumerate}
 \item You need an accurate position, both latitude and longitude, which the library needs to provide accurate timing. Note that it does rely on positive or negative longitude, so you are at -\/100 longitude, but put 100 longitude in, you will get invalid results.
 \end{DoxyEnumerate}
 \begin{DoxyEnumerate}
-\item To get accurate results for your location, you need both the Latitude and Longitude, A\+ND a local timezone.
+\item To get accurate results for your location, you need both the Latitude and Longitude, AND a local timezone.
 \begin{DoxyItemize}
-\item All math is done without a timezone, (timezone = 0). Therefore, to make sure you get accurate results for your location, you must set a local timezone for the L\+AT and L\+ON you are using. You can tell if you made a mistake when the result you get is negative for sunrise.
+\item All math is done without a timezone, (timezone = 0). Therefore, to make sure you get accurate results for your location, you must set a local timezone for the LAT and LON you are using. You can tell if you made a mistake when the result you get is negative for sunrise.
 \end{DoxyItemize}
 \end{DoxyEnumerate}
 \begin{DoxyEnumerate}
 \item Prior to calculating sunrise or sunset, you must update the current date for the library, including the required timezone. The library doesn’t track the date, so calling it every day without changing the date means you will always get the calculation for the last accurate date you gave it. If you do not set the date, it defaults to midnight, January 1st of year 0 in the Gregorian calendar.
 \end{DoxyEnumerate}
 \begin{DoxyEnumerate}
-\item Since all calculations are done in U\+TC, it is possible to know what time sunrise is in your location without a timezone. Call calc\+Sunrise\+U\+TC for this detail.
+\item Since all calculations are done in UTC, it is possible to know what time sunrise is in your location without a timezone. Call calc\+Sunrise\+UTC for this detail.
 \begin{DoxyItemize}
-\item This isn\textquotesingle{}t very useful in the long run, so the U\+TC functions will be deprecated. The new civil, astro, and nautical A\+PI\textquotesingle{}s do not include the U\+TC analog. This is by design.
+\item This isn\textquotesingle{}t very useful in the long run, so the UTC functions will be deprecated. The new civil, astro, and nautical API\textquotesingle{}s do not include the UTC analog. This is by design.
 \end{DoxyItemize}
 \end{DoxyEnumerate}
 \begin{DoxyEnumerate}
@@ -106,10 +111,13 @@ To use \mbox{\hyperlink{classSunSet}{Sun\+Set}}, you need to a few bits of local
 \end{DoxyItemize}
 \end{DoxyEnumerate}
 \begin{DoxyEnumerate}
-\item The library may return NaN or 0 for instances where there is no real sunrise or sunset value (above the arctic circle in summer as an example). The differences seem to be compiler and platform related, and is not something I am currently doing something about. Correctly checking for return value is a critical need and not ignoring 0 or NaN will make this library work better for you in the long run.
-\begin{DoxyItemize}
-\item This library does some pretty intensive math, so devices without an F\+PU are going to run slower because of it. As of version 1.\+1.\+3, this library does work for the E\+S\+P8266, but this is not an indication that it will run on all non F\+PU enabled devices.
-\end{DoxyItemize}
+\item The library may return NaN for instances where there is no real sunrise or sunset value (above the arctic circle in summer as an example). Checking for std\+::isnan() is critical if you are in a location or are calculating for a location which may not have a valid sunrise/sunset. If you get NaN, then either the sun is always up or always down.
+\end{DoxyEnumerate}
+\begin{DoxyEnumerate}
+\item This library does some pretty intensive math, so devices without an FPU are going to run slower because of it. As of version 1.\+1.\+3, this library does work for the ESP8266, but this is not an indication that it will run on all non FPU enabled devices.
+\end{DoxyEnumerate}
+\begin{DoxyEnumerate}
+\item This library has a hard requirement on 32 bit precision for the device you are using. 8 or 16 bit micros are not supported.
 \end{DoxyEnumerate}
 
 The example below gives some hints for using the library, it\textquotesingle{}s pretty simple. Every time you need the calculation, call for it. I wouldn\textquotesingle{}t suggest caching the value unless you can handle changes in date so the calculation is correct relative to a date you need.
@@ -117,23 +125,40 @@ The example below gives some hints for using the library, it\textquotesingle{}s 
 \mbox{\hyperlink{classSunSet}{Sun\+Set}} is C++, no C implementation is provided. It is compiled using C++14, and any code using it should use C++14 as well as there is a dependency on C++14 at a minimum. Newer C++ versions work as well.\hypertarget{index_autotoc_md12}{}\doxysection{Releases}\label{index_autotoc_md12}
 
 \begin{DoxyItemize}
+\item 1.\+1.\+6 Fixing issues with library version numbering
+\item 1.\+1.\+5 Bug fixes
+\begin{DoxyItemize}
+\item Issue \#26 -\/ Code quality issue in function calc\+Geom\+Mean\+Long\+Sun?
+\item Issue \#28 -\/ Add option to override cmake build settings via variables
+\item Issue \#29 -\/ Fix warning for platforms that cannot build shared objects
+\item Issue \#31 -\/ Member functions that should be const aren\textquotesingle{}t
+\item Issue \#32 -\/ Expose calc\+Abs\+Sunset style interface, so custom offsets can be used
+\item Issue \#33 -\/ Remove unnecessary define statements
+\item Issue \#34 -\/ Fix missing precision cast in calc\+JD
+\item Issue \#37 -\/ typo in examples/esp/example.\+ino
+\end{DoxyItemize}
 \item 1.\+1.\+4 Making this work for Arduino and the library manager via Include Library
-\item 1.\+1.\+3 Performance improvements to enable the E\+S\+P8266 to function better. Thank you to \href{https://github.com/Glichy}{\texttt{ https\+://github.\+com/\+Glichy}}.
+\item 1.\+1.\+3 Performance improvements to enable the ESP8266 to function better. Thank you to \href{https://github.com/Glichy}{\texttt{ https\+://github.\+com/\+Glichy}}.
 \item 1.\+1.\+2 Bumping the library.\+properties license field to be correct. This forced a new release number so it would work with build systems.
 \item 1.\+1.\+1 Changes to support case insensitive file systems.
 \item 1.\+1.\+0 New capabilities. Added Civil, Nautical, and Astronomical sunrise and sunset.
 \begin{DoxyItemize}
-\item New A\+PI\textquotesingle{}s for the new functionality. See the code for details.
-\item Begin to deprecate U\+TC functions. These will not be removed until later if ever. They are not tested as well.
-\item Migrate timezone to be a double for fractional timezones. I\+ST for example works correctly now.
+\item New API\textquotesingle{}s for the new functionality. See the code for details.
+\item Begin to deprecate UTC functions. These will not be removed until later if ever. They are not tested as well.
+\item Migrate timezone to be a double for fractional timezones. IST for example works correctly now.
 \end{DoxyItemize}
-\item 1.\+0.\+11 Fixes related to making S\+A\+MD targets compile. S\+A\+MD doesn\textquotesingle{}t like std\+::chrono it seems.
+\item 1.\+0.\+11 Fixes related to making SAMD targets compile. SAMD doesn\textquotesingle{}t like std\+::chrono it seems.
 \item 1.\+0.\+10 Fixed a bug in a header file, it should build for all platforms now.
 \item 1.\+0.\+9\+: Revert some imported changes which broke the system.
-\item 1.\+0.\+8\+: Fix installation path issue and update R\+E\+A\+D\+ME to include installation instructions.
+\item 1.\+0.\+8\+: Fix installation path issue and update README to include installation instructions.
 \item 1.\+0.\+7\+: Allows for use of positive or negative longitude values. Thank you to \href{https://github.com/nliviu}{\texttt{ https\+://github.\+com/nliviu}}.
 \end{DoxyItemize}\hypertarget{index_autotoc_md13}{}\doxysection{Moon Phases}\label{index_autotoc_md13}
-This library also allows you to calculate the moon phase for the current day to an integer value. This means it\textquotesingle{}s not perfectly accurate, but it\textquotesingle{}s pretty close. To use it, you call moon\+Phase() with an integer value that is the number of seconds from the January 1, 1970 epoch. It will do some simple math and return an integer value that represents the current phase of the moon, from 0 to 29. In this case, 0 is new, and 29 is new, 15 is full. The code handles times that may cause the calculation to return 30 to avoid some limits confusion (there aren\textquotesingle{}t 30 days in the lunar cycle, but it\textquotesingle{}s close enough that some time values will cause it to return 30 anyway).\hypertarget{index_autotoc_md14}{}\doxysection{Examples}\label{index_autotoc_md14}
+This library also allows you to calculate the moon phase for the current day to an integer value. This means it\textquotesingle{}s not perfectly accurate, but it\textquotesingle{}s pretty close. To use it, you call moon\+Phase() with an integer value that is the number of seconds from the January 1, 1970 epoch. It will do some simple math and return an integer value that represents the current phase of the moon, from 0 to 29. In this case, 0 is new, and 29 is new, 15 is full. The code handles times that may cause the calculation to return 30 to avoid some limits confusion (there aren\textquotesingle{}t 30 days in the lunar cycle, but it\textquotesingle{}s close enough that some time values will cause it to return 30 anyway).
+
+
+\begin{DoxyItemize}
+\item Moon phase is calculated based on current time, not just the current date. As a result, if you don\textquotesingle{}t populate the system time on the device you are using, the return value will be -\/6, which is clearly incorrect. To use the moon phase, please make sure to keep the system clock accurate, OR, you can pass the time elapsed from the Unix EPOCH in seconds as a positive value. Either will work, but using the system clock is less confusing.
+\end{DoxyItemize}\hypertarget{index_autotoc_md14}{}\doxysection{Examples}\label{index_autotoc_md14}
 This example is relative to an .ino file. Create a global object, initialize it and use it in loop().
 
 
@@ -165,6 +190,7 @@ This example is relative to an .ino file. Create a global object, initialize it 
 \DoxyCodeLine{    double sunset = sun.calcSunset();}
 \DoxyCodeLine{    int moonphase = sun.moonPhase(std::time(nullptr));}
 \DoxyCodeLine{\}}
+
 \end{DoxyCode}
 
 
@@ -196,6 +222,7 @@ This example is for the Raspberry Pi using C++
 \DoxyCodeLine{    double astroSunrise = sun.calcAstronomicalSunrise();}
 \DoxyCodeLine{    int moonphase = sun.moonPhase(static\_cast<int>(rightnow));}
 \DoxyCodeLine{\}}
+
 \end{DoxyCode}
 \hypertarget{index_autotoc_md15}{}\doxysection{Notes}\label{index_autotoc_md15}
 
@@ -203,17 +230,17 @@ This example is for the Raspberry Pi using C++
 \item This is a general purpose calculator, so you could calculate when Sunrise was on the day Shakespeare died. Hence some of the design decisions.
 \item Date values are absolute, are not zero based, and should not be abbreviated. (e.\+g. don’t use 15 for 2015 or 0 for January)
 \item This library has a hard requirement on a 32 bit micro with native hard float. Soft float micros {\itshape do} work, but may have issues. The math is pretty intensive.
-\item It is important to remember you M\+U\+ST have accurate date and time. The calculations are time sensitive, and if you aren\textquotesingle{}t accurate, the results will be obvious. Note that the library does not use hours, minutes, or seconds, just the date, so syncing time a lot won\textquotesingle{}t help, just making sure it\textquotesingle{}s accurate at midnight so you can set the date before calling the calc functions. Knowing when to update the timzone for savings time if applicaple is also pretty important.
-\item It can be used as a general purpose library on any Linux machine, as well as on an Arduino or Particle Photon. You just need to compile it into your R\+PI or Beagle project using cmake 3.\+0 or later.
-\item U\+TC is not the U\+TC sunrise time, it is the time in Greenwhich when the sun would rise at the location specified to the library. It\textquotesingle{}s weird, but allows for some flexibility when doing calcualations depending on how you keep track of time in your system. The U\+TC specific calls are being deprecated starting with 1.\+1.\+0.
-\item Use of Civil, Nautical, and Astronomical values are interesting for lots of new uses of the library. They are added as a convenience, but hopefully will prove useful. These functions do not have equal U\+TC functions.
+\item It is important to remember you MUST have accurate date and time. The calculations are time sensitive, and if you aren\textquotesingle{}t accurate, the results will be obvious. Note that the library does not use hours, minutes, or seconds, just the date, so syncing time a lot won\textquotesingle{}t help, just making sure it\textquotesingle{}s accurate at midnight so you can set the date before calling the calc functions. Knowing when to update the timzone for savings time if applicaple is also pretty important.
+\item It can be used as a general purpose library on any Linux machine, as well as on an Arduino or Particle Photon. You just need to compile it into your RPI or Beagle project using cmake 3.\+0 or later.
+\item UTC is not the UTC sunrise time, it is the time in Greenwhich when the sun would rise at the location specified to the library. It\textquotesingle{}s weird, but allows for some flexibility when doing calcualations depending on how you keep track of time in your system. The UTC specific calls are being deprecated starting with 1.\+1.\+0.
+\item Use of Civil, Nautical, and Astronomical values are interesting for lots of new uses of the library. They are added as a convenience, but hopefully will prove useful. These functions do not have equal UTC functions.
 \item I do not build or test on a Windows target. I don\textquotesingle{}t have a Windows machine to do so. I do test this on a Mac, but only lightly and not every release right now.
-\end{DoxyItemize}\hypertarget{index_autotoc_md16}{}\doxysection{E\+S\+P Devices}\label{index_autotoc_md16}
-The popular E\+SP devices seem to have some inconsistencies. While it is possible to run on the 8266, which has no F\+PU but is 32bit, the math is slow, and if you are doing time constrained activities, there is no specific guarantee that this library will work for you. Testing shows it does work well enough, but use it at your own risk.
+\end{DoxyItemize}\hypertarget{index_autotoc_md16}{}\doxysection{ESP Devices}\label{index_autotoc_md16}
+The popular ESP devices seem to have some inconsistencies. While it is possible to run on the 8266, which has no FPU but is 32bit, the math is slow, and if you are doing time constrained activities, there is no specific guarantee that this library will work for you. Testing shows it does work well enough, but use it at your own risk.
 
-Using this library with an E\+S\+P8266 is not considered a valid or tested combination, though it may work for you. I will not attempt to support any issues raised against the 8266 that can\textquotesingle{}t be duplicated on an E\+S\+P32.
+Using this library with an ESP8266 is not considered a valid or tested combination, though it may work for you. I will not attempt to support any issues raised against the 8266 that can\textquotesingle{}t be duplicated on an ESP32.
 
-The E\+S\+P32 also has some F\+PU issues, though testing confirms it works very well and does not slow the system in any measurable way.
+The ESP32 also has some FPU issues, though testing confirms it works very well and does not slow the system in any measurable way.
 
 
 \begin{DoxyItemize}
@@ -221,7 +248,7 @@ The E\+S\+P32 also has some F\+PU issues, though testing confirms it works very 
 \item \href{https://blog.classycode.com/esp32-floating-point-performance-6e9f6f567a69}{\texttt{ https\+://blog.\+classycode.\+com/esp32-\/floating-\/point-\/performance-\/6e9f6f567a69}}
 \end{DoxyItemize}
 
-The conclusions in the links seem to indicate that a lot of the math used by this library may be slow on the E\+S\+P8266 processors. However, slow in this case is still milliseconds, so it may not matter on the 8266 at all. Your mileage might vary.\hypertarget{index_autotoc_md17}{}\doxysection{Links}\label{index_autotoc_md17}
+The conclusions in the links seem to indicate that a lot of the math used by this library may be slow on the ESP8266 processors. However, slow in this case is still milliseconds, so it may not matter on the 8266 at all. Your mileage might vary.\hypertarget{index_autotoc_md17}{}\doxysection{Links}\label{index_autotoc_md17}
 You can find the original math in c code at \href{http://souptonuts.sourceforge.net/code/sunrise.c.html}{\texttt{ http\+://souptonuts.\+sourceforge.\+net/code/sunrise.\+c.\+html}}
 
 I got the moon work from Ben Daglish at \href{http://www.ben-daglish.net/moon.shtml}{\texttt{ http\+://www.\+ben-\/daglish.\+net/moon.\+shtml}}\hypertarget{index_autotoc_md18}{}\doxysection{Thank you to}\label{index_autotoc_md18}
@@ -229,7 +256,7 @@ The following contributors have helped me identify issues and add features. The 
 
 
 \begin{DoxyItemize}
-\item \href{https://github.com/ASL07}{\texttt{ https\+://github.\+com/\+A\+S\+L07}}
+\item \href{https://github.com/ASL07}{\texttt{ https\+://github.\+com/\+ASL07}}
 \item \href{https://github.com/ThothK}{\texttt{ https\+://github.\+com/\+ThothK}}
 \item \href{https://github.com/CaspianMaster}{\texttt{ https\+://github.\+com/\+Caspian\+Master}}
 \item \href{https://github.com/rhn}{\texttt{ https\+://github.\+com/rhn}}
