@@ -16,6 +16,6 @@
     }
   ],
   "license" : "GPLV2",
-  "platforms" : "esp8266,esp32,samd,sam,particle-photon,particle-electron,particle-p1,spark-core"
+  "platforms" : "esp8266,esp32"
 }
 
