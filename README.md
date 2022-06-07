@@ -104,6 +104,7 @@ The example below gives some hints for using the library, it's pretty simple. Ev
 SunSet is C++, no C implementation is provided. It is compiled using C++14, and any code using it should use C++14 as well as there is a dependency on C++14 at a minimum. Newer C++ versions work as well.
 
 # Releases
+* 1.1.7 Maintenance release with documentation updates and a fix for a broken test
 * 1.1.6 Fixing issues with library version numbering
 * 1.1.5 Bug fixes
   * Issue #26 - Code quality issue in function calcGeomMeanLongSun?
