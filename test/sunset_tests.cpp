@@ -354,8 +354,11 @@ namespace
     TEST(SunsetTesting, MoonphaseNoArgs)
     {
         SunSet sun;
+
+        int moonphase1 = sun.moonPhase();
+        int moonphase2 = sun.moonPhase(std::time(nullptr));
         
-        EXPECT_EQ(sun.moonPhase(), 4) << "Returned: " << sun.moonPhase() << ", epoch is " << 1579097467;
+        EXPECT_EQ(moonphase1, moonphase2) << "Moonphase no args != moonphase(std::time(0))";
     }
     
     TEST(SunsetTesting, MoonphaseZeroEpoch)

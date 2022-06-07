@@ -38,7 +38,7 @@ if (BUILD_TESTS)
         target_compile_options(${PROJECT_NAME}-test PUBLIC "-pthread")
     endif()
     
-    include_directories(${GTEST_INCLUDE_DIR})
+#    include_directories(${GTEST_INCLUDE_DIR})
     add_executable(${PROJECT_NAME}-test ${TESTS} ${HEADERS})
     target_link_libraries(${PROJECT_NAME}-test ${GTEST_LIBRARIES} ${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT})
 endif()
