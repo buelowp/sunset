@@ -42,7 +42,7 @@ void loop()
     astrosunrise = sun.calcAstronomicalSunrise();
     astrosunset = sun.calcAstronomicalSunset();
     customsunrise = sun.calcCustomSunrise(90.0);
-    customsunset = sun.calcCustomSuset(90.0);
+    customsunset = sun.calcCustomSunset(90.0);
     
     Log.info("Sunrise at %d:%dam, Sunset at %d:%dpm", (sunrise/60), (sunrise%60), (sunset/60), (sunset%60));
     Log.info("Civil Sunrise at %f mpm, Sunset at %f mpm", civilsunrise, civilsunset);
