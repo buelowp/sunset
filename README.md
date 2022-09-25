@@ -237,3 +237,4 @@ The following contributors have helped me identify issues and add features. The 
 * https://github.com/enbyted
 * https://github.com/kebekus
 * https://github.com/ivankravets
+* https://github.com/chegancasb
